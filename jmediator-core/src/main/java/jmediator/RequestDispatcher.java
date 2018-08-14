@@ -14,6 +14,6 @@ public interface RequestDispatcher {
      * @param request
      * @return
      */
-    <T> T send(Request request);
+    <R> R send(Request request);
 
 }

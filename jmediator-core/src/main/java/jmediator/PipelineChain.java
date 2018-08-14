@@ -4,13 +4,12 @@ package jmediator;
  *
  *
  */
-public interface PipelineChain<T extends Request, R> {
+public interface PipelineChain {
 
     /**
      *
-     * @param request
      * @return
      */
-    R doBehavior(T request);
+    Object doBehavior();
 
 }

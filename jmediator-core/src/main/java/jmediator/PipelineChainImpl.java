@@ -6,34 +6,28 @@ import java.util.List;
 /**
  *
  * @param <T>
- * @param <R>
  */
-public class PipelineChainImpl<T extends Request, R> implements PipelineChain<T, R> {
+public class PipelineChainImpl<T extends Request, R> implements PipelineChain {
 
     // TODO: do we want to us an iterator instead?
-    private List<PipelineBehavior<T, R>> chain = new ArrayList<>();
-    private final RequestHandler<T, R> handler;
+    private final T request;
+    private List<? extends PipelineBehavior<? super T, R>> chain;
+    private final RequestHandler<? super T, R> handler;
     private int position = 0;
 
     /**
      *
      * @param handler
      */
-    public PipelineChainImpl(RequestHandler<T, R> handler) {
+    public PipelineChainImpl(T request, List<? extends PipelineBehavior<? super T, R>> chain, RequestHandler<? super T, R> handler) {
+        this.request = request;
+        this.chain = chain;
         this.handler = handler;
     }
 
-    // TODO: this probably doesn't below here
-    /**
-     *
-     * @param behavior
-     */
-    public void addBehavior(final PipelineBehavior<T, R> behavior) {
-        chain.add(behavior);
-    }
 
     @Override
-    public R doBehavior(T request) {
+    public Object doBehavior() {
         if (position < chain.size()) {
             return chain.get(position++).handle(request, this);
         } else {
