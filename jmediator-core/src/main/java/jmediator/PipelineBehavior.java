@@ -6,12 +6,12 @@ package jmediator;
  *
  * @param <T> Request type
  */
-public interface PipelineBehavior<T extends Request, R> {
+public interface PipelineBehavior {
 
 	/**
 	 * 
 	 * @param request
 	 * @return
 	 */
-	R handle(T request, PipelineChain chain);
+	<T extends Request> Object handle(T request, PipelineChain chain);
 }

@@ -1,7 +1,6 @@
 package jmediator;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Implementation of the dispatcher (aka command bus) that dispatches requests
@@ -24,13 +23,13 @@ public class RequestDispatcherImpl implements RequestDispatcher {
     private final RequestHandlerProvider requestHandlerProvider;
 
     // TODO: add register/subscribe method
-    private final List<PipelineBehavior<? super Request, ?>> handlerInterceptors;
+    private final List<PipelineBehavior> handlerInterceptors;
 
     /**
      *
      * @param requestHandlerProvider
      */
-    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider, List<PipelineBehavior<? super Request, ?>> handlerInterceptors) {
+    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider, List<PipelineBehavior> handlerInterceptors) {
         this.requestHandlerProvider = requestHandlerProvider;
         this.handlerInterceptors = handlerInterceptors;
     }
@@ -43,12 +42,11 @@ public class RequestDispatcherImpl implements RequestDispatcher {
         return doSend(request);
     }
 
-    // public PipelineChainImpl(T request, List<? extends PipelineBehavior<? super T, R>> chain, RequestHandler<? super T, R> handler) {
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked"})
 	private <T extends Request, R> R doSend(T request) {
-        RequestHandler<Request, Object> handler = requestHandlerProvider.getRequestHandler(request);
+        RequestHandler<? super T, ?> handler = (RequestHandler<? super T, ?>) requestHandlerProvider.getRequestHandler(request);
 
-        PipelineChain chain = new PipelineChainImpl(request, handlerInterceptors, handler);
+        PipelineChain chain = new PipelineChainImpl<T>(request, handlerInterceptors, handler);
 
         return (R) chain.doBehavior();
     }

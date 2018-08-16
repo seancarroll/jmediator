@@ -17,7 +17,7 @@ public class PipelineTest {
         DefaultRequestHandlerProvider provider = new DefaultRequestHandlerProvider();
         provider.register(new ZingHandler());
 
-        List<PipelineBehavior<? super Request, ?>> behaviors = new ArrayList<>();
+        List<PipelineBehavior> behaviors = new ArrayList<>();
         behaviors.add(new LoggingPipelineBehavior());
         RequestDispatcher dispatcher = new RequestDispatcherImpl(provider, behaviors);
 
@@ -72,7 +72,7 @@ public class PipelineTest {
         }
     }
     
-    private static class LoggingPipelineBehavior<Request, Object> implements PipelineBehavior {
+    private static class LoggingPipelineBehavior implements PipelineBehavior { //<Request> {
         private static final Logger _output = LoggerFactory.getLogger(LoggingPipelineBehavior.class);
 
 		@Override
