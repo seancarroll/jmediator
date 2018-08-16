@@ -11,6 +11,6 @@ public interface RequestHandlerProvider {
      * @param request
      * @return
      */
-    RequestHandler<?, ?> getRequestHandler(Request request);
+    <T extends Request, R> RequestHandler<T, R> getRequestHandler(T request);
 
 }

@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class PipelineChainImpl<T extends Request> implements PipelineChain {
 
-    // TODO: do we want to us an iterator instead?
     private final T request;
     private List<? extends PipelineBehavior> chain;
     private final RequestHandler<? super T, ?> handler;

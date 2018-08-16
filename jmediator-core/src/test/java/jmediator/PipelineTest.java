@@ -61,18 +61,17 @@ public class PipelineTest {
 
     }
 
-    public class ZingHandler implements RequestHandler<Zing, Zong> {
-        private final Logger logger = LoggerFactory.getLogger(ZingHandler.class);
+	public class ZingHandler implements RequestHandler<Zing, Zong> {
+		private final Logger logger = LoggerFactory.getLogger(ZingHandler.class);
 
-        @Override
-        public Zong handle(Zing request)
-        {
-            logger.info("handler");
-            return new Zong(request.message + " Zong");
-        }
-    }
+		@Override
+		public Zong handle(Zing request) {
+			logger.info("handler");
+			return new Zong(request.message + " Zong");
+		}
+	}
     
-    private static class LoggingPipelineBehavior implements PipelineBehavior { //<Request> {
+    private static class LoggingPipelineBehavior implements PipelineBehavior {
         private static final Logger _output = LoggerFactory.getLogger(LoggingPipelineBehavior.class);
 
 		@Override
@@ -82,8 +81,6 @@ public class PipelineTest {
 			_output.info("logging after chain");
 			return (Object) response;
 		}
-        
-
         
     }
 
