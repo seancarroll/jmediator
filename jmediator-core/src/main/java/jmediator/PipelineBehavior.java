@@ -5,14 +5,13 @@ package jmediator;
  * Implementations add additional behavior and call next
  *
  * @param <T> Request type
- * @param <R> Response type
  */
-public interface PipelineBehavior<T extends Request, R> /*extends RequestHandler<T, R>*/ {
+public interface PipelineBehavior {
 
 	/**
 	 * 
 	 * @param request
 	 * @return
 	 */
-	R handle(T request, PipelineChain<T, R> chain);
+	<T extends Request> Object handle(T request, PipelineChain chain);
 }

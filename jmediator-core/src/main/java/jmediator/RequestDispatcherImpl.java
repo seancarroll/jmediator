@@ -1,7 +1,5 @@
 package jmediator;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,62 +22,34 @@ public class RequestDispatcherImpl implements RequestDispatcher {
 
     private final RequestHandlerProvider requestHandlerProvider;
 
-    private Iterable<? extends IPreRequestHandler> preRequestHandlers = Collections.emptyList();
-    private Iterable<? extends IPostRequestHandler> postRequestHandlers = Collections.emptyList();
-
+    // TODO: add register/subscribe method
+    private final List<PipelineBehavior> handlerInterceptors;
 
     /**
      *
      * @param requestHandlerProvider
      */
-    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider) {
+    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider, List<PipelineBehavior> handlerInterceptors) {
         this.requestHandlerProvider = requestHandlerProvider;
+        this.handlerInterceptors = handlerInterceptors;
     }
 
     /**
      *
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> T send(Request request) {
-
-        for (IPreRequestHandler preRequestHandler : preRequestHandlers) {
-            preRequestHandler.handle(request);
-        }
-        
-        RequestHandler<Request, ?> handler = requestHandlerProvider.getRequestHandler(request);
-        T response = (T) handler.handle(request);
-
-        for (IPostRequestHandler postRequestHandler : postRequestHandlers) {
-            postRequestHandler.handle(request, response);
-        }
-        
-        return response;
-    }
-    
-
-    /**
-     * Registers the given list of pre-interceptors to the dispatcher. All
-     * incoming requests will pass through the interceptors at the given order
-     * before the request is passed to the handler for processing.
-     *
-     * @param preRequestHandlers
-     *            the interceptors to invoke prior to request being handled
-     */
-    public void setPreRequestHandlers(List<? extends IPreRequestHandler> preRequestHandlers) {
-        this.preRequestHandlers = new ArrayList<>(preRequestHandlers);
+    public <R> R send(Request request) {
+        return doSend(request);
     }
 
-    /**
-     * Registers the given list of post-interceptors to the dispatcher. All
-     * incoming requests will pass through the interceptors at the given order
-     * after the request is handled by the dispatcher
-     *
-     * @param postRequestHandlers
-     *            The interceptors to invoke after the request has been handled
-     */
-    public void setPostRequestHandlers(List<? extends IPostRequestHandler> postRequestHandlers) {
-        this.postRequestHandlers = new ArrayList<>(postRequestHandlers);
+    @SuppressWarnings({ "unchecked"})
+	private <T extends Request, R> R doSend(T request) {
+        RequestHandler<? super T, ?> handler = (RequestHandler<? super T, ?>) requestHandlerProvider.getRequestHandler(request);
+
+        PipelineChain chain = new PipelineChainImpl<T>(request, handlerInterceptors, handler);
+
+        return (R) chain.doBehavior();
     }
+
 
 }

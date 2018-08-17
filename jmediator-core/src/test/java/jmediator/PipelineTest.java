@@ -1,6 +1,9 @@
 package jmediator;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -10,8 +13,19 @@ import org.slf4j.LoggerFactory;
 public class PipelineTest {
 
     @Test
-    public void test() {
-        fail("Not yet implemented");
+    public void test() throws ClassNotFoundException {
+        DefaultRequestHandlerProvider provider = new DefaultRequestHandlerProvider();
+        provider.register(new ZingHandler());
+
+        List<PipelineBehavior> behaviors = new ArrayList<>();
+        behaviors.add(new LoggingPipelineBehavior());
+        RequestDispatcher dispatcher = new RequestDispatcherImpl(provider, behaviors);
+
+        Zing zing = new Zing();
+        zing.message = "Hi there";
+
+        Zong zong = dispatcher.send(zing);
+        assertEquals("Hi there Zong", zong.message);
     }
     
     public class Ping implements Request {
@@ -47,28 +61,26 @@ public class PipelineTest {
 
     }
 
-    public class ZingHandler implements RequestHandler<Zing, Zong> {
-        private final Logger logger = LoggerFactory.getLogger(ZingHandler.class);
+	public class ZingHandler implements RequestHandler<Zing, Zong> {
+		private final Logger logger = LoggerFactory.getLogger(ZingHandler.class);
 
-        @Override
-        public Zong handle(Zing request)
-        {
-            logger.info("handler");
-            return new Zong(request.message + " Zong");
-        }
-    }
+		@Override
+		public Zong handle(Zing request) {
+			logger.info("handler");
+			return new Zong(request.message + " Zong");
+		}
+	}
     
-    private static class ConstrainedLogging implements IPreRequestHandler {
-        private static final Logger _output = LoggerFactory.getLogger(ConstrainedLogging.class);
-        
-        @Override
-        public void handle(Request request) {
-            //_output.info("Constrained before");
-            //var response = await next();
-            //_output.info("Constrained after");
+    private static class LoggingPipelineBehavior implements PipelineBehavior {
+        private static final Logger _output = LoggerFactory.getLogger(LoggingPipelineBehavior.class);
 
-            //return response;
-        }
+		@Override
+		public Object handle(jmediator.Request request, PipelineChain chain) {
+			_output.info("logging before chain");
+			java.lang.Object response = chain.doBehavior();
+			_output.info("logging after chain");
+			return (Object) response;
+		}
         
     }
 
