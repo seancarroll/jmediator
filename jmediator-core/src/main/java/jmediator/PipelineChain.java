@@ -10,6 +10,6 @@ public interface PipelineChain {
      *
      * @return
      */
-    Object doBehavior();
+    <R> R doBehavior();
 
 }

@@ -13,5 +13,5 @@ public interface PipelineBehavior {
 	 * @param request
 	 * @return
 	 */
-	<T extends Request> Object handle(T request, PipelineChain chain);
+	<T extends Request, R> R handle(T request, PipelineChain chain);
 }

@@ -74,12 +74,13 @@ public class PipelineTest {
     private static class LoggingPipelineBehavior implements PipelineBehavior {
         private static final Logger _output = LoggerFactory.getLogger(LoggingPipelineBehavior.class);
 
+
 		@Override
-		public Object handle(jmediator.Request request, PipelineChain chain) {
+		public <T extends Request, R> R handle(T request, PipelineChain chain) {
 			_output.info("logging before chain");
-			java.lang.Object response = chain.doBehavior();
+			R response = chain.doBehavior();
 			_output.info("logging after chain");
-			return (Object) response;
+			return response;
 		}
         
     }

@@ -42,13 +42,12 @@ public class RequestDispatcherImpl implements RequestDispatcher {
         return doSend(request);
     }
 
-    @SuppressWarnings({ "unchecked"})
 	private <T extends Request, R> R doSend(T request) {
-        RequestHandler<? super T, ?> handler = (RequestHandler<? super T, ?>) requestHandlerProvider.getRequestHandler(request);
+        RequestHandler<? super T, R> handler = requestHandlerProvider.getRequestHandler(request);
 
-        PipelineChain chain = new PipelineChainImpl<T>(request, handlerInterceptors, handler);
+        PipelineChain chain = new PipelineChainImpl<>(request, handlerInterceptors, handler);
 
-        return (R) chain.doBehavior();
+        return chain.doBehavior();
     }
 
 
