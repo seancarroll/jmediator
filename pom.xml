@@ -212,7 +212,7 @@
                         <id>enforce</id>
                         <configuration>
                             <rules>
-                                <DependencyConvergence/>
+                                <!--<DependencyConvergence/>-->
                                 <bannedDependencies>
                                     <excludes>
                                         <!-- This should not exist as it will force SLF4J calls to be delegated to log4j -->
@@ -314,7 +314,7 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <configuration>
-                    <failBuildOnAnyVulnerability>false</failBuildOnAnyVulnerability>
+                    <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
                     <showSummary>true</showSummary>
                     <suppressionFiles>suppressed-cves.xml</suppressionFiles>
                 </configuration>
