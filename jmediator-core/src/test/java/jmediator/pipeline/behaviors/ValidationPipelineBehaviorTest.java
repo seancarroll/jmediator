@@ -21,13 +21,13 @@ class ValidationPipelineBehaviorTest {
     private PipelineChain pipelineChain;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         behavior = new ValidationPipelineBehavior();
         pipelineChain = mock(PipelineChain.class);
     }
 
     @Test
-    public void shouldNotThrowExceptionForLegalValues() {
+    void shouldNotThrowExceptionForLegalValues() {
         StubMessage message = new StubMessage("Sean");
 
         behavior.handle(message, pipelineChain);
@@ -35,7 +35,7 @@ class ValidationPipelineBehaviorTest {
     }
 
     @Test
-    public void shouldThrowConstraintViolationExceptionForIllegalValues() {
+    void shouldThrowConstraintViolationExceptionForIllegalValues() {
         StubMessage message = new StubMessage(null);
 
         try {
@@ -50,7 +50,7 @@ class ValidationPipelineBehaviorTest {
     }
 
     @Test
-    public void canUseCustomValidatorFactory() {
+    void canUseCustomValidatorFactory() {
         StubMessage message = new StubMessage("Sean");
         ValidatorFactory mockValidatorFactory = spy(Validation.buildDefaultValidatorFactory());
         behavior = new ValidationPipelineBehavior(mockValidatorFactory);

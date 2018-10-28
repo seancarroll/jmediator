@@ -20,20 +20,20 @@ class LoggingPipelineBehaviorTest {
     private ListAppender appender;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         behavior = new LoggingPipelineBehavior();
         pipelineChain = mock(PipelineChain.class);
     }
 
     @AfterEach
-    public void cleanUp() {
+    void cleanUp() {
         if (appender != null) {
             appender.clear();
         }
     }
 
     @Test
-    public void canLogNullReturnValue() {
+    void canLogNullReturnValue() {
         when(pipelineChain.doBehavior()).thenReturn(null);
 
         behavior.handle(new Ping(), pipelineChain);
@@ -44,7 +44,7 @@ class LoggingPipelineBehaviorTest {
     }
 
     @Test
-    public void canLogCustomReturnValue() {
+    void canLogCustomReturnValue() {
 
         when(pipelineChain.doBehavior()).thenReturn(new Pong("World"));
 
@@ -59,7 +59,7 @@ class LoggingPipelineBehaviorTest {
     }
 
     @Test
-    public void shouldNotLogReturnWhenExceptionOccurs() {
+    void shouldNotLogReturnWhenExceptionOccurs() {
 
         when(pipelineChain.doBehavior()).thenThrow(new RuntimeException());
 
@@ -78,7 +78,7 @@ class LoggingPipelineBehaviorTest {
     }
 
     @Test
-    public void canUseCustomLogger() {
+    void canUseCustomLogger() {
         when(pipelineChain.doBehavior()).thenReturn(new Pong("World"));
         String loggerName = "jmediator.pipeline.logging";
 
