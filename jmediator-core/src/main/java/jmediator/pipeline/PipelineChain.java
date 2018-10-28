@@ -10,7 +10,7 @@ public interface PipelineChain {
 
     /**
      *
-     * @return
+     * @return the result from a request handler
      */
     Object doBehavior();
 

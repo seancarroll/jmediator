@@ -12,7 +12,7 @@ public interface RequestHandler<T extends Request, R> {
      * Handles a request
      * 
      * @param request message to be handled
-     * @return Response from the request
+     * @return Response from the handler
      */
     R handle(T request);
 }

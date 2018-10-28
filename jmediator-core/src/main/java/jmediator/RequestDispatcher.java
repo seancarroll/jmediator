@@ -9,9 +9,9 @@ public interface RequestDispatcher {
 
     /**
      * Send a response to handler
-     * 
-     * @param request
-     * @return
+     *
+     * @param request message to be handled
+     * @return Response from the handler
      */
     <R> R send(Request request);
 
