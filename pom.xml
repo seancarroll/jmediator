@@ -16,6 +16,7 @@
         <module>jmediator-jersey</module>
         <module>jmediator-guice</module>
         <module>jmediator-bom</module>
+        <module>jmediator-samples</module>
     </modules>
 
     <properties>
