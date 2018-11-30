@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
  * 
  *
  */
-public class ReflectionUtils {
+public final class ReflectionUtils {
     private ReflectionUtils() {
         // static utility
     }
