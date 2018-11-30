@@ -4,6 +4,7 @@ import jmediator.pipeline.PipelineBehavior;
 import jmediator.pipeline.PipelineChain;
 import jmediator.pipeline.PipelineChainImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,9 +19,22 @@ public class RequestDispatcherImpl implements RequestDispatcher {
     // TODO: add register/subscribe method
     private final List<PipelineBehavior> handlerInterceptors;
 
+    /**
+     *
+     * @param requestHandlerProvider
+     */
+    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider) {
+        this(requestHandlerProvider, Collections.emptyList());
+    }
+
+    /**
+     * 
+     * @param requestHandlerProvider
+     * @param handlerInterceptors
+     */
     public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider, List<PipelineBehavior> handlerInterceptors) {
-        this.requestHandlerProvider = requestHandlerProvider;
-        this.handlerInterceptors = handlerInterceptors;
+        this.requestHandlerProvider = Ensure.notNull(requestHandlerProvider);
+        this.handlerInterceptors = Ensure.notNull(handlerInterceptors);
     }
 
     @Override
