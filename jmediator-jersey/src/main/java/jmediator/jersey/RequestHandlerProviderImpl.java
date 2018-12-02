@@ -1,7 +1,10 @@
 package jmediator.jersey;
 
 import io.github.classgraph.ClassGraph;
-import jmediator.*;
+import jmediator.NoHandlerForRequestException;
+import jmediator.Request;
+import jmediator.RequestHandler;
+import jmediator.RequestHandlerProvider;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.api.ServiceLocatorFactory;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
@@ -16,19 +19,13 @@ import java.util.Map;
 
 public class RequestHandlerProviderImpl implements RequestHandlerProvider, ServletContextListener {
 
-//    private ConfigurableListableBeanFactory beanFactory;
-private ServiceLocator serviceLocator;
+    private final String[] packagesToScan;
+    private final ServiceLocator serviceLocator;
     private Map<Class<?>, RequestHandler<Request, Object>> handlers = new HashMap<>();
-//
-//    public RequestHandlerProviderImpl(ConfigurableListableBeanFactory beanFactory) {
-//        this.beanFactory = beanFactory;
-//    }
-
-    private String[] packagesToScan;
 
     public RequestHandlerProviderImpl(String... packagesToScan) {
         this.packagesToScan = packagesToScan;
-        this.serviceLocator = ServiceLocatorFactory.getInstance().create("uniqueName");
+        this.serviceLocator = ServiceLocatorFactory.getInstance().create("RequestHandlerProviderImpl");
     }
 
     @Override
@@ -40,84 +37,46 @@ private ServiceLocator serviceLocator;
         return handler;
     }
 
-//    /**
-//     *
-//     * @param event
-//     */
-//    @SuppressWarnings("unchecked")
-//    @Override
-//    public void onApplicationEvent(ContextRefreshedEvent event) {
-//        handlers.clear();
-//        String[] requestHandlersNames = beanFactory.getBeanNamesForType(RequestHandler.class);
-//        for (String beanName : requestHandlersNames) {
-//            try {
-//                BeanDefinition requestHandler = beanFactory.getBeanDefinition(beanName);
-//                Class<?> handlerClass = Class.forName(requestHandler.getBeanClassName());
-//                Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
-//                RequestHandler<Request, Object> handler = beanFactory.getBean(beanName, RequestHandler.class);
-//                handlers.putIfAbsent(requestClass, handler);
-//            } catch (ClassNotFoundException e) {
-//                throw new NoHandlerForRequestException("request handler not found for class " + beanName, e);
-//            }
-//        }
-//    }
-
-    Map<Class<?>, RequestHandler<Request, Object>> getHandlers() {
-        return Collections.unmodifiableMap(handlers);
-    }
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+
         handlers.clear();
         List<String> requestHandlersNames = serviceNames(packagesToScan);
         for (String className : requestHandlersNames) {
             try {
-
                 Class<?> clazz = Class.forName(className);
                 //ClassBinding cb = bind(clazz).to(clazz);
 
                 ServiceLocatorUtilities.bind(serviceLocator, new AbstractBinder() {
-
                     @Override
                     protected void configure() {
                         bind(clazz).to(clazz);
                     }
                 });
 
-                Object handler = serviceLocator.getService(clazz);
-
-                if (handler != null) {
-
+                RequestHandler<Request, Object> handler = ServiceLocatorUtilities.getService(serviceLocator, className);
+                // RequestHandler<Request, Object> handler = serviceLocator.getService(clazz);
+                if (handler == null) {
+                    throw new NoHandlerForRequestException("request handler not found for class " + className);
                 }
-                //handlers.putIfAbsent(clazz, handler);
-
-//                Class<?> clazz = Class.forName(className);
-//                ClassBinding cb = bind(clazz).to(clazz);
-
-
-
-//                BeanDefinition requestHandler = beanFactory.getBeanDefinition(beanName);
-//                Class<?> handlerClass = Class.forName(requestHandler.getBeanClassName());
-//                Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
-//                RequestHandler<Request, Object> handler = beanFactory.getBean(beanName, RequestHandler.class);
-//                handlers.putIfAbsent(requestClass, handler);
+                handlers.putIfAbsent(clazz, handler);
             } catch (ClassNotFoundException e) {
                 throw new NoHandlerForRequestException("request handler not found for class " + className, e);
             }
         }
     }
 
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
 
+    }
 
     private static List<String> serviceNames(String... packages) {
         return new ClassGraph().whitelistPackages(packages)
             .scan()
             .getAllClasses()
+            //.getStandardClasses()
             .getNames();
     }
 
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-
-    }
 }

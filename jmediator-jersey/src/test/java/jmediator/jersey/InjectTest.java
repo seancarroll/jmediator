@@ -2,9 +2,8 @@ package jmediator.jersey;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.Test;
-
 import jmediator.RequestHandler;
+import org.junit.jupiter.api.Test;
 
 
 public class InjectTest {
