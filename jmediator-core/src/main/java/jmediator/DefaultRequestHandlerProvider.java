@@ -23,6 +23,7 @@ public class DefaultRequestHandlerProvider implements RequestHandlerProvider {
      * @throws ClassNotFoundException
      */
     public <T extends Request> void register(RequestHandler<? super T, ?> handler) {
+        Ensure.notNull(handler);
         Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handler.getClass(), RequestHandler.class);
         handlers.putIfAbsent(requestClass, handler);
     }
