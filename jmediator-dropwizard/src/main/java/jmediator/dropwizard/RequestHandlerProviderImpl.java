@@ -1,12 +1,10 @@
 package jmediator.dropwizard;
 
 import io.github.classgraph.ClassGraph;
-import io.github.classgraph.ClassInfo;
 import jmediator.*;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.api.ServiceLocatorFactory;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -16,12 +14,12 @@ import java.util.Map;
 
 public class RequestHandlerProviderImpl implements RequestHandlerProvider, ServletContextListener {
 
-    private final String[] packagesToScan;
+    private final ClassGraph classGraph;
     private final ServiceLocator serviceLocator;
     private Map<Class<?>, RequestHandler<Request, Object>> handlers = new HashMap<>();
 
     public RequestHandlerProviderImpl(String... packagesToScan) {
-        this.packagesToScan = packagesToScan;
+        this.classGraph = new ClassGraph().whitelistPackages(packagesToScan);
         this.serviceLocator = ServiceLocatorFactory.getInstance().create("RequestHandlerProviderImpl");
     }
 
@@ -38,21 +36,11 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Servl
     public void contextInitialized(ServletContextEvent sce) {
 
         handlers.clear();
-        List<String> requestHandlersNames = serviceNames(packagesToScan);
-        for (String className : requestHandlersNames) {
+        List<String> requestHandlerNames = getRequestHandlerClassNames();
+        for (String className : requestHandlerNames) {
             try {
                 Class<?> clazz = Class.forName(className);
-                //ClassBinding cb = bind(clazz).to(clazz);
-
-                ServiceLocatorUtilities.bind(serviceLocator, new AbstractBinder() {
-                    @Override
-                    protected void configure() {
-                        bind(clazz).to(clazz);
-                    }
-                });
-
                 RequestHandler<Request, Object> handler = ServiceLocatorUtilities.getService(serviceLocator, className);
-                // RequestHandler<Request, Object> handler = serviceLocator.getService(clazz);
                 if (handler == null) {
                     throw new NoHandlerForRequestException("request handler not found for class " + className);
                 }
@@ -69,8 +57,8 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Servl
 
     }
 
-    private static List<String> serviceNames(String... packages) {
-        return new ClassGraph().whitelistPackages(packages)
+    private List<String> getRequestHandlerClassNames() {
+        return classGraph
             .scan()
             .getClassesImplementing(RequestHandler.class.getName())
             .getNames();
