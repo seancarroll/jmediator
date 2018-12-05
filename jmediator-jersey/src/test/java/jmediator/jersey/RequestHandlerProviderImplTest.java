@@ -6,7 +6,7 @@ import jmediator.RequestHandler;
 import org.junit.jupiter.api.Test;
 
 
-public class InjectTest {
+public class RequestHandlerProviderImplTest {
 
     @Test
     public void registration() {

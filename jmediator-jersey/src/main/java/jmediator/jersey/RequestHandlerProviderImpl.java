@@ -1,10 +1,7 @@
 package jmediator.jersey;
 
 import io.github.classgraph.ClassGraph;
-import jmediator.NoHandlerForRequestException;
-import jmediator.Request;
-import jmediator.RequestHandler;
-import jmediator.RequestHandlerProvider;
+import jmediator.*;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.api.ServiceLocatorFactory;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
@@ -12,7 +9,6 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +55,8 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Servl
                 if (handler == null) {
                     throw new NoHandlerForRequestException("request handler not found for class " + className);
                 }
-                handlers.putIfAbsent(clazz, handler);
+                Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(clazz, RequestHandler.class);
+                handlers.putIfAbsent(requestClass, handler);
             } catch (ClassNotFoundException e) {
                 throw new NoHandlerForRequestException("request handler not found for class " + className, e);
             }
@@ -74,7 +71,7 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Servl
     private static List<String> serviceNames(String... packages) {
         return new ClassGraph().whitelistPackages(packages)
             .scan()
-            .getAllClasses()
+            .getClassesImplementing(RequestHandler.class.getName())
             //.getStandardClasses()
             .getNames();
     }
