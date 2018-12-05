@@ -99,6 +99,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
@@ -226,7 +232,7 @@
                                         <exclude>org.slf4j:slf4j-jdk14</exclude>
                                         <!-- Ensure only slf4j is on the classpath -->
                                         <exclude>log4j:log4j</exclude>
-                                        <exclude>ch.qos.logback:logback-classic</exclude>
+                                        <!--<exclude>ch.qos.logback:logback-classic</exclude>-->
                                         <!-- As recommended from the slf4j guide, exclude commons-logging -->
                                         <exclude>commons-logging:commons-logging</exclude>
                                     </excludes>
