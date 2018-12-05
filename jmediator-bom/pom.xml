@@ -43,12 +43,11 @@
                 <groupId>io.dropwizard</groupId>
                 <artifactId>dropwizard-core</artifactId>
                 <version>${dropwizard.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>logback-classic</artifactId>
-                        <groupId>ch.qos.logback</groupId>
-                    </exclusion>
-                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-testing</artifactId>
+                <version>${dropwizard.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.hk2</groupId>
@@ -98,7 +97,6 @@
                 <version>${validation.api.version}</version>
                 <optional>true</optional>
             </dependency>
-
 
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
