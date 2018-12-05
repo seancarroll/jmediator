@@ -1,4 +1,4 @@
-package jmediator.spring.sample.spring;
+package jmediator.sample.spring;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
