@@ -6,6 +6,7 @@ import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.api.ServiceLocatorFactory;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.internal.inject.InjectionManager;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -16,8 +17,15 @@ import java.util.Map;
 public class RequestHandlerProviderImpl implements RequestHandlerProvider, ServletContextListener {
 
     private final String[] packagesToScan;
-    private final ServiceLocator serviceLocator;
-    private Map<Class<?>, RequestHandler<Request, Object>> handlers = new HashMap<>();
+    private InjectionManager injectionManager;
+    private  ServiceLocator serviceLocator;
+    private Map<Class<?>, Class<RequestHandler>> handlerClassNames = new HashMap<>();
+
+
+    public RequestHandlerProviderImpl(InjectionManager injectionManager, String... packagesToScan) {
+        this.injectionManager = injectionManager;
+        this.packagesToScan = packagesToScan;
+    }
 
     public RequestHandlerProviderImpl(String... packagesToScan) {
         this.packagesToScan = packagesToScan;
@@ -26,7 +34,8 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Servl
 
     @Override
     public RequestHandler<Request, Object> getRequestHandler(Request request) {
-        RequestHandler<Request, Object> handler = handlers.get(request.getClass());
+        Class<RequestHandler> requestHandlerClassName = handlerClassNames.get(request.getClass());
+        RequestHandler<Request, Object> handler = injectionManager.getInstance(requestHandlerClassName);
         if (handler == null) {
             throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
         }
@@ -35,30 +44,18 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Servl
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
-        handlers.clear();
+        // TODO: just do this as part of the constructor?
+        handlerClassNames.clear();
         List<String> requestHandlersNames = serviceNames(packagesToScan);
-        for (String className : requestHandlersNames) {
+        for (String requestHandlersName : requestHandlersNames) {
             try {
-                Class<?> clazz = Class.forName(className);
-                //ClassBinding cb = bind(clazz).to(clazz);
-
-                ServiceLocatorUtilities.bind(serviceLocator, new AbstractBinder() {
-                    @Override
-                    protected void configure() {
-                        bind(clazz).to(clazz);
-                    }
-                });
-
-                RequestHandler<Request, Object> handler = ServiceLocatorUtilities.getService(serviceLocator, className);
-                // RequestHandler<Request, Object> handler = serviceLocator.getService(clazz);
-                if (handler == null) {
-                    throw new NoHandlerForRequestException("request handler not found for class " + className);
-                }
-                Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(clazz, RequestHandler.class);
-                handlers.putIfAbsent(requestClass, handler);
+                Class<RequestHandler> handlerClass = (Class<RequestHandler>) Class.forName(requestHandlersName);
+                Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
+                // we only want to store the class name as the actual handler should be managed by Spring and could have
+                // custom lifecycle or scope depending on how it added to the injection binder
+                handlerClassNames.putIfAbsent(requestClass, handlerClass);
             } catch (ClassNotFoundException e) {
-                throw new NoHandlerForRequestException("request handler not found for class " + className, e);
+                throw new NoHandlerForRequestException("request handler not found for class " + requestHandlersName, e);
             }
         }
     }
