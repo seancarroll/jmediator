@@ -21,7 +21,7 @@
         <classgraph.version>4.6.3</classgraph.version>
         <dropwizard.version>1.3.7</dropwizard.version>
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
-        <hk2.version>2.5.0-b62</hk2.version>
+        <hk2.version>2.5.0-b42</hk2.version>
         <javax.el.version>3.0.0</javax.el.version>
         <javax.servlet.api.version>3.0.1</javax.servlet.api.version>
         <jersey-server.version>2.27</jersey-server.version>
@@ -73,6 +73,11 @@
             <dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
                 <artifactId>jersey-server</artifactId>
+                <version>${jersey-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
                 <version>${jersey-server.version}</version>
             </dependency>
             <dependency>
