@@ -18,6 +18,7 @@ public class SampleJerseyApplication {
         ctx.setContextPath("/");
         server.setHandler(ctx);
 
+        // TODO: hook in ResourceConfig...is this good enough?
         AppConfig config = new AppConfig();
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
         ctx.addServlet(servlet, "/*");
@@ -26,7 +27,9 @@ public class SampleJerseyApplication {
         serHol.setInitOrder(1);
         serHol.setInitParameter(ServerProperties.PROVIDER_PACKAGES, "jmediator.sample.jersey");
 
-        // TODO: hook in ResourceConfig
+
+        // TODO: where to get injection manager?
+        // TODO: how to register context listener?
 
         try {
             server.start();
