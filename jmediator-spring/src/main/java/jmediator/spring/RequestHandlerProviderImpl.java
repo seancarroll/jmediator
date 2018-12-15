@@ -36,7 +36,7 @@ import java.util.Map;
 public class RequestHandlerProviderImpl implements RequestHandlerProvider, ApplicationListener<ContextRefreshedEvent> {
 
     private ConfigurableListableBeanFactory beanFactory;
-    private Map<Class<?>, String> handlerClassNames = new HashMap<>();
+    private Map<String, String> handlerClassNames = new HashMap<>();
 
     public RequestHandlerProviderImpl(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
@@ -44,7 +44,7 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
 
     @Override
     public RequestHandler<Request, Object> getRequestHandler(Request request) {
-        String handlerClassName = handlerClassNames.get(request.getClass());
+        String handlerClassName = handlerClassNames.get(request.getClass().getName());
         RequestHandler<Request, Object> handler = beanFactory.getBean(handlerClassName, RequestHandler.class);
         if (handler == null) {
             throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
@@ -68,7 +68,7 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
                 Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
                 // we only want to store the class name as the actual handler should be managed by Spring and could have
                 // custom lifecycle or scope depending on how it added to the injection binder
-                handlerClassNames.putIfAbsent(requestClass, beanName);
+                handlerClassNames.putIfAbsent(requestClass.getName(), beanName);
             } catch (ClassNotFoundException e) {
                 throw new NoHandlerForRequestException("request handler not found for class " + beanName, e);
             }
