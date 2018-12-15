@@ -14,19 +14,16 @@ import java.util.Map;
 
 // https://github.com/tchen319/hairball-j/blob/4a2f87386e578394fee547970d4502618f218421/src/main/java/com/oath/gemini/merchant/cron/QuartzFeature.java
 public class JmediatorFeature implements RequestHandlerProvider, Feature {
-
-    private final boolean autobind;
+    
     private final String[] packagesToScan;
     private InjectionManager injectionManager;
     private Map<String, Class<RequestHandler>> handlers = new HashMap<>();
 
     /**
      *
-     * @param autobind whether or not RequestHandlers should be registered with DI system
      * @param packagesToScan packages to look for RequestHandler
      */
-    public JmediatorFeature(boolean autobind, String... packagesToScan) {
-        this.autobind = autobind;
+    public JmediatorFeature(String... packagesToScan) {
         this.packagesToScan = packagesToScan;
     }
 
