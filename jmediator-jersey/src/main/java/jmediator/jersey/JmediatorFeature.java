@@ -14,10 +14,10 @@ import java.util.Map;
 
 // https://github.com/tchen319/hairball-j/blob/4a2f87386e578394fee547970d4502618f218421/src/main/java/com/oath/gemini/merchant/cron/QuartzFeature.java
 public class JmediatorFeature implements RequestHandlerProvider, Feature {
-    
+
     private final String[] packagesToScan;
+    private final Map<String, Class<RequestHandler>> handlers = new HashMap<>();
     private InjectionManager injectionManager;
-    private Map<String, Class<RequestHandler>> handlers = new HashMap<>();
 
     /**
      *
@@ -29,8 +29,11 @@ public class JmediatorFeature implements RequestHandlerProvider, Feature {
 
     @Override
     public boolean configure(FeatureContext context) {
-        handlers.clear();
-        List<String> requestHandlersNames = serviceNames(packagesToScan);
+        // I've attempted to get services through injectionManager.getAllInstances and injectionManager.getAllServiceHolders
+        // but both of those never return any instances. I've also attempted to implement ContainerLifecycleListener
+        // and get services through injection manager via onStartUp and onRestart but no luck there either
+        // so I'm falling back to using classGraph
+        List<String> requestHandlersNames = getRequestHandlerClassNames(packagesToScan);
         injectionManager = InjectionManagerProvider.getInjectionManager(context);
         for (String className : requestHandlersNames) {
             try {
@@ -69,7 +72,7 @@ public class JmediatorFeature implements RequestHandlerProvider, Feature {
         return handler;
     }
 
-    private static List<String> serviceNames(String... packages) {
+    private static List<String> getRequestHandlerClassNames(String... packages) {
         return new ClassGraph().whitelistPackages(packages)
             .scan()
             .getClassesImplementing(RequestHandler.class.getName())
