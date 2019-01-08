@@ -28,7 +28,7 @@
         <log4j.version>2.11.1</log4j.version>
         <slf4j.version>1.7.25</slf4j.version>
         <springframework.version>4.3.21.RELEASE</springframework.version>
-        <validation.api.version>2.0.1.Final</validation.api.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
     </properties>
 
 
@@ -99,7 +99,7 @@
             <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
-                <version>${validation.api.version}</version>
+                <version>${validation-api.version}</version>
                 <optional>true</optional>
             </dependency>
 
