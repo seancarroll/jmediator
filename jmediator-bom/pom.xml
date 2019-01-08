@@ -19,7 +19,7 @@
 
     <properties>
         <classgraph.version>4.6.3</classgraph.version>
-        <dropwizard.version>1.3.7</dropwizard.version>
+        <dropwizard.version>1.3.8</dropwizard.version>
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <hk2.version>2.5.0-b42</hk2.version>
         <javax.el.version>3.0.0</javax.el.version>
