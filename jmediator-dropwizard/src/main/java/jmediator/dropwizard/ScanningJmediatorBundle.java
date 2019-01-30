@@ -19,6 +19,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.server.internal.scanning.PackageNamesScanner;
 
+// https://javaee.github.io/hk2/getting-started.html
 // https://github.com/Netflix/governator/blob/master/governator-jersey/src/main/java/com/netflix/governator/guice/jersey/GovernatorComponentProviderFactory.java
 // https://stackoverflow.com/questions/45620576/jersey-2-26-and-spring-4-3-10-but-no-hk2#comment78209510_45624308
 // https://stackoverflow.com/questions/46825067/how-to-get-hk2-servicelocator-in-a-jersey2-servletcontainer

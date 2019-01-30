@@ -18,6 +18,7 @@ public final class ReflectionUtils {
      * @param genericInterface
      * @return
      */
+    // TODO: I dont really need this to be generic. My specific use case is around RequestHandler
     public static Class<?> getTypeArgumentForGenericInterface(Class<?> clazz, Class<?> genericInterface) {
         Type[] genericInterfaces = clazz.getGenericInterfaces();
         ParameterizedType type = findByRawType(genericInterfaces, genericInterface);

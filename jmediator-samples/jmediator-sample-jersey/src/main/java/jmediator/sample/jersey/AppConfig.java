@@ -19,6 +19,7 @@ public class AppConfig extends ResourceConfig {
             }
         });
 
+
         register(new JmediatorFeature("jmediator.sample.jersey"));
     }
 }

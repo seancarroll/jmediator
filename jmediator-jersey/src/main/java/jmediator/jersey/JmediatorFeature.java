@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: implement autobind or remove
 // https://github.com/tchen319/hairball-j/blob/4a2f87386e578394fee547970d4502618f218421/src/main/java/com/oath/gemini/merchant/cron/QuartzFeature.java
 public class JmediatorFeature implements RequestHandlerProvider, Feature {
 
