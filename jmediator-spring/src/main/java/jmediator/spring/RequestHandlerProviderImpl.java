@@ -42,6 +42,7 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
         this.beanFactory = beanFactory;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public RequestHandler<Request, Object> getRequestHandler(Request request) {
         String handlerClassName = handlerClassNames.get(request.getClass().getName());
@@ -52,11 +53,6 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
         return handler;
     }
 
-    /**
-     *
-     * @param event
-     */
-    @SuppressWarnings("unchecked")
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         handlerClassNames.clear();
