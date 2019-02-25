@@ -17,6 +17,7 @@
         <module>jmediator-sample-spring</module>
         <module>jmediator-sample-jersey</module>
         <module>jmediator-sample-dropwizard</module>
+        <module>jmediator-sample-micronaut</module>
     </modules>
 
 </project>
