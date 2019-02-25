@@ -9,6 +9,8 @@ import io.github.classgraph.ClassGraph;
 import jmediator.*;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.glassfish.jersey.InjectionManagerProvider;
+import org.glassfish.jersey.internal.inject.InjectionManager;
 import org.glassfish.jersey.servlet.ServletProperties;
 
 import java.util.Collection;
@@ -21,6 +23,7 @@ public class JmediatorBundle<T extends Configuration> implements ConfiguredBundl
 
     private final ClassGraph classGraph;
     private final Map<String, String> handlerClassNames = new HashMap<>();
+    private final Map<String, Class<RequestHandler>> handlers = new HashMap<>();
     private MutableServletContextHandler contextHandler;
     private ServiceLocator serviceLocator;
 
@@ -39,6 +42,10 @@ public class JmediatorBundle<T extends Configuration> implements ConfiguredBundl
 //        serviceLocator = (ServiceLocator) environment.getApplicationContext().getAttributes().getAttribute(ServletProperties.SERVICE_LOCATOR);
 
         contextHandler = environment.getApplicationContext();
+
+        // InjectionManagerProvider.getInjectionManager()
+        // InjectionManager injectionManager = InjectionManagerProvider.getInjectionManager();
+
 
         List<String> requestHandlerNames = getRequestHandlerClassNames();
         for (String className : requestHandlerNames) {
@@ -114,4 +121,14 @@ public class JmediatorBundle<T extends Configuration> implements ConfiguredBundl
             throw new RuntimeException(ex);
         }
     }
+
+//    @Override
+//    public RequestHandler<Request, Object> getRequestHandler(Request request)  {
+//        Class<RequestHandler> handlerClass =  handlers.get(request.getClass().getName());
+//        RequestHandler<Request, Object> handler = injectionManager.getInstance(handlerClass);
+//        if (handler == null) {
+//            throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
+//        }
+//        return handler;
+//    }
 }
