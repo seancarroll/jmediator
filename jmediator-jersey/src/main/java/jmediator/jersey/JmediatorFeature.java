@@ -21,6 +21,10 @@ public class JmediatorFeature implements RequestHandlerProvider, Feature {
     private final Map<String, Class<RequestHandler>> handlers = new HashMap<>();
     private InjectionManager injectionManager;
 
+    // TODO: can we support a no-arg constructor?
+    // If specific packages are not defined, scanning will occur from the package of the class that declares this annotation
+    // how would I get caller class?
+
     /**
      * @see JmediatorFeature#JmediatorFeature(boolean, String...)
      * @param packagesToScan packages to look for RequestHandler
