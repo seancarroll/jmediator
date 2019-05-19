@@ -1,8 +1,6 @@
 package jmediator.sample.jersey;
 
-import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
-
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
