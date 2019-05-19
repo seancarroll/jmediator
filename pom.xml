@@ -349,7 +349,10 @@
                 <configuration>
                     <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
                     <showSummary>true</showSummary>
-                    <suppressionFiles>suppressed-cves.xml</suppressionFiles>
+                    <suppressionFiles>
+                        <suppressionFile>suppressed-cves.xml</suppressionFile>
+                        <suppressionFile>jmediator-samples/jmediator-sample-dropwizard/suppressed-cves.xml</suppressionFile>
+                    </suppressionFiles>
                 </configuration>
                 <executions>
                     <execution>
