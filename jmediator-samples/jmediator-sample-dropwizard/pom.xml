@@ -12,16 +12,20 @@
     <artifactId>jmediator-sample-dropwizard</artifactId>
 
     <properties>
-        <dropwizard.version>1.3.8</dropwizard.version>
+        <dropwizard.version>2.0.0-rc1</dropwizard.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.seancarroll</groupId>
-            <artifactId>jmediator-dropwizard</artifactId>
+            <artifactId>jmediator-jersey</artifactId>
             <version>0.0.2-SNAPSHOT</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-core</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>

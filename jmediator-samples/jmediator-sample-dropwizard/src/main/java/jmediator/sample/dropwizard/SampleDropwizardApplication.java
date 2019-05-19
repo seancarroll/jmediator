@@ -1,15 +1,10 @@
 package jmediator.sample.dropwizard;
 
 import io.dropwizard.Application;
-import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import jmediator.RequestDispatcher;
-import jmediator.RequestDispatcherImpl;
-import jmediator.dropwizard.JmediatorBundle;
-import jmediator.dropwizard.RequestHandlerProviderImpl;
-import org.glassfish.hk2.api.ServiceLocator;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
-import org.glassfish.jersey.servlet.ServletProperties;
+import jmediator.jersey.JmediatorFeature;
+import org.glassfish.jersey.internal.inject.AbstractBinder;
+//import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 // https://github.com/dragonzone/dropwizard-hk2/blob/master/src/main/java/zone/dragon/dropwizard/HK2Bundle.java
 // https://groups.google.com/forum/#!topic/dropwizard-user/Om_N_4WIZfQ
@@ -31,63 +26,19 @@ public class SampleDropwizardApplication extends Application<SampleDropwizardCon
         return "hello";
     }
 
-//    private final HibernateBundle<SampleDropwizardConfiguration> hibernate = new HibernateBundle<SampleDropwizardConfiguration>(Person.class) {
-//        @Override
-//        public DataSourceFactory getDataSourceFactory(SampleDropwizardConfiguration configuration) {
-//            return configuration.getDataSourceFactory();
-//        }
-//    };
-
-    private final JmediatorBundle<SampleDropwizardConfiguration> jmediatorBundle = new JmediatorBundle<>();
-
-    @Override
-    public void initialize(Bootstrap<SampleDropwizardConfiguration> bootstrap) {
-        // nothing to do yet
-         bootstrap.addBundle(jmediatorBundle);
-    }
-
     @Override
     public void run(SampleDropwizardConfiguration configuration, Environment environment) {
 
         environment.jersey().register(new AbstractBinder() {
             @Override
             protected void configure() {
-//                ClassGraph scanner = new ClassGraph().whitelistPackages("jmediator.sample.dropwizard");
-//                for (ClassInfo classInfo : scanner.scan().getClassesImplementing(RequestHandler.class.getName()).getStandardClasses()) {
-//                    bind(classInfo.getClass()).to(classInfo.getClass());
-//                }
                 bind(HelloRequestHandler.class).to(HelloRequestHandler.class);
             }
         });
 
-        //environment.jersey().register(new PackageScanningBinder("jmediator.sample.dropwizard"));
-
-        // Looks like we cant do this here :(
-        // ServiceLocator serviceLocator = ((ServletContainer) environment.getJerseyServletContainer()).getApplicationHandler().getServiceLocator();
-        // doesnt work when in run
-        // however this means I cant simply bind to jersey and use ServiceLocatorFactory within RequestHandlerProvider
-        // these would be two different service locators and thus the one in RequestHandlerProvider would not find those
-        // bound to jersey
-        // Potentially could use a bridge or maybe parent service locator?
-        // Would putting this all in a bundle help?
-        // What about configuration?
-
-//        final RequestHandlerProviderImpl provider = new RequestHandlerProviderImpl("jmediator.sample.dropwizard");
-//        environment.servlets().addServletListeners(provider);
-//        final RequestDispatcher dispatcher = new RequestDispatcherImpl(provider);
-//        final HelloResource resource = new HelloResource(dispatcher);
-//        environment.jersey().register(resource);
+        // environment.jersey().register(JmediatorFeature.class);
+        environment.jersey().register(new JmediatorFeature("jmediator.sample.dropwizard"));
         environment.jersey().register(HelloResource.class);
-
-
-//        environment.jersey().register(HelloResource.class);
-//        environment.jersey().register(new AbstractBinder() {
-//            @Override
-//            protected void configure() {
-//                bind(provider).to(RequestHandlerProvider.class);
-//                bind(dispatcher).to(RequestDispatcher.class);
-//            }
-//        });
     }
 
 }
