@@ -11,11 +11,14 @@
     <modules>
         <module>jmediator-core</module>
         <module>jmediator-spring</module>
-        <module>jmediator-dropwizard</module>
         <module>jmediator-play</module>
         <module>jmediator-jersey</module>
         <module>jmediator-bom</module>
         <module>jmediator-samples</module>
+        <module>jmediator-prometheus</module>
+        <module>jmediator-micrometer</module>
+        <module>jmediator-openconcensus</module>
+        <module>jmediator-opentracing</module>
     </modules>
 
     <properties>
@@ -26,7 +29,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <assertj.version>3.12.0</assertj.version>
         <junit.version>5.4.0</junit.version>
-        <mockito.version>2.24.5</mockito.version>
+        <mockito.version>2.27.0</mockito.version>
 
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
         <dependency-check-maven.version>4.0.2</dependency-check-maven.version>
@@ -39,7 +42,7 @@
         <maven-failsafe-plugin.verion>2.22.1</maven-failsafe-plugin.verion>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -77,7 +80,7 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.3</version>
+                        <version>0.8.4</version>
                         <executions>
                             <execution>
                                 <id>prepare-agent</id>
