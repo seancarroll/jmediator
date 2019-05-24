@@ -22,6 +22,16 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- Fixing CVE-2019-12086. TODO: remove later -->
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.9.9</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            
             <dependency>
                 <groupId>com.seancarroll</groupId>
                 <artifactId>jmediator-bom</artifactId>
