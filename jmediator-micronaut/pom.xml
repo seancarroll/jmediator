@@ -11,15 +11,16 @@
 
     <artifactId>jmediator-micronaut</artifactId>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>jcenter.bintray.com</id>-->
-<!--            <url>https://jcenter.bintray.com</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
-
     <dependencyManagement>
         <dependencies>
+            <!-- Fixing CVE-2019-12086. TODO: remove later -->
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.9.9</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
             <dependency>
                 <groupId>com.seancarroll</groupId>
                 <artifactId>jmediator-bom</artifactId>
@@ -28,14 +29,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- TODO: best way to handle this?-->
-<!--            <dependency>-->
-<!--                <groupId>io.micronaut</groupId>-->
-<!--                <artifactId>micronaut-bom</artifactId>-->
-<!--                <version>1.1.2</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
