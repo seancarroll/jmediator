@@ -16,17 +16,19 @@ import java.util.Map;
 public class RequestHandlerProviderImpl implements RequestHandlerProvider, ApplicationEventListener<StartupEvent> {
 
     private ApplicationContext applicationContext;
-    private Map<String, Class<RequestHandler>> handlerClassNames = new HashMap<>();
+    private Map<String, Class<RequestHandler>> handlerClassNameToTypeMap = new HashMap<>();
 
     @Inject
     public RequestHandlerProviderImpl(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public RequestHandler<Request, Object> getRequestHandler(Request request) {
-        Class<RequestHandler> handlerClass = handlerClassNames.get(request.getClass().getName());
-        RequestHandler handler = applicationContext.getBean(handlerClass);
+        Class<RequestHandler> handlerClass = handlerClassNameToTypeMap.get(request.getClass().getName());
+        RequestHandler<Request, Object> handler = applicationContext.getBean(handlerClass);
+        // TODO: I dont think we need this check as getBean will throw NonUniqueBeanException or NoSuchBeanException
         if (handler == null) {
             throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
         }
@@ -36,15 +38,15 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
     // TODO: ApplicationStartupEvent fires twice
     @Override
     public void onApplicationEvent(StartupEvent event) {
-        handlerClassNames.clear();
+        handlerClassNameToTypeMap.clear();
         Collection<BeanDefinition<RequestHandler>> beanDefinitions = applicationContext.getBeanDefinitions(RequestHandler.class);
         for (BeanDefinition<RequestHandler> beanDefinition : beanDefinitions) {
             try {
                 Class<?> handlerClass = Class.forName(beanDefinition.getName());
                 Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
-                // we only want to store the class name as the actual handler should be managed by Micronaut and could have
-                // custom lifecycle or scope depending on how it added to the injection binder
-                handlerClassNames.putIfAbsent(requestClass.getName(), beanDefinition.getBeanType());
+                // we only want to store the bean type as the actual handler should be managed by Micronaut and could have
+                // custom lifecycle or scope depending on how its registered
+                handlerClassNameToTypeMap.putIfAbsent(requestClass.getName(), beanDefinition.getBeanType());
             } catch (ClassNotFoundException e) {
                 throw new NoHandlerForRequestException("request handler not found for class " + beanDefinition.getName(), e);
             }
