@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import jmediator.RequestDispatcher;
 
-@Controller("/")
+@Controller()
 public class SampleMicronautController {
 
     private final RequestDispatcher dispatcher;
@@ -22,7 +22,6 @@ public class SampleMicronautController {
     @Get(uri = "/hello/{name}", produces = MediaType.APPLICATION_JSON)
     public String hello(@PathVariable(name = "name") String name) {
         HelloRequest request = new HelloRequest(name);
-        String response = dispatcher.send(request);
-        return response;
+        return dispatcher.send(request);
     }
 }

@@ -6,7 +6,6 @@ import io.micronaut.context.event.StartupEvent;
 import io.micronaut.inject.BeanDefinition;
 import jmediator.*;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,7 +17,6 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
     private ApplicationContext applicationContext;
     private Map<String, Class<RequestHandler>> handlerClassNameToTypeMap = new HashMap<>();
 
-    @Inject
     public RequestHandlerProviderImpl(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
@@ -27,15 +25,9 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
     @Override
     public RequestHandler<Request, Object> getRequestHandler(Request request) {
         Class<RequestHandler> handlerClass = handlerClassNameToTypeMap.get(request.getClass().getName());
-        RequestHandler<Request, Object> handler = applicationContext.getBean(handlerClass);
-        // TODO: I dont think we need this check as getBean will throw NonUniqueBeanException or NoSuchBeanException
-        if (handler == null) {
-            throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
-        }
-        return handler;
+        return applicationContext.getBean(handlerClass);
     }
 
-    // TODO: ApplicationStartupEvent fires twice
     @Override
     public void onApplicationEvent(StartupEvent event) {
         handlerClassNameToTypeMap.clear();

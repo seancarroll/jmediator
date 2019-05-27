@@ -4,14 +4,12 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.runtime.server.EmbeddedServer;
-import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@MicronautTest
 class SampleMicronautControllerTest {
 
     private static EmbeddedServer server;
@@ -38,7 +36,7 @@ class SampleMicronautControllerTest {
 
     @Test
     void testHello() {
-        String rsp = client.toBlocking().retrieve(HttpRequest.<String>GET("/hello/sean"));
+        String rsp = client.toBlocking().retrieve(HttpRequest.GET("/hello/sean"));
         assertEquals("Hello sean", rsp);
     }
 
