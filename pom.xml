@@ -20,6 +20,7 @@
         <module>jmediator-opencensus</module>
         <module>jmediator-opentracing</module>
         <module>jmediator-micronaut</module>
+        <module>jmediator-quarkus</module>
     </modules>
 
     <properties>
