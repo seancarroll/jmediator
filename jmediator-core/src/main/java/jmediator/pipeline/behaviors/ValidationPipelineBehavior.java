@@ -10,7 +10,6 @@ import java.util.Set;
 /**
  * Pipeline behavior that applies JSR303 bean validation on incoming messages.
  * When validation on a message fails, a ConstraintViolationException is thrown, holding the constraint violations.
- *
  */
 public class ValidationPipelineBehavior implements PipelineBehavior {
 

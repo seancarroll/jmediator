@@ -10,14 +10,13 @@ public class DefaultRequestHandlerProvider implements RequestHandlerProvider {
 
     private Map<Class<?>, RequestHandler<? extends Request, ?>> handlers = new HashMap<>();
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends Request, R> RequestHandler<T, R> getRequestHandler(T request) {
-		return (RequestHandler<T, R>) handlers.get(request.getClass());
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends Request, R> RequestHandler<T, R> getRequestHandler(T request) {
+        return (RequestHandler<T, R>) handlers.get(request.getClass());
+    }
 
     /**
-     *
      * @param handler
      * @param <T>
      * @throws ClassNotFoundException

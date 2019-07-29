@@ -4,7 +4,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
- * 
  *
  */
 public final class ReflectionUtils {
@@ -13,7 +12,6 @@ public final class ReflectionUtils {
     }
 
     /**
-     * 
      * @param clazz
      * @param genericInterface
      * @return
@@ -26,7 +24,6 @@ public final class ReflectionUtils {
     }
 
     /**
-     * 
      * @param genericInterfaces
      * @param expectedRawType
      * @return

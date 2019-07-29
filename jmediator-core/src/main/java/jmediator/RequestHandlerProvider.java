@@ -1,13 +1,11 @@
 package jmediator;
 
 /**
- * 
  *
  */
 public interface RequestHandlerProvider {
 
     /**
-     * 
      * @param request
      * @return
      */

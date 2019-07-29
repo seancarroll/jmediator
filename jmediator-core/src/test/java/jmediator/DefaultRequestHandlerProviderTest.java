@@ -16,7 +16,9 @@ class DefaultRequestHandlerProviderTest {
     }
 
 
-    class SomeRequest implements Request {}
+    class SomeRequest implements Request {
+    }
+
     class SomeRequestHandler implements RequestHandler<SomeRequest, Void> {
 
         @Override

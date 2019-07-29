@@ -7,7 +7,8 @@ import java.util.List;
 
 /**
  * Mechanism that takes care of behavior and handler execution.
- * @param <T> The message type this pipeline chain can process
+ *
+ * @param <T>  The message type this pipeline chain can process
  */
 public class PipelineChainImpl<T extends Request> implements PipelineChain {
 
@@ -19,8 +20,9 @@ public class PipelineChainImpl<T extends Request> implements PipelineChain {
     /**
      * Initialize the default pipeline chain to dispatch the given {@code request}, through the
      * {@code behaviors}, to the {@code handler}.
-     * @param request The request to be processed
-     * @param behaviors The behaviors composing the chain
+     *
+     * @param request  The request to be processed
+     * @param behaviors  The behaviors composing the chain
      * @param handler  The handler for the request
      */
     public PipelineChainImpl(T request, List<? extends PipelineBehavior> behaviors, RequestHandler<? super T, ?> handler) {

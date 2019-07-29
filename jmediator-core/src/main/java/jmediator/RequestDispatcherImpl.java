@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Implementation of the dispatcher, aka command bus, that dispatches requests to the handlers subscribed to the specific type of request.
  * Pipeline behaviors may be configured to add processing to requests regardless of their type
- *
  */
 public class RequestDispatcherImpl implements RequestDispatcher {
 
@@ -20,7 +19,6 @@ public class RequestDispatcherImpl implements RequestDispatcher {
     private final List<PipelineBehavior> handlerInterceptors;
 
     /**
-     *
      * @param requestHandlerProvider
      */
     public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider) {
@@ -28,7 +26,6 @@ public class RequestDispatcherImpl implements RequestDispatcher {
     }
 
     /**
-     *
      * @param requestHandlerProvider
      * @param handlerInterceptors
      */
@@ -42,8 +39,8 @@ public class RequestDispatcherImpl implements RequestDispatcher {
         return doSend(request);
     }
 
-    @SuppressWarnings({ "unchecked"})
-	private <T extends Request, R> R doSend(T request) {
+    @SuppressWarnings({"unchecked"})
+    private <T extends Request, R> R doSend(T request) {
         RequestHandler<? super T, ?> handler = requestHandlerProvider.getRequestHandler(request);
 
         PipelineChain chain = new PipelineChainImpl<>(request, handlerInterceptors, handler);
