@@ -10,7 +10,6 @@ import javax.inject.Singleton;
 @Factory
 public class RequestDispatcherFactory {
 
-    private RequestDispatcher dispatcher;
     private RequestHandlerProvider provider;
 
     public RequestDispatcherFactory(RequestHandlerProvider provider) {
@@ -19,8 +18,7 @@ public class RequestDispatcherFactory {
 
     @Singleton
     public RequestDispatcher requestDispatcher() {
-        RequestDispatcherImpl requestDispatcher = new RequestDispatcherImpl(provider);
-        return requestDispatcher;
+        return new RequestDispatcherImpl(provider);
     }
 
 }
