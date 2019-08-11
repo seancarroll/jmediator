@@ -15,6 +15,9 @@ import java.util.Map;
 import java.util.Set;
 
 // TODO: I would like to avoid this and manually register
+// TODO: I'm not positive this is the appropriate way to handle this in Quarkus.
+// Quarkus has an interesting extension model that splits work between deployent aka build time and runtime.
+// Could I do this work as part of deployment time?
 @ApplicationScoped
 public class RequestHandlerProviderImpl implements RequestHandlerProvider {
 
@@ -51,7 +54,7 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider {
         Set<Bean<?>> requestHandlersBeans = beanManager.getBeans(REQUEST_HANDLER_TYPE_LITERAL.getType());
         for (Bean<?> bean : requestHandlersBeans) {
             Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(bean.getBeanClass(), RequestHandler.class);
-            // we only want to store the class name as the actual handler should be managed by Spring and could have
+            // we only want to store the class name as the actual handler should be managed by Quarkus and could have
             // custom lifecycle or scope depending on how it added to the injection binder
             handlerClassNames.putIfAbsent(requestClass.getName(), bean.getBeanClass());
         }
