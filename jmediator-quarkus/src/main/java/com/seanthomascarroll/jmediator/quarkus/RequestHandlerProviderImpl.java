@@ -21,7 +21,7 @@ import java.util.Set;
 @ApplicationScoped
 public class RequestHandlerProviderImpl implements RequestHandlerProvider {
 
-    private final TypeLiteral<RequestHandler<?, ?>> REQUEST_HANDLER_TYPE_LITERAL = new TypeLiteral<RequestHandler<?, ?>>() {};
+    private static final TypeLiteral<RequestHandler<?, ?>> REQUEST_HANDLER_TYPE_LITERAL = new TypeLiteral<RequestHandler<?, ?>>() {};
 
     private final BeanManager beanManager;
     private final Map<String, Class<?>> handlerClassNames = new HashMap<>();
