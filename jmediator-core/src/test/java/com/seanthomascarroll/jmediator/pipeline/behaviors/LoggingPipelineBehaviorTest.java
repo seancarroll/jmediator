@@ -95,15 +95,15 @@ class LoggingPipelineBehaviorTest {
     }
 
     private static class Ping implements Request {
-        public Ping() {
+        Ping() {
 
         }
 
-        public Ping(String message) {
+        Ping(String message) {
             this.message = message;
         }
 
-        public String message;
+        String message;
 
         @Override
         public String toString() {
@@ -114,11 +114,11 @@ class LoggingPipelineBehaviorTest {
     }
 
     private static class Pong {
-        public Pong(String message) {
+        Pong(String message) {
             this.message = message;
         }
 
-        public String message;
+        String message;
 
         @Override
         public String toString() {

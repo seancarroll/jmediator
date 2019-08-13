@@ -16,10 +16,10 @@ class DefaultRequestHandlerProviderTest {
     }
 
 
-    class SomeRequest implements Request {
+    static class SomeRequest implements Request {
     }
 
-    class SomeRequestHandler implements RequestHandler<SomeRequest, Void> {
+    static class SomeRequestHandler implements RequestHandler<SomeRequest, Void> {
 
         @Override
         public Void handle(SomeRequest request) {

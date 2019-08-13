@@ -66,7 +66,7 @@ class ValidationPipelineBehaviorTest {
         @Size(min = 2)
         private String message;
 
-        public StubMessage(String message) {
+        StubMessage(String message) {
             this.message = message;
         }
     }
