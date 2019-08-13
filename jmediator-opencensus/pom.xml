@@ -2,14 +2,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>jmediator-parent</artifactId>
         <groupId>com.seancarroll</groupId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jmediator-open-concensus</artifactId>
 
+    <properties>
+        <opencensus-api.version>0.22.0</opencensus-api.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.seancarroll</groupId>
+            <artifactId>jmediator-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opencensus</groupId>
+            <artifactId>opencensus-api</artifactId>
+            <version>${opencensus-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opencensus</groupId>
+            <artifactId>opencensus-impl</artifactId>
+            <version>${opencensus-api.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+    </dependencies>
 
 </project>
