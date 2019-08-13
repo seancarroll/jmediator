@@ -1,4 +1,4 @@
 package com.seanthomascarroll.jmediator.micrometer.pipeline;
 
-public class behaviors {
+public class Behaviors {
 }

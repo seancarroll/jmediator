@@ -40,7 +40,7 @@ public class OpenTracingBehavior implements PipelineBehavior {
             // Tags.COMPONENT.set(span, request.getClass().getSimpleName());
             // TODO: Do we want to log anything after?
             return chain.doBehavior();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             Tags.ERROR.set(span, true);
             span.log(getExceptionDetails(ex));
             throw ex;
