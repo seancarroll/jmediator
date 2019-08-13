@@ -1,8 +1,8 @@
 package com.seanthomascarroll.jmediator.sample.dropwizard;
 
+import com.seanthomascarroll.jmediator.jersey.JmediatorFeature;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
-import com.seanthomascarroll.jmediator.jersey.JmediatorFeature;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 //import org.glassfish.hk2.utilities.binding.AbstractBinder;
 

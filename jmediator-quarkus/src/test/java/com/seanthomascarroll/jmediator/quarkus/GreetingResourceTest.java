@@ -1,10 +1,10 @@
 package com.seanthomascarroll.jmediator.quarkus;
 
-import io.quarkus.test.junit.QuarkusTest;
 import com.seanthomascarroll.jmediator.NoHandlerForRequestException;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestHandler;
 import com.seanthomascarroll.jmediator.RequestHandlerProvider;
+import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;

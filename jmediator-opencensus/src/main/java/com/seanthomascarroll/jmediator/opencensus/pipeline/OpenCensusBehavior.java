@@ -12,6 +12,7 @@ import io.opencensus.trace.samplers.Samplers;
 // https://opencensus.io/quickstart/java/
 // https://opencensus.io/quickstart/java/tracing/
 // https://opencensus.io/quickstart/java/metrics/
+
 /**
  *
  */
@@ -25,10 +26,11 @@ public class OpenCensusBehavior implements PipelineBehavior {
         // be sampled. This makes it easier to try out the example, but unless you have a clear use
         // case, you don't need to explicitly set record events or sampler.
         try (Scope ss = TRACER
-                     .spanBuilder("MyChildWorkSpan")
-                     .setRecordEvents(true)
-                     .setSampler(Samplers.alwaysSample())
-                     .startScopedSpan()) {
+            .spanBuilder("MyChildWorkSpan")
+            .setRecordEvents(true)
+            .setSampler(Samplers.alwaysSample())
+            .startScopedSpan()) {
+
             doInitialWork();
             TRACER.getCurrentSpan().addAnnotation("Finished initial work");
             doFinalWork();

@@ -22,16 +22,16 @@ import java.util.Map;
 // https://github.com/spring-projects/spring-framework/blob/a89e716cc71a8741385a0224b5d7eb7ce009e11a/spring-web/src/main/java/org/springframework/web/context/support/WebApplicationContextUtils.java
 // AbstractAutowireCapableBeanFactory
 // AbstractBeanFactory
+
 /**
  * Default implementation that looks into the application event listener context
  * refreshed event and finds all beans implements RequestHandler
- *
- *
+ * <p>
+ * <p>
  * Default implementation that uses BeanFactory to find all registered RequestHandler beans.
- *
+ * <p>
  * Is also an ApplicationListener that hooks into the ContextRefreshedEvent to find all registered RequestHandlers
  * to create a map between Request classes and RequestHandler class names
- *
  */
 public class RequestHandlerProviderImpl implements RequestHandlerProvider, ApplicationListener<ContextRefreshedEvent> {
 

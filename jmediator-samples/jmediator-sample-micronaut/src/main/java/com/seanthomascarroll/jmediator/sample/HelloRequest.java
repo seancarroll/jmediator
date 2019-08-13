@@ -6,7 +6,8 @@ public class HelloRequest implements Request {
 
     private String name;
 
-    public HelloRequest() {}
+    public HelloRequest() {
+    }
 
     public HelloRequest(String name) {
         this.name = name;

@@ -6,7 +6,8 @@ public class PingRequest implements Request {
 
     private String value;
 
-    public PingRequest() {}
+    public PingRequest() {
+    }
 
     public PingRequest(String value) {
         this.value = value;

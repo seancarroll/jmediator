@@ -11,7 +11,7 @@ public interface PipelineBehavior {
     /**
      * @param request  The request to be processed
      * @param chain  The chain manages the flow of a message through a chain of behaviors and ultimately to the request
-     *                handler
+     *               handler
      * @param <T>  The message type this behavior chain can process
      * @return Response from the handler
      */

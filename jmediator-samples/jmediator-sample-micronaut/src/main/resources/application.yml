@@ -1,3 +1,3 @@
 micronaut:
-  application:
-    name: jmediator-sample-micronaut-app
+    application:
+        name: jmediator-sample-micronaut-app

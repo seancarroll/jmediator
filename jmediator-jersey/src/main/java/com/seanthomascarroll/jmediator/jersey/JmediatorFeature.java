@@ -26,17 +26,16 @@ public class JmediatorFeature implements RequestHandlerProvider, Feature {
     // how would I get caller class?
 
     /**
+     * @param packagesToScan packages  to look for RequestHandler
      * @see JmediatorFeature#JmediatorFeature(boolean, String...)
-     * @param packagesToScan packages to look for RequestHandler
      */
     public JmediatorFeature(String... packagesToScan) {
         this(false, packagesToScan);
     }
 
     /**
-     *
-     * @param autobind whether or not RequestHandlers should be registered with DI system
-     * @param packagesToScan packages to look for RequestHandler
+     * @param autobind  whether or not RequestHandlers should be registered with DI system
+     * @param packagesToScan  packages to look for RequestHandler
      */
     public JmediatorFeature(boolean autobind, String... packagesToScan) {
         this.autobind = autobind;
@@ -83,8 +82,8 @@ public class JmediatorFeature implements RequestHandlerProvider, Feature {
     }
 
     @Override
-    public RequestHandler<Request, Object> getRequestHandler(Request request)  {
-        Class<RequestHandler> handlerClass =  handlers.get(request.getClass().getName());
+    public RequestHandler<Request, Object> getRequestHandler(Request request) {
+        Class<RequestHandler> handlerClass = handlers.get(request.getClass().getName());
         RequestHandler<Request, Object> handler = injectionManager.getInstance(handlerClass);
         if (handler == null) {
             throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
