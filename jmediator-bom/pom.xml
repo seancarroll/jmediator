@@ -6,7 +6,7 @@
 
     <parent>
         <artifactId>jmediator-parent</artifactId>
-        <groupId>com.seancarroll</groupId>
+        <groupId>com.seanthomascarroll</groupId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 

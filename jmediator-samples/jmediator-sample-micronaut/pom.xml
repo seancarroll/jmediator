@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>jmediator-samples</artifactId>
-        <groupId>com.seancarroll</groupId>
+        <groupId>com.seanthomascarroll</groupId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
@@ -17,7 +17,7 @@
         <java.version>1.8</java.version>
         <log4j.version>2.11.2</log4j.version>
         <micronaut.version>1.1.4</micronaut.version>
-        <exec.mainClass>jmediator.sample.Application</exec.mainClass>
+        <exec.mainClass>com.seanthomascarroll.jmediator.sample.Application</exec.mainClass>
     </properties>
 
     <dependencyManagement>
@@ -32,7 +32,7 @@
             </dependency>
 
             <dependency>
-                <groupId>com.seancarroll</groupId>
+                <groupId>com.seanthomascarroll</groupId>
                 <artifactId>jmediator-bom</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
@@ -44,7 +44,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.seancarroll</groupId>
+            <groupId>com.seanthomascarroll</groupId>
             <artifactId>jmediator-micronaut</artifactId>
             <version>${project.version}</version>
         </dependency>
