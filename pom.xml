@@ -15,7 +15,6 @@
     <modules>
         <module>jmediator-core</module>
         <module>jmediator-spring</module>
-        <module>jmediator-play</module>
         <module>jmediator-jersey</module>
         <module>jmediator-bom</module>
         <module>jmediator-samples</module>
