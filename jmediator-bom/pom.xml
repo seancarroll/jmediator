@@ -27,7 +27,7 @@
         <jersey-server.version>2.28</jersey-server.version>
         <log4j.version>2.11.2</log4j.version>
         <micronaut.version>1.2.0</micronaut.version>
-        <quarkus.version>0.20.1</quarkus.version>
+        <quarkus.version>0.21.1</quarkus.version>
         <rest-assured.version>3.3.0</rest-assured.version>
         <slf4j.version>1.7.28</slf4j.version>
         <springframework.version>4.3.24.RELEASE</springframework.version>
