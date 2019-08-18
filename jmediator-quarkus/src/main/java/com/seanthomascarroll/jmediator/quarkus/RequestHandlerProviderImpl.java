@@ -16,7 +16,7 @@ import java.util.Set;
 
 // TODO: I would like to avoid this and manually register
 // TODO: I'm not positive this is the appropriate way to handle this in Quarkus.
-// Quarkus has an interesting extension model that splits work between deployent aka build time and runtime.
+// Quarkus has an interesting extension model that splits work between deployment aka build time and runtime.
 // Could I do this work as part of deployment time?
 @ApplicationScoped
 public class RequestHandlerProviderImpl implements RequestHandlerProvider {
