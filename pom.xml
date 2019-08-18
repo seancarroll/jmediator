@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.seanthomascarroll</groupId>
     <artifactId>jmediator-parent</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>pom</packaging>
 
     <name>jMediator (Parent)</name>
@@ -73,7 +72,7 @@
         <connection>scm:git:git://github.com/seancarroll/jmediator.git</connection>
         <developerConnection>scm:git:git@github.com:seancarroll/jmediator.git</developerConnection>
         <url>https://github.com/seancarroll/jmediator/</url>
-        <tag>HEAD</tag>
+        <tag>v0.0.2</tag>
     </scm>
 
     <issueManagement>
@@ -265,7 +264,7 @@
                         <id>enforce</id>
                         <configuration>
                             <rules>
-                                <!--<DependencyConvergence/>-->
+                                <!--<DependencyConvergence />-->
                                 <bannedDependencies>
                                     <excludes>
                                         <!-- This should not exist as it will force SLF4J calls to be delegated to log4j -->
