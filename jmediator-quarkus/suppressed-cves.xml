@@ -9,4 +9,7 @@
     <suppress>
         <cve>CVE-2014-8122</cve>
     </suppress>
+    <suppress>
+        <cve>CVE-2019-10086</cve>
+    </suppress>
 </suppressions>
