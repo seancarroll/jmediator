@@ -1,12 +1,22 @@
 language: java
 jdk:
     - openjdk8
+
+addons:
+  sonarcloud:
+    organization: "seancarroll-github"
+    token:
+      secure: "vFpzzcRHnt/+x9qeAxodbJdsDQkDhAM64Mtr2YLxaUFjyofMAx+mltF3OVToZJYSDmzoY1NxY2FzW6NAJ0FVuFZe8zTHEdDTZcr6DzXAJi0HzkOVJIMCJFHft3KYCKqLKG/SSXxcOS1uNKsxGWS2uKG1Hd4qeecRPnPJIqrQ0Tnc2zNsVxsJsDgxaMqdyVfgKe5q6NVhXByyy34Evgprn974esNeG/NRg0MbRvCFa1rZ7wb8Od5WaBgNmArNtYXXVymp39lR7911++w9T/UBwviAzm5WGOuC3zBfRAGiJYeUwuM5gO2fRcD55N3XR2GRGTgjuiyAAHWhbkscMYX7jnI00oc31FlzcKIbRYYuHyLNL99MTpYWFCHa3RbaQJ5jLAKd+tbnxO2HPGmXP8aeet2Pf5LSlboN61ihznM+avpwtIOzjtwbINovHBs12YKtet6cNVwhBtxnzOcLCd9LsEOEEFm0DiwkEn1TkAbE3Zr9mFYB+/GtRUBsBHDKdx9XuRwYf80Y4huQEWM7ZsmoImN9KLv5lkSomkouCxu2O/l2jLLO3mAiFn0hw9iPlIzJplIBmpLAnNOGSnvWDEC8rgp17ECHuROuWMzBiNx42CqjbZ+4GIt3bcMqbOR16D9Ncc6fkOOMuD3OsDtU+SnFLAImSaUNfreYQCcQ+GDGi7g="
+
 cache:
-    directories:
-        - $HOME/.m2
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
 
 after_success:
     - bash <(curl -s https://codecov.io/bash)
 #  - snyk monitor
 
-script: mvn verify -P code-coverage
+
+script:
+  - mvn clean verify sonar:sonar -Dsonar.projectKey=seancarroll_jmediator -Pcoverage
