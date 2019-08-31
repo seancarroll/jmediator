@@ -6,7 +6,7 @@
 
     <parent>
         <artifactId>jmediator-samples</artifactId>
-        <groupId>com.seanthomascarroll</groupId>
+        <groupId>com.seanthomascarroll.jmediator</groupId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
@@ -52,7 +52,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.seanthomascarroll</groupId>
+            <groupId>com.seanthomascarroll.jmediator</groupId>
             <artifactId>jmediator-spring</artifactId>
             <version>0.0.2-SNAPSHOT</version>
         </dependency>
