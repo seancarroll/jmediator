@@ -13,10 +13,16 @@ cache:
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-#  - snyk monitor
-
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script:
   - mvn clean verify sonar:sonar -Dsonar.projectKey=seancarroll_jmediator -Pcode-coverage
+
+after_script:
+  - ./cc-test-reporter after-build -d -t jacoco ./target/site/jacoco/jacoco.xml --exit-code $TRAVIS_TEST_RESULT
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
