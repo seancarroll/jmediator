@@ -15,3 +15,57 @@ Simple in-process mediator implementation.
 ## Prerequisites
 
 Requires Java 8
+
+## Examples
+
+jmediator attempts to decouple the in-process sending of messages from how they are handled.
+
+First, create a message by creating a class that implements the `Request` interface. 
+The `Request` interface handles both commands and queries.
+
+```java
+public class HelloRequest implements Request {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+            "payload='" + name + '\'' +
+            '}';
+    }
+}
+```
+
+Next, lets create the corresponding handler
+
+```java
+@Named
+public class HelloRequestHandler implements RequestHandler<HelloRequest, String> {
+
+    @Override
+    public String handle(HelloRequest request) {
+        return "Hello " + request.getName();
+    }
+
+}
+```
+
+Finally, we can send a message through the mediator
+
+```java
+String response dispatcher.send(new Request("Sean"));
+System.out.println(response); // prints "Hello Sean"
+```
+
+## Inspiration
+
+This project was inspired by Jimmy Bogard's [Mediator](https://github.com/jbogard/MediatR) project 
