@@ -62,7 +62,7 @@ public class HelloRequestHandler implements RequestHandler<HelloRequest, String>
 Finally, we can send a message through the mediator
 
 ```java
-String response dispatcher.send(new Request("Sean"));
+String response dispatcher.send(new HelloRequest("Sean"));
 System.out.println(response); // prints "Hello Sean"
 ```
 
