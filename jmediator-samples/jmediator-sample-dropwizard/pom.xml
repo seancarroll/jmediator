@@ -33,7 +33,7 @@
             <artifactId>jmediator-jersey</artifactId>
             <version>0.0.2-SNAPSHOT</version>
         </dependency>
-        
+
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
