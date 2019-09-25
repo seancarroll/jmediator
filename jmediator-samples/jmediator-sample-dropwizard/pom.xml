@@ -20,7 +20,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
-                <version>2.9.9</version>
+                <version>2.9.10</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -33,14 +33,7 @@
             <artifactId>jmediator-jersey</artifactId>
             <version>0.0.2-SNAPSHOT</version>
         </dependency>
-
-        <!-- only including to fix CVE and can remove in the future once bom version matches -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.9.3</version>
-        </dependency>
-
+        
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
