@@ -13,6 +13,7 @@
 
     <properties>
         <opentracing-api.version>0.33.0</opentracing-api.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <dependencies>

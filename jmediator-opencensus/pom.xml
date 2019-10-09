@@ -13,6 +13,7 @@
 
     <properties>
         <opencensus-api.version>0.22.0</opencensus-api.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <dependencies>

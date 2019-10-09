@@ -13,6 +13,7 @@
 
     <properties>
         <simpleclient.version>0.6.0</simpleclient.version>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <dependencies>
