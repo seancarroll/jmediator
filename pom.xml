@@ -20,8 +20,6 @@
         <module>jmediator-samples</module>
         <module>jmediator-prometheus</module>
         <module>jmediator-micrometer</module>
-        <module>jmediator-opencensus</module>
-        <module>jmediator-opentracing</module>
         <module>jmediator-micronaut</module>
         <module>jmediator-opentelemetry</module>
         <module>jmediator-quarkus</module>
