@@ -11,9 +11,17 @@
 
     <artifactId>jmediator-micrometer</artifactId>
 
-    <properties>
-        <micrometer-core.version>1.4.0</micrometer-core.version>
-    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.seanthomascarroll.jmediator</groupId>
+                <artifactId>jmediator-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -26,9 +34,7 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-core</artifactId>
-            <version>${micrometer-core.version}</version>
         </dependency>
-
 
     </dependencies>
 

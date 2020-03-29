@@ -11,11 +11,17 @@
 
     <artifactId>jmediator-opentelemetry</artifactId>
 
-    <properties>
-        <maven.deploy.skip>true</maven.deploy.skip>
-
-        <opentelemetry.version>0.3.0</opentelemetry.version>
-    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.seanthomascarroll.jmediator</groupId>
+                <artifactId>jmediator-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -28,12 +34,10 @@
         <dependency>
             <groupId>io.opentelemetry</groupId>
             <artifactId>opentelemetry-api</artifactId>
-            <version>${opentelemetry.version}</version>
         </dependency>
         <dependency>
             <groupId>io.opentelemetry</groupId>
             <artifactId>opentelemetry-sdk</artifactId>
-            <version>${opentelemetry.version}</version>
         </dependency>
     </dependencies>
 
