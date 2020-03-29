@@ -12,8 +12,7 @@
     <artifactId>jmediator-micrometer</artifactId>
 
     <properties>
-        <micrometer-core.version>1.1.4</micrometer-core.version>
-        <maven.deploy.skip>true</maven.deploy.skip>
+        <micrometer-core.version>1.4.0</micrometer-core.version>
     </properties>
 
     <dependencies>
