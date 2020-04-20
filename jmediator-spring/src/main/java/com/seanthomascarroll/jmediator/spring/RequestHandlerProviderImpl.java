@@ -1,6 +1,8 @@
 package com.seanthomascarroll.jmediator.spring;
 
 import com.seanthomascarroll.jmediator.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationListener;
@@ -35,6 +37,8 @@ import java.util.Map;
  */
 public class RequestHandlerProviderImpl implements RequestHandlerProvider, ApplicationListener<ContextRefreshedEvent> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandlerProviderImpl.class);
+
     private ConfigurableListableBeanFactory beanFactory;
     private Map<String, String> handlerClassNames = new HashMap<>();
 
@@ -55,6 +59,7 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+
         handlerClassNames.clear();
         String[] requestHandlersNames = beanFactory.getBeanNamesForType(RequestHandler.class);
         for (String beanName : requestHandlersNames) {
@@ -64,7 +69,11 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider, Appli
                 Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
                 // we only want to store the class name as the actual handler should be managed by Spring and could have
                 // custom lifecycle or scope depending on how it added to the injection binder
-                handlerClassNames.putIfAbsent(requestClass.getName(), beanName);
+                String previous = handlerClassNames.putIfAbsent(requestClass.getName(), beanName);
+                if (previous != null) {
+                    LOGGER.warn("{} already associated with {}", requestClass.getName(), beanName);
+                }
+
             } catch (ClassNotFoundException e) {
                 throw new NoHandlerForRequestException("request handler not found for class " + beanName, e);
             }
