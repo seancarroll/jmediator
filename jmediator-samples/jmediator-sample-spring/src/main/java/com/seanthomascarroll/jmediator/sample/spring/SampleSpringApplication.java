@@ -23,8 +23,7 @@ public class SampleSpringApplication {
 
     @Bean
     public RequestDispatcher requestDispatcher() {
-        RequestDispatcherImpl requestDispatcher = new RequestDispatcherImpl(requestHandlerProvider());
-        return requestDispatcher;
+        return new RequestDispatcherImpl(requestHandlerProvider());
     }
 
     @Bean
