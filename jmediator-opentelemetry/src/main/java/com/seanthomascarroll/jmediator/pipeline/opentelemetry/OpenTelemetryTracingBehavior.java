@@ -1,4 +1,4 @@
-package com.seanthomascarroll.opentelemetry;
+package com.seanthomascarroll.jmediator.pipeline.opentelemetry;
 
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
@@ -37,7 +37,7 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
 
     private Map<String, AttributeValue> getExceptionDetails(Exception ex) {
         Map<String, AttributeValue> attributes = new HashMap<>(2);
-        attributes.put("error.type", AttributeValue.stringAttributeValue("exception"));
+        attributes.put("error.type", AttributeValue.stringAttributeValue(ex.getClass().getSimpleName()));
         attributes.put("error.message", AttributeValue.stringAttributeValue(ex.getMessage()));
         // TODO: add stacktrace as attribute
         // still waiting on PR for arrays

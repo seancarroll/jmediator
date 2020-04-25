@@ -39,6 +39,14 @@
             <groupId>io.opentelemetry</groupId>
             <artifactId>opentelemetry-sdk</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporters-inmemory</artifactId>
+            <version>0.3.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
