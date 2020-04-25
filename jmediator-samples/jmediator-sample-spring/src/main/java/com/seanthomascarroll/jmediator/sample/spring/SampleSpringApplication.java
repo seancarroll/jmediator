@@ -3,7 +3,7 @@ package com.seanthomascarroll.jmediator.sample.spring;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import com.seanthomascarroll.jmediator.RequestHandlerProvider;
-import com.seanthomascarroll.jmediator.spring.RequestHandlerProviderImpl;
+import com.seanthomascarroll.jmediator.spring.ComponentScanningRequestHandlerProvider;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +28,7 @@ public class SampleSpringApplication {
 
     @Bean
     public RequestHandlerProvider requestHandlerProvider() {
-        return new RequestHandlerProviderImpl(beanFactory);
+        return new ComponentScanningRequestHandlerProvider(beanFactory);
     }
 
 }

@@ -19,7 +19,7 @@ import java.util.Set;
 // Quarkus has an interesting extension model that splits work between deployment aka build time and runtime.
 // Could I do this work as part of deployment time?
 @ApplicationScoped
-public class RequestHandlerProviderImpl implements RequestHandlerProvider {
+public class BeanManagerRequestHandlerProvider implements RequestHandlerProvider {
 
     private static final TypeLiteral<RequestHandler<?, ?>> REQUEST_HANDLER_TYPE_LITERAL = new TypeLiteral<RequestHandler<?, ?>>() { };
 
@@ -27,7 +27,7 @@ public class RequestHandlerProviderImpl implements RequestHandlerProvider {
     private final Map<String, Class<?>> handlerClassNames = new HashMap<>();
 
     @Inject
-    public RequestHandlerProviderImpl(BeanManager beanManager) {
+    public BeanManagerRequestHandlerProvider(BeanManager beanManager) {
         this.beanManager = beanManager;
     }
 

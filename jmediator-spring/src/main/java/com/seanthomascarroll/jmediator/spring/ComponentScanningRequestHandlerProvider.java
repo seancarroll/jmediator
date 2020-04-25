@@ -35,14 +35,14 @@ import java.util.Map;
  * Is also an ApplicationListener that hooks into the ContextRefreshedEvent to find all registered RequestHandlers
  * to create a map between Request classes and RequestHandler class names
  */
-public class RequestHandlerProviderImpl implements RequestHandlerProvider, ApplicationListener<ContextRefreshedEvent> {
+public class ComponentScanningRequestHandlerProvider implements RequestHandlerProvider, ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandlerProviderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComponentScanningRequestHandlerProvider.class);
 
     private ConfigurableListableBeanFactory beanFactory;
     private Map<String, String> handlerClassNames = new HashMap<>();
 
-    public RequestHandlerProviderImpl(ConfigurableListableBeanFactory beanFactory) {
+    public ComponentScanningRequestHandlerProvider(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
     }
 

@@ -5,7 +5,6 @@ import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import com.seanthomascarroll.jmediator.RequestHandler;
-import com.seanthomascarroll.jmediator.RequestHandlerProvider;
 import io.prometheus.client.CollectorRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ class PrometheusMetricsBehaviorTest {
         registry = new CollectorRegistry();
         behavior = new PrometheusMetricsBehavior(registry);
 
-        RequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
+        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
         requestHandlerProvider.register(new PingHandler());
 
         dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));

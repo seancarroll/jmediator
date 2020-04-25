@@ -15,7 +15,6 @@ public class RequestDispatcherImpl implements RequestDispatcher {
 
     private final RequestHandlerProvider requestHandlerProvider;
 
-    // TODO: add register/subscribe method
     private final List<PipelineBehavior> handlerInterceptors;
 
     /**
@@ -47,6 +46,5 @@ public class RequestDispatcherImpl implements RequestDispatcher {
 
         return (R) chain.doBehavior();
     }
-
 
 }

@@ -29,7 +29,7 @@ class MicrometerBehaviorTest {
         registry = new SimpleMeterRegistry();
         behavior = new MicrometerBehavior(registry);
 
-        RequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
+        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
         requestHandlerProvider.register(new PingHandler());
 
         dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));

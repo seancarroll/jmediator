@@ -5,9 +5,6 @@ import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import com.seanthomascarroll.jmediator.RequestHandler;
-import com.seanthomascarroll.jmediator.RequestHandlerProvider;
-import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
-import com.seanthomascarroll.jmediator.pipeline.PipelineChainImpl;
 import io.opentelemetry.exporters.inmemory.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.TracerSdkProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
@@ -39,7 +36,7 @@ class OpenTelemetryTracingBehaviorTest {
 
     @Test
     void shouldAddSpan() {
-        RequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
+        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
         requestHandlerProvider.register(new PingHandler());
         RequestDispatcher dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));
 
@@ -53,7 +50,7 @@ class OpenTelemetryTracingBehaviorTest {
 
     @Test
     void shouldAddErrorWhenExceptionOccurs() {
-        RequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
+        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
         requestHandlerProvider.register(new FaultyPingHandler());
         RequestDispatcher dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));
 
@@ -129,6 +126,5 @@ class OpenTelemetryTracingBehaviorTest {
                 '}';
         }
     }
-
 
 }

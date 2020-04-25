@@ -12,12 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Singleton
-public class RequestHandlerProviderImpl implements RequestHandlerProvider, ApplicationEventListener<StartupEvent> {
+public class ApplicationContextRequestHandlerProvider implements RequestHandlerProvider, ApplicationEventListener<StartupEvent> {
 
     private ApplicationContext applicationContext;
     private Map<String, Class<RequestHandler>> handlerClassNameToTypeMap = new HashMap<>();
 
-    public RequestHandlerProviderImpl(ApplicationContext applicationContext) {
+    public ApplicationContextRequestHandlerProvider(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
