@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class DefaultRequestHandlerProvider implements RequestHandlerProvider {
 
-    private Map<Class<?>, RequestHandler<? extends Request, ?>> handlers = new HashMap<>();
+    private final Map<Class<?>, RequestHandler<? extends Request, ?>> handlers = new HashMap<>();
 
     @SuppressWarnings("unchecked")
     @Override
@@ -21,6 +21,7 @@ public class DefaultRequestHandlerProvider implements RequestHandlerProvider {
      * @param <T>
      * @throws ClassNotFoundException
      */
+    @Override
     public <T extends Request> void register(RequestHandler<? super T, ?> handler) {
         Ensure.notNull(handler);
         Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handler.getClass(), RequestHandler.class);
