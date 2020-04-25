@@ -36,9 +36,10 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
     }
 
     private Map<String, AttributeValue> getExceptionDetails(Exception ex) {
-        Map<String, AttributeValue> attributes = new HashMap<>(4);
+        Map<String, AttributeValue> attributes = new HashMap<>(2);
         attributes.put("error.type", AttributeValue.stringAttributeValue("exception"));
         attributes.put("error.message", AttributeValue.stringAttributeValue(ex.getMessage()));
+        // TODO: add stacktrace as attribute
         // still waiting on PR for arrays
         // attributes.put("error.stack", ex.getStackTrace());
         return attributes;
