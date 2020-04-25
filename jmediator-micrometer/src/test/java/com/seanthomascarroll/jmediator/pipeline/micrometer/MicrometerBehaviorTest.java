@@ -1,17 +1,15 @@
 package com.seanthomascarroll.jmediator.pipeline.micrometer;
 
+import com.seanthomascarroll.jmediator.DefaultRequestHandlerProvider;
 import com.seanthomascarroll.jmediator.Request;
+import com.seanthomascarroll.jmediator.RequestDispatcher;
+import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import com.seanthomascarroll.jmediator.RequestHandler;
-import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
-import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
-import com.seanthomascarroll.jmediator.pipeline.PipelineChainImpl;
+import com.seanthomascarroll.jmediator.RequestHandlerProvider;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
-import io.micrometer.core.instrument.search.RequiredSearch;
-import io.micrometer.core.instrument.search.Search;
 import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,46 +17,42 @@ import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class MicrometerBehaviorTest {
 
     private MeterRegistry registry;
     private MicrometerBehavior behavior;
-    private PipelineChain pipelineChain;
+    private RequestDispatcher dispatcher;
 
     @BeforeEach
     void setUp() {
         registry = new SimpleMeterRegistry();
         behavior = new MicrometerBehavior(registry);
-        pipelineChain = mock(PipelineChain.class);
-    }
 
+        RequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
+        requestHandlerProvider.register(new PingHandler());
+
+        dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));
+    }
 
     @Test
     void shouldTrackCounts() {
-        when(pipelineChain.doBehavior()).thenReturn(null);
-
-        behavior.handle(new Ping(), pipelineChain);
-        behavior.handle(new Ping(), pipelineChain);
+        dispatcher.send(new Ping());
+        dispatcher.send(new Ping());
 
         Counter counter = registry
-            .get("app.request.count")
+            .get("request.count")
             .tag("request.name", Ping.class.getName())
             .counter();
         assertEquals(2, counter.count());
-
     }
 
     @Test
     void shouldTrackTime() {
-        PipelineChain pipelineChain = new PipelineChainImpl(new Ping(), Collections.singletonList(behavior), new PingHandler());
-        pipelineChain.doBehavior();
+        dispatcher.send(new Ping());
 
         Timer timer = registry
-            .get("app.request.time")
+            .get("request.time")
             .tag("request.name", Ping.class.getName())
             .timer();
         assertEquals(500, timer.totalTime(TimeUnit.MILLISECONDS), 10);
