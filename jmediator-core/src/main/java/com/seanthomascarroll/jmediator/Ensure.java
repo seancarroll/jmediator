@@ -13,5 +13,4 @@ public final class Ensure {
         return argument;
     }
 
-
 }

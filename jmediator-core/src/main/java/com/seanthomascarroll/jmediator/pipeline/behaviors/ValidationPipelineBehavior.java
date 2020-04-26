@@ -36,6 +36,13 @@ public class ValidationPipelineBehavior implements PipelineBehavior {
     @Override
     public <T extends Request> Object handle(T request, PipelineChain chain) {
         Validator validator = validatorFactory.getValidator();
+
+        // TODO: check if JSR303 implementation (aka hibernate validator) is on the classpath.
+        // log a warning if not but still continue
+        // might make sense to move this into a validation package
+        // name it HibernateValidatorPipelineBehavior
+        // add JFluentValidationPipelineBehavior as well
+
         Set<ConstraintViolation<Object>> violations = validator.validate(request);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
