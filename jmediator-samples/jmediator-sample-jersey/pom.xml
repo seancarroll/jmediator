@@ -6,7 +6,7 @@
     <parent>
         <artifactId>jmediator-samples</artifactId>
         <groupId>com.seanthomascarroll.jmediator</groupId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>jmediator-sample-jersey</artifactId>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.seanthomascarroll.jmediator</groupId>
             <artifactId>jmediator-jersey</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
 
         <dependency>
