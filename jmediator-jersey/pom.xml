@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>jmediator-parent</artifactId>
         <groupId>com.seanthomascarroll.jmediator</groupId>
-        <version>0.0.3-SNAPSHOT</version>
+        <artifactId>jmediator-parent</artifactId>
+        <version>0.0.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>jmediator-jersey</artifactId>
