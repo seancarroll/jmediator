@@ -50,6 +50,10 @@ public class ComponentScanningRequestHandlerProvider implements RequestHandlerPr
     @Override
     public RequestHandler<Request, Object> getRequestHandler(Request request) {
         String handlerClassName = handlerClassNames.get(request.getClass().getName());
+        if (handlerClassName == null) {
+            throw new NoHandlerForRequestException("request handler bean not registered for class " + request.getClass());
+        }
+
         RequestHandler<Request, Object> handler = beanFactory.getBean(handlerClassName, RequestHandler.class);
         if (handler == null) {
             throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
