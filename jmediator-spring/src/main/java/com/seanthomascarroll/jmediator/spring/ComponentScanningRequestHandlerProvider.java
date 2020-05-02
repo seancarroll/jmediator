@@ -67,6 +67,7 @@ public class ComponentScanningRequestHandlerProvider implements RequestHandlerPr
         handlerClassNames.clear();
         String[] requestHandlersNames = beanFactory.getBeanNamesForType(RequestHandler.class);
         for (String beanName : requestHandlersNames) {
+            LOGGER.debug("registering requesthandler {} with jmediator", beanName);
             try {
                 BeanDefinition requestHandler = beanFactory.getBeanDefinition(beanName);
                 Class<?> handlerClass = Class.forName(requestHandler.getBeanClassName());

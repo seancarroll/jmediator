@@ -14,6 +14,10 @@ import java.util.Map;
 
 // TODO: implement autobind or remove
 // https://github.com/tchen319/hairball-j/blob/4a2f87386e578394fee547970d4502618f218421/src/main/java/com/oath/gemini/merchant/cron/QuartzFeature.java
+
+/**
+ *
+ */
 public class JmediatorFeature implements RequestHandlerProvider, Feature {
 
     private final boolean autobind;
@@ -84,6 +88,10 @@ public class JmediatorFeature implements RequestHandlerProvider, Feature {
     @Override
     public RequestHandler<Request, Object> getRequestHandler(Request request) {
         Class<RequestHandler> handlerClass = handlers.get(request.getClass().getName());
+        if (handlerClass == null) {
+            throw new NoHandlerForRequestException("request handler bean not registered for class " + request.getClass());
+        }
+
         RequestHandler<Request, Object> handler = injectionManager.getInstance(handlerClass);
         if (handler == null) {
             throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
