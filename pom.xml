@@ -23,6 +23,7 @@
         <module>jmediator-micronaut</module>
         <module>jmediator-opentelemetry</module>
         <module>jmediator-quarkus</module>
+        <module>jmediator-springboot</module>
     </modules>
 
     <properties>

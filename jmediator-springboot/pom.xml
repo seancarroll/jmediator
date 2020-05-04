@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.seanthomascarroll.jmediator</groupId>
+        <artifactId>jmediator-parent</artifactId>
+        <version>0.0.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jmediator-springboot</artifactId>
+    <name>jMediator Spring Boot</name>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.seanthomascarroll.jmediator</groupId>
+                <artifactId>jmediator-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.seanthomascarroll.jmediator</groupId>
+            <artifactId>jmediator-spring</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>
