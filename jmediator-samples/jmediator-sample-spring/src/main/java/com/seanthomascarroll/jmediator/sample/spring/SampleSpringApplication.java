@@ -9,25 +9,20 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import javax.inject.Inject;
-
 @SpringBootApplication
 public class SampleSpringApplication {
-
-    @Inject
-    private ConfigurableListableBeanFactory beanFactory;
 
     public static void main(String[] args) {
         SpringApplication.run(SampleSpringApplication.class, args);
     }
 
     @Bean
-    public RequestDispatcher requestDispatcher() {
-        return new RequestDispatcherImpl(requestHandlerProvider());
+    public RequestDispatcher requestDispatcher(RequestHandlerProvider requestHandlerProvider) {
+        return new RequestDispatcherImpl(requestHandlerProvider);
     }
 
     @Bean
-    public RequestHandlerProvider requestHandlerProvider() {
+    public ComponentScanningRequestHandlerProvider requestHandlerProvider(ConfigurableListableBeanFactory beanFactory) {
         return new ComponentScanningRequestHandlerProvider(beanFactory);
     }
 

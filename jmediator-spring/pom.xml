@@ -25,6 +25,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-qual</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.seanthomascarroll.jmediator</groupId>
             <artifactId>jmediator-core</artifactId>
             <version>${project.version}</version>
