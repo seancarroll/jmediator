@@ -14,8 +14,7 @@ import java.util.List;
 public class RequestDispatcherImpl implements RequestDispatcher {
 
     private final RequestHandlerProvider requestHandlerProvider;
-
-    private final List<PipelineBehavior> handlerInterceptors;
+    private final List<PipelineBehavior> pipelineBehaviors;
 
     /**
      * @param requestHandlerProvider
@@ -26,11 +25,11 @@ public class RequestDispatcherImpl implements RequestDispatcher {
 
     /**
      * @param requestHandlerProvider
-     * @param handlerInterceptors
+     * @param pipelineBehaviors
      */
-    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider, List<PipelineBehavior> handlerInterceptors) {
+    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider, List<PipelineBehavior> pipelineBehaviors) {
         this.requestHandlerProvider = Ensure.notNull(requestHandlerProvider);
-        this.handlerInterceptors = Ensure.notNull(handlerInterceptors);
+        this.pipelineBehaviors = Ensure.notNull(pipelineBehaviors);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class RequestDispatcherImpl implements RequestDispatcher {
     private <T extends Request, R> R doSend(T request) {
         RequestHandler<? super T, ?> handler = requestHandlerProvider.getRequestHandler(request);
 
-        PipelineChain chain = new PipelineChainImpl<>(request, handlerInterceptors, handler);
+        PipelineChain chain = new PipelineChainImpl<>(request, pipelineBehaviors, handler);
 
         return (R) chain.doBehavior();
     }
