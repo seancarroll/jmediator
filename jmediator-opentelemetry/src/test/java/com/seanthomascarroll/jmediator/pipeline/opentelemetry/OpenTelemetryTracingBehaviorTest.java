@@ -1,7 +1,6 @@
 package com.seanthomascarroll.jmediator.pipeline.opentelemetry;
 
 import com.seanthomascarroll.jmediator.DefaultServiceFactory;
-import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import com.seanthomascarroll.jmediator.RequestHandler;
@@ -74,37 +73,6 @@ class OpenTelemetryTracingBehaviorTest {
         assertEquals("an error occurred", error.getAttributes().get("error.message").getStringValue());
     }
 
-    private static class Ping implements Request {
-        Ping() { }
-
-        Ping(String message) {
-            this.message = message;
-        }
-
-        String message;
-
-        @Override
-        public String toString() {
-            return "Ping{" +
-                "message='" + message + '\'' +
-                '}';
-        }
-    }
-
-    private static class PingHandler implements RequestHandler<Ping, Pong> {
-
-        @Override
-        public Pong handle(Ping request) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                // ignore
-            }
-
-            return new Pong("hello " + request.message);
-        }
-    }
-
     private static class FaultyPingHandler implements RequestHandler<Ping, Pong> {
 
         @Override
@@ -112,20 +80,4 @@ class OpenTelemetryTracingBehaviorTest {
             throw new RuntimeException("an error occurred");
         }
     }
-
-    private static class Pong {
-        Pong(String message) {
-            this.message = message;
-        }
-
-        String message;
-
-        @Override
-        public String toString() {
-            return "Pong{" +
-                "message='" + message + '\'' +
-                '}';
-        }
-    }
-
 }
