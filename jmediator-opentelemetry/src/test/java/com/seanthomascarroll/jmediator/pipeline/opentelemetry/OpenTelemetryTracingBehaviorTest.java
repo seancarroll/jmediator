@@ -29,7 +29,7 @@ class OpenTelemetryTracingBehaviorTest {
 
     @BeforeEach
     public void setUp() {
-        tracerSdkProvider.addSpanProcessor(SimpleSpansProcessor.newBuilder(exporter).build());
+        tracerSdkProvider.addSpanProcessor(SimpleSpansProcessor.create(exporter));
         behavior = new OpenTelemetryTracingBehavior(tracer);
     }
 

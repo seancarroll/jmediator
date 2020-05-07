@@ -41,7 +41,7 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
         attributes.put("error.type", AttributeValue.stringAttributeValue(ex.getClass().getSimpleName()));
         attributes.put("error.message", AttributeValue.stringAttributeValue(ex.getMessage()));
         // TODO: add stacktrace as attribute
-        // still waiting on PR for arrays
+        // currently not supported by opentelemetry. see https://github.com/open-telemetry/opentelemetry-java/issues/243
         // attributes.put("error.stack", ex.getStackTrace());
         return attributes;
     }
