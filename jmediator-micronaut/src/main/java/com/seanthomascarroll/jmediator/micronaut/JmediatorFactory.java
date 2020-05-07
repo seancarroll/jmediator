@@ -2,23 +2,23 @@ package com.seanthomascarroll.jmediator.micronaut;
 
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
-import com.seanthomascarroll.jmediator.RequestHandlerProvider;
+import com.seanthomascarroll.jmediator.ServiceFactory;
 import io.micronaut.context.annotation.Factory;
 
 import javax.inject.Singleton;
 
 @Factory
-public class RequestDispatcherFactory {
+public class JmediatorFactory {
 
-    private RequestHandlerProvider provider;
+    private ServiceFactory serviceFactory;
 
-    public RequestDispatcherFactory(RequestHandlerProvider provider) {
-        this.provider = provider;
+    public JmediatorFactory(ServiceFactory serviceFactory) {
+        this.serviceFactory = serviceFactory;
     }
 
     @Singleton
     public RequestDispatcher requestDispatcher() {
-        return new RequestDispatcherImpl(provider);
+        return new RequestDispatcherImpl(serviceFactory);
     }
 
 }

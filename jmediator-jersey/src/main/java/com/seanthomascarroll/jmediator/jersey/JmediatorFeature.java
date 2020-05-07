@@ -1,6 +1,7 @@
 package com.seanthomascarroll.jmediator.jersey;
 
 import com.seanthomascarroll.jmediator.*;
+import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import io.github.classgraph.ClassGraph;
 import org.glassfish.jersey.InjectionManagerProvider;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
@@ -18,7 +19,7 @@ import java.util.Map;
 /**
  *
  */
-public class JmediatorFeature implements RequestHandlerProvider, Feature {
+public class JmediatorFeature implements ServiceFactory, Feature {
 
     private final boolean autobind;
     private final String[] packagesToScan;
@@ -66,14 +67,14 @@ public class JmediatorFeature implements RequestHandlerProvider, Feature {
             }
         }
 
-        RequestHandlerProvider provider = this;
+        ServiceFactory serviceFactory = this;
 
         // https://github.com/eclipse-ee4j/jersey/issues/3675
         // This currently doesn't work...org.glassfish.hk2.utilities.binding.AbstractBinder
         context.register(new AbstractBinder() {
             @Override
             protected void configure() {
-                RequestDispatcherImpl dispatcher = new RequestDispatcherImpl(provider);
+                RequestDispatcherImpl dispatcher = new RequestDispatcherImpl(serviceFactory);
                 bind(dispatcher).to(RequestDispatcher.class);
 
                 for (Class clazz : handlers.values()) {
@@ -86,17 +87,22 @@ public class JmediatorFeature implements RequestHandlerProvider, Feature {
     }
 
     @Override
-    public RequestHandler<Request, Object> getRequestHandler(Request request) {
-        Class<RequestHandler> handlerClass = handlers.get(request.getClass().getName());
+    public <T extends Request, R> RequestHandler<T, R> getRequestHandler(Class<? extends Request> requestClass) {
+        Class<RequestHandler> handlerClass = handlers.get(requestClass.getName());
         if (handlerClass == null) {
-            throw new NoHandlerForRequestException("request handler bean not registered for class " + request.getClass());
+            throw new NoHandlerForRequestException("request handler bean not registered for class " + requestClass);
         }
 
-        RequestHandler<Request, Object> handler = injectionManager.getInstance(handlerClass);
+        RequestHandler<T, R> handler = injectionManager.getInstance(handlerClass);
         if (handler == null) {
-            throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
+            throw new NoHandlerForRequestException(requestClass);
         }
         return handler;
+    }
+
+    @Override
+    public List<PipelineBehavior> getPipelineBehaviors() {
+        return injectionManager.getAllInstances(PipelineBehavior.class);
     }
 
     private static List<String> getRequestHandlerClassNames(String... packages) {

@@ -4,15 +4,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class DefaultRequestHandlerProviderTest {
+class DefaultServiceFactoryTest {
 
     @Test
     void shouldRequestRequestHandler() {
-        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
+        DefaultServiceFactory requestHandlerProvider = new DefaultServiceFactory();
 
         requestHandlerProvider.register(new SomeRequestHandler());
 
-        assertNotNull(requestHandlerProvider.getRequestHandler(new SomeRequest()));
+        assertNotNull(requestHandlerProvider.getRequestHandler(SomeRequest.class));
     }
 
 

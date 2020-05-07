@@ -1,18 +1,21 @@
 package com.seanthomascarroll.jmediator.micronaut;
 
 import com.seanthomascarroll.jmediator.*;
+import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.event.StartupEvent;
 import io.micronaut.inject.BeanDefinition;
 
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Singleton
-public class ApplicationContextRequestHandlerProvider implements RequestHandlerProvider, ApplicationEventListener<StartupEvent> {
+public class ApplicationContextRequestHandlerProvider implements ServiceFactory, ApplicationEventListener<StartupEvent> {
 
     private ApplicationContext applicationContext;
     private Map<String, Class<RequestHandler>> handlerClassNameToTypeMap = new HashMap<>();
@@ -21,11 +24,15 @@ public class ApplicationContextRequestHandlerProvider implements RequestHandlerP
         this.applicationContext = applicationContext;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public RequestHandler<Request, Object> getRequestHandler(Request request) {
-        Class<RequestHandler> handlerClass = handlerClassNameToTypeMap.get(request.getClass().getName());
+    public <T extends Request, R> RequestHandler<T, R> getRequestHandler(Class<? extends Request> requestClass) {
+        Class<RequestHandler> handlerClass = handlerClassNameToTypeMap.get(requestClass.getName());
         return applicationContext.getBean(handlerClass);
+    }
+
+    @Override
+    public List<PipelineBehavior> getPipelineBehaviors() {
+        return new ArrayList<>(applicationContext.getBeansOfType(PipelineBehavior.class));
     }
 
     @Override

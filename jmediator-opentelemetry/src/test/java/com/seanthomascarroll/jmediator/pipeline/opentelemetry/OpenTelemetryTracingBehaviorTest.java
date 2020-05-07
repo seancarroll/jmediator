@@ -1,6 +1,6 @@
 package com.seanthomascarroll.jmediator.pipeline.opentelemetry;
 
-import com.seanthomascarroll.jmediator.DefaultRequestHandlerProvider;
+import com.seanthomascarroll.jmediator.DefaultServiceFactory;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
@@ -14,7 +14,6 @@ import io.opentelemetry.trace.Tracer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,9 +35,10 @@ class OpenTelemetryTracingBehaviorTest {
 
     @Test
     void shouldAddSpan() {
-        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
-        requestHandlerProvider.register(new PingHandler());
-        RequestDispatcher dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));
+        DefaultServiceFactory serviceFactory = new DefaultServiceFactory();
+        serviceFactory.register(new PingHandler());
+        serviceFactory.register(behavior);
+        RequestDispatcher dispatcher = new RequestDispatcherImpl(serviceFactory);
 
         dispatcher.send(new Ping());
 
@@ -50,9 +50,10 @@ class OpenTelemetryTracingBehaviorTest {
 
     @Test
     void shouldAddErrorWhenExceptionOccurs() {
-        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
-        requestHandlerProvider.register(new FaultyPingHandler());
-        RequestDispatcher dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));
+        DefaultServiceFactory serviceFactory = new DefaultServiceFactory();
+        serviceFactory.register(new FaultyPingHandler());
+        serviceFactory.register(behavior);
+        RequestDispatcher dispatcher = new RequestDispatcherImpl(serviceFactory);
 
         assertThrows(RuntimeException.class, () -> dispatcher.send(new Ping()));
 

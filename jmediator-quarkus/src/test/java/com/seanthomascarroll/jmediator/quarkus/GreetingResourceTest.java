@@ -3,7 +3,7 @@ package com.seanthomascarroll.jmediator.quarkus;
 import com.seanthomascarroll.jmediator.NoHandlerForRequestException;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestHandler;
-import com.seanthomascarroll.jmediator.RequestHandlerProvider;
+import com.seanthomascarroll.jmediator.ServiceFactory;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
@@ -16,17 +16,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class GreetingResourceTest {
 
     @Inject
-    RequestHandlerProvider requestHandlerProvider;
+    ServiceFactory serviceFactory;
 
     @Test
     void shouldObtainRequestHandlerForRequestThatHasHandler() {
-        RequestHandler<Request, Object> handler = requestHandlerProvider.getRequestHandler(new PingRequest("Sean"));
+        RequestHandler<Request, Object> handler = serviceFactory.getRequestHandler(PingRequest.class);
 
         assertNotNull(handler);
     }
 
     @Test
     void shouldThrowNoHandlerForRequestExceptionForTypeThatHasNoHandler() {
-        assertThrows(NoHandlerForRequestException.class, () -> requestHandlerProvider.getRequestHandler(new NoHandler()));
+        assertThrows(NoHandlerForRequestException.class, () -> serviceFactory.getRequestHandler(NoHandler.class));
     }
 }

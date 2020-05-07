@@ -1,11 +1,10 @@
 package com.seanthomascarroll.jmediator.pipeline.micrometer;
 
-import com.seanthomascarroll.jmediator.DefaultRequestHandlerProvider;
+import com.seanthomascarroll.jmediator.DefaultServiceFactory;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import com.seanthomascarroll.jmediator.RequestHandler;
-import com.seanthomascarroll.jmediator.RequestHandlerProvider;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
@@ -13,7 +12,6 @@ import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,10 +27,11 @@ class MicrometerBehaviorTest {
         registry = new SimpleMeterRegistry();
         behavior = new MicrometerBehavior(registry);
 
-        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
-        requestHandlerProvider.register(new PingHandler());
+        DefaultServiceFactory serviceFactory = new DefaultServiceFactory();
+        serviceFactory.register(new PingHandler());
+        serviceFactory.register(behavior);
 
-        dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));
+        dispatcher = new RequestDispatcherImpl(serviceFactory);
     }
 
     @Test

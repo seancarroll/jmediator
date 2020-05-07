@@ -1,6 +1,6 @@
 package com.seanthomascarroll.jmediator.pipeline.prometheus;
 
-import com.seanthomascarroll.jmediator.DefaultRequestHandlerProvider;
+import com.seanthomascarroll.jmediator.DefaultServiceFactory;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
@@ -8,8 +8,6 @@ import com.seanthomascarroll.jmediator.RequestHandler;
 import io.prometheus.client.CollectorRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,12 +20,12 @@ class PrometheusMetricsBehaviorTest {
     @BeforeEach
     public void setUp() {
         registry = new CollectorRegistry();
-        behavior = new PrometheusMetricsBehavior(registry);
 
-        DefaultRequestHandlerProvider requestHandlerProvider = new DefaultRequestHandlerProvider();
-        requestHandlerProvider.register(new PingHandler());
+        DefaultServiceFactory serviceFactory = new DefaultServiceFactory();
+        serviceFactory.register(new PingHandler());
+        serviceFactory.register(new PrometheusMetricsBehavior(registry));
 
-        dispatcher = new RequestDispatcherImpl(requestHandlerProvider, Collections.singletonList(behavior));
+        dispatcher = new RequestDispatcherImpl(serviceFactory);
     }
 
     @Test
