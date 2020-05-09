@@ -51,7 +51,7 @@ class PrometheusMetricsBehaviorTest {
             new String[]{"request_name"},
             new String[]{Ping.class.getName()});
 
-        assertEquals(.5, time, .1);
+        assertEquals(.5, time, .2);
     }
 
     private static class Ping implements Request {

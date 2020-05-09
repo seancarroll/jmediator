@@ -10,19 +10,6 @@
     <artifactId>jmediator-core</artifactId>
     <name>jMediator Core</name>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.seanthomascarroll.jmediator</groupId>
-                <artifactId>jmediator-bom</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-
     <dependencies>
 
         <dependency>
@@ -53,9 +40,9 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
+            <scope>test</scope>
             <type>test-jar</type>
         </dependency>
-
     </dependencies>
 
 </project>

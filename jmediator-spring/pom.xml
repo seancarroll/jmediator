@@ -11,18 +11,6 @@
     <artifactId>jmediator-spring</artifactId>
     <name>jMediator Spring</name>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.seanthomascarroll.jmediator</groupId>
-                <artifactId>jmediator-bom</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.checkerframework</groupId>
@@ -32,7 +20,6 @@
         <dependency>
             <groupId>com.seanthomascarroll.jmediator</groupId>
             <artifactId>jmediator-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <dependency>

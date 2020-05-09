@@ -13,27 +13,27 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-class LoggingPipelineBehaviorTest {
+public class LoggingPipelineBehaviorTest {
 
     private LoggingPipelineBehavior behavior;
     private PipelineChain pipelineChain;
     private ListAppender appender;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         behavior = new LoggingPipelineBehavior();
         pipelineChain = mock(PipelineChain.class);
     }
 
     @AfterEach
-    void cleanUp() {
+    public void cleanUp() {
         if (appender != null) {
             appender.clear();
         }
     }
 
     @Test
-    void canLogNullReturnValue() {
+    public void canLogNullReturnValue() {
         when(pipelineChain.doBehavior()).thenReturn(null);
 
         behavior.handle(new Ping(), pipelineChain);
