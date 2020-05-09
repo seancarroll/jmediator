@@ -45,19 +45,6 @@ public class ClasspathScanningServiceFactory implements ServiceFactory, BeanFact
         }
     }
 
-//    public RequestHandler<Request, Object> getRequestHandler(Class<? extends Request> requestClass) {
-//        String handlerClassName = handlerClassNames.get(request.getClass().getName());
-//        if (handlerClassName == null) {
-//            throw new NoHandlerForRequestException("request handler bean not registered for class " + request.getClass());
-//        }
-//
-//        try {
-//            return beanFactory.getBean(handlerClassName, RequestHandler.class);
-//        } catch (BeansException ex) {
-//            throw new NoHandlerForRequestException("request handler not found for class " + request.getClass());
-//        }
-//    }
-
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
         String[] requestHandlersNames = configurableListableBeanFactory.getBeanNamesForType(RequestHandler.class);
@@ -89,4 +76,8 @@ public class ClasspathScanningServiceFactory implements ServiceFactory, BeanFact
         }
     }
 
+    // TODO: add @VisibleForTest annotation
+    Map<String, String> getHandlerClassNames() {
+        return handlerClassNames;
+    }
 }
