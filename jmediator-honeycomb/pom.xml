@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.seanthomascarroll.jmediator</groupId>
+        <artifactId>jmediator-parent</artifactId>
+        <version>0.0.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jmediator-honeycomb</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.seanthomascarroll.jmediator</groupId>
+            <artifactId>jmediator-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.honeycomb.beeline</groupId>
+            <artifactId>beeline-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+    </build>
+
+</project>
