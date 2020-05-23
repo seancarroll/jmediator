@@ -9,10 +9,8 @@
         <version>0.0.4-SNAPSHOT</version>
     </parent>
 
-<!--    <groupId>com.seanthomascarroll.jmediator</groupId>-->
     <artifactId>jmediator-samples</artifactId>
     <name>jmediator Samples</name>
-<!--    <version>0.0.4-SNAPSHOT</version>-->
     <packaging>pom</packaging>
 
     <modules>

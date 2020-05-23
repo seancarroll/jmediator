@@ -11,8 +11,82 @@
 
     <artifactId>jmediator-sample-quarkus</artifactId>
 
+    <properties>
+        <quarkus.version>1.4.2.Final</quarkus.version>
+        <jmediator.version>0.0.4-SNAPSHOT</jmediator.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.seanthomascarroll.jmediator</groupId>
+            <artifactId>jmediator-quarkus</artifactId>
+            <version>${jmediator.version}</version>
+        </dependency>
+
+        <!--
+            You shouldnt need this but including so that this sample project builds after
+            jmediator-quarkus (runtime) and deployment. Otherwise we get stale bytecode generation
+         -->
+        <dependency>
+            <groupId>com.seanthomascarroll.jmediator</groupId>
+            <artifactId>jmediator-quarkus-deployment</artifactId>
+            <version>${jmediator.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>httpclient</artifactId>
+                    <groupId>org.apache.httpcomponents</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>

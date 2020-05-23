@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.seanthomascarroll.jmediator</groupId>
-        <artifactId>jmediator-quarkus</artifactId>
+        <artifactId>jmediator-quarkus-parent</artifactId>
         <version>0.0.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>jmediator-quarkus-runtime</artifactId>
+    <artifactId>jmediator-quarkus</artifactId>
 
     <dependencies>
         <dependency>
@@ -29,6 +29,15 @@
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-bootstrap-maven-plugin</artifactId>
+                <version>${quarkus.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>extension-descriptor</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
