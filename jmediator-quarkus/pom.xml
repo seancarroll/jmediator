@@ -17,10 +17,6 @@
         <module>jmediator-quarkus-deployment</module>
     </modules>
 
-    <properties>
-        <maven.deploy.skip>true</maven.deploy.skip>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.seanthomascarroll.jmediator</groupId>
