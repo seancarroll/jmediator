@@ -52,10 +52,7 @@ public class QuarkusServiceFactory implements ServiceFactory {
     public List<PipelineBehavior> getPipelineBehaviors() {
         // TODO: this cant possibly be right
         try {
-            LOGGER.infof("has behaviors [%s]", behaviors);
             List<PipelineBehavior> pipelineBehaviors = new ArrayList<>();
-            BeanManager bm = Arc.container().beanManager();
-
             for (String clazz : behaviors) {
                 Class<PipelineBehavior> behaviorClass = (Class<PipelineBehavior>) Class.forName(clazz);
                 InstanceHandle<PipelineBehavior> instance = Arc.container().instance(behaviorClass);

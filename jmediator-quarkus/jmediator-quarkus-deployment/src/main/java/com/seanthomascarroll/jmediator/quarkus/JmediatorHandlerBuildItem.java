@@ -9,10 +9,10 @@ import java.util.Map;
 
 public final class JmediatorHandlerBuildItem extends SimpleBuildItem { // extends MultiBuildItem {
 
-    private Map<String, String> handlerClassNames = new HashMap<>();
+    private Map<String, Class<RequestHandler>> handlerClassNames;
     // private final Class<RequestHandler> requestHandlerClass;
 
-    public JmediatorHandlerBuildItem(Map<String, String> handlerClassNames) {
+    public JmediatorHandlerBuildItem(Map<String, Class<RequestHandler>> handlerClassNames) {
         this.handlerClassNames = handlerClassNames;
     }
 
@@ -20,7 +20,7 @@ public final class JmediatorHandlerBuildItem extends SimpleBuildItem { // extend
 //        return requestHandlerClass;
 //    }
 
-    public Map<String, String> getHandlerClassNames() {
+    public Map<String, Class<RequestHandler>> getHandlerClassNames() {
         return handlerClassNames;
     }
 }

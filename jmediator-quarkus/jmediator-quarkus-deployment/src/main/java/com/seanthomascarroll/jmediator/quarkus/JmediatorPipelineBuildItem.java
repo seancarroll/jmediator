@@ -1,10 +1,11 @@
 package com.seanthomascarroll.jmediator.quarkus;
 
 import io.quarkus.builder.item.MultiBuildItem;
+import io.quarkus.builder.item.SimpleBuildItem;
 
 import java.util.List;
 
-public final class JmediatorPipelineBuildItem extends MultiBuildItem {
+public final class JmediatorPipelineBuildItem extends SimpleBuildItem {
 
     // private final Class<PipelineBehavior> behaviorClass;
     private final List<String> behaviorClassNames;
