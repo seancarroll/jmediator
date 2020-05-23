@@ -21,9 +21,9 @@ public class QuarkusServiceFactory implements ServiceFactory {
     private static final Logger LOGGER = Logger.getLogger(QuarkusServiceFactory.class);
 
     private final Map<String, Class<RequestHandler>> handlerClassNames;
-    private final List<String> behaviors;
+    private final List<Class<PipelineBehavior>> behaviors;
 
-    public QuarkusServiceFactory(Map<String, Class<RequestHandler>> handlerClassNames, List<String> behaviors) {
+    public QuarkusServiceFactory(Map<String, Class<RequestHandler>> handlerClassNames, List<Class<PipelineBehavior>> behaviors) {
         this.handlerClassNames = handlerClassNames;
         this.behaviors = behaviors;
     }
@@ -48,9 +48,8 @@ public class QuarkusServiceFactory implements ServiceFactory {
     public List<PipelineBehavior> getPipelineBehaviors() {
         try {
             List<PipelineBehavior> pipelineBehaviors = new ArrayList<>();
-            for (String clazz : behaviors) {
-                Class<PipelineBehavior> behaviorClass = (Class<PipelineBehavior>) Class.forName(clazz);
-                InstanceHandle<PipelineBehavior> instance = Arc.container().instance(behaviorClass);
+            for (Class<PipelineBehavior> clazz : behaviors) {
+                InstanceHandle<PipelineBehavior> instance = Arc.container().instance(clazz);
                 PipelineBehavior behavior = instance.get();
                 if (behavior != null) {
                     pipelineBehaviors.add(behavior);

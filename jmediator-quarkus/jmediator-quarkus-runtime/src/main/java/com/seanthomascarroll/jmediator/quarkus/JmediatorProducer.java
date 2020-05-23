@@ -4,6 +4,7 @@ import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import com.seanthomascarroll.jmediator.RequestHandler;
 import com.seanthomascarroll.jmediator.ServiceFactory;
+import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
@@ -15,8 +16,6 @@ import java.util.Map;
 @ApplicationScoped
 public class JmediatorProducer {
 
-    private volatile Map<String, String> handlerClassNames;
-    private volatile List<String> behaviors;
     private volatile QuarkusServiceFactory serviceFactory;
 
     @Produces
@@ -33,15 +32,7 @@ public class JmediatorProducer {
         return new RequestDispatcherImpl(serviceFactory);
     }
 
-    public void setHandlerClassNames(Map<String, String> handlerClassNames) {
-        this.handlerClassNames = handlerClassNames;
-    }
-
-    public void setBehaviors(List<String> behaviors) {
-        this.behaviors = behaviors;
-    }
-
-    public void init(Map<String, Class<RequestHandler>> handlerClassNames, List<String> behaviorClassNames) {
+    public void init(Map<String, Class<RequestHandler>> handlerClassNames, List<Class<PipelineBehavior>> behaviorClassNames) {
         serviceFactory = new QuarkusServiceFactory(handlerClassNames, behaviorClassNames);
     }
 }

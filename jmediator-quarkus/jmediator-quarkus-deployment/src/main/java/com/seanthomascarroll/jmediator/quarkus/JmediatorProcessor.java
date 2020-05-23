@@ -71,12 +71,18 @@ public class JmediatorProcessor {
 
         handlerProducer.produce(new JmediatorHandlerBuildItem(handlerClassNames));
 
-        List<String> behaviorClassNames = new ArrayList<>();
+        List<Class<PipelineBehavior>> behaviorClassNames = new ArrayList<>();
         Collection<ClassInfo> pipelineBehaviors = indexView.getAllKnownImplementors(PIPELINE_BEHAVIOR_DOT_NAME);
         for (ClassInfo behavior : pipelineBehaviors) {
-            String beanClass = behavior.name().toString();
-            behaviorClassNames.add(beanClass);
-            additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(beanClass));
+            try {
+                Class<PipelineBehavior> behaviorClass = (Class<PipelineBehavior>) Class.forName(behavior.name().toString());
+                behaviorClassNames.add(behaviorClass);
+                additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(behaviorClass));
+            } catch (ClassNotFoundException e) {
+                LOGGER.warn("Failed to load pipeline behavior bean class", e);
+            } catch (Exception ex) {
+                LOGGER.errorf("failed to get requestClass for %s", behavior.name().toString());
+            }
         }
         behaviorProducer.produce(new JmediatorPipelineBuildItem(behaviorClassNames));
     }
