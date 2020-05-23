@@ -10,13 +10,9 @@ import io.quarkus.arc.Arc;
 import io.quarkus.arc.InstanceHandle;
 import org.jboss.logging.Logger;
 
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.BeanManager;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -50,7 +46,6 @@ public class QuarkusServiceFactory implements ServiceFactory {
 
     @Override
     public List<PipelineBehavior> getPipelineBehaviors() {
-        // TODO: this cant possibly be right
         try {
             List<PipelineBehavior> pipelineBehaviors = new ArrayList<>();
             for (String clazz : behaviors) {
@@ -61,15 +56,6 @@ public class QuarkusServiceFactory implements ServiceFactory {
                     pipelineBehaviors.add(behavior);
                 }
             }
-
-
-//            for (Bean<?> b : bm.getBeans(PipelineBehavior.class)) {
-//                InstanceHandle<PipelineBehavior> instance = Arc.container().instance((Type) b.getClass());
-//                PipelineBehavior behavior = instance.get();
-//                if (behavior != null) {
-//                    pipelineBehaviors.add(behavior);
-//                }
-//            }
             return pipelineBehaviors;
         } catch (Exception ex) {
             throw new ServiceFactoryException("Failed to create PipelineBehavior bean(s)", ex);

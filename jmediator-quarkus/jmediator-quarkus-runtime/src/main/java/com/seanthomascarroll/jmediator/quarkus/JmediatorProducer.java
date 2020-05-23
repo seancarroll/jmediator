@@ -23,7 +23,6 @@ public class JmediatorProducer {
     @Dependent
     @Default
     public ServiceFactory producesServiceFactory() {
-        // return new QuarkusServiceFactory(handlerClassNames, behaviors);
         return serviceFactory;
     }
 
