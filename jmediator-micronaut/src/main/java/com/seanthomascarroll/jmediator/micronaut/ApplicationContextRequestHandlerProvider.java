@@ -1,11 +1,17 @@
 package com.seanthomascarroll.jmediator.micronaut;
 
-import com.seanthomascarroll.jmediator.*;
+import com.seanthomascarroll.jmediator.NoHandlerForRequestException;
+import com.seanthomascarroll.jmediator.ReflectionUtils;
+import com.seanthomascarroll.jmediator.Request;
+import com.seanthomascarroll.jmediator.RequestHandler;
+import com.seanthomascarroll.jmediator.ServiceFactory;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.event.StartupEvent;
 import io.micronaut.inject.BeanDefinition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
 import java.util.ArrayList;
@@ -17,6 +23,8 @@ import java.util.Map;
 @Singleton
 public class ApplicationContextRequestHandlerProvider implements ServiceFactory, ApplicationEventListener<StartupEvent> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextRequestHandlerProvider.class);
+
     private ApplicationContext applicationContext;
     private Map<String, Class<RequestHandler>> handlerClassNameToTypeMap = new HashMap<>();
 
@@ -27,6 +35,9 @@ public class ApplicationContextRequestHandlerProvider implements ServiceFactory,
     @Override
     public <T extends Request, R> RequestHandler<T, R> getRequestHandler(Class<? extends Request> requestClass) {
         Class<RequestHandler> handlerClass = handlerClassNameToTypeMap.get(requestClass.getName());
+        if (handlerClass == null) {
+            throw new NoHandlerForRequestException(requestClass.getName());
+        }
         return applicationContext.getBean(handlerClass);
     }
 
@@ -45,7 +56,10 @@ public class ApplicationContextRequestHandlerProvider implements ServiceFactory,
                 Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
                 // we only want to store the bean type as the actual handler should be managed by Micronaut and could have
                 // custom lifecycle or scope depending on how its registered
-                handlerClassNameToTypeMap.putIfAbsent(requestClass.getName(), beanDefinition.getBeanType());
+                Class<?> previous = handlerClassNameToTypeMap.putIfAbsent(requestClass.getName(), beanDefinition.getBeanType());
+                if (previous != null) {
+                    LOGGER.warn("{} already associated with {}", requestClass.getName(), beanDefinition.getName());
+                }
             } catch (ClassNotFoundException e) {
                 throw new NoHandlerForRequestException("request handler not found for class " + beanDefinition.getName(), e);
             }
