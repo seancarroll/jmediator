@@ -21,14 +21,11 @@ public class BeelineTraceBehavior implements PipelineBehavior {
 
     @Override
     public <T extends Request> Object handle(T request, PipelineChain chain) {
-
-        // beeline.getActiveSpan().addField("new_owner", owner);
-        try (Span childSpan = beeline.startChildSpan(request.getClass().getSimpleName())) {
-
+        // beeline.getActiveSpan().addField("request", request.getClass().getName());
+        try (Span childSpan = beeline.startChildSpan(request.getClass().getName())) {
+            // childSpan.addField("request", request.getClass().getName());
+            return chain.doBehavior();
         }
-
-        return chain.doBehavior();
     }
-
 
 }
