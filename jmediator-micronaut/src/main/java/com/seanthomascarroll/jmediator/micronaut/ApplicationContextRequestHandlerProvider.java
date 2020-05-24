@@ -25,8 +25,8 @@ public class ApplicationContextRequestHandlerProvider implements ServiceFactory,
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextRequestHandlerProvider.class);
 
-    private ApplicationContext applicationContext;
-    private Map<String, Class<RequestHandler>> handlerClassNameToTypeMap = new HashMap<>();
+    private final ApplicationContext applicationContext;
+    private final Map<String, Class<RequestHandler>> handlerClassNameToTypeMap = new HashMap<>();
 
     public ApplicationContextRequestHandlerProvider(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
