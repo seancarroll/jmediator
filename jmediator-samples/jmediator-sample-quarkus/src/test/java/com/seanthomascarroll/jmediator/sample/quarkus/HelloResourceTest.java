@@ -13,15 +13,6 @@ import static org.hamcrest.CoreMatchers.is;
 public class HelloResourceTest {
 
     @Test
-    void testGetHelloEndpoint() {
-        given()
-            .when().get("/hello")
-            .then()
-            .statusCode(200)
-            .body(is("Hello"));
-    }
-
-    @Test
     void testHelloEndpoint() {
         Map<String, Object> jsonAsMap = new HashMap<>();
         jsonAsMap.put("name", "Sean");

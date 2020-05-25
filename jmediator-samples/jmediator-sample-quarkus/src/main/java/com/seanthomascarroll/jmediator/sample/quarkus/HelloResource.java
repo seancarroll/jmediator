@@ -20,12 +20,6 @@ public class HelloResource {
         this.dispatcher = dispatcher;
     }
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getHello() {
-        return "Hello";
-    }
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)

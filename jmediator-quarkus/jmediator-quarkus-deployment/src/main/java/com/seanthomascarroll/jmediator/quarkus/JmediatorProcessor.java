@@ -4,6 +4,7 @@ import com.seanthomascarroll.jmediator.RequestHandler;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.BeanContainerBuildItem;
+import io.quarkus.arc.processor.DotNames;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.Record;
@@ -12,6 +13,7 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import org.jboss.jandex.ClassInfo;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.IndexView;
+import org.jboss.jandex.MethodInfo;
 import org.jboss.jandex.Type;
 import org.jboss.logging.Logger;
 
@@ -41,16 +43,23 @@ public class JmediatorProcessor {
     }
 
     @BuildStep
-    void scan(CombinedIndexBuildItem beanArchiveIndex,
+    void scan(CombinedIndexBuildItem combinedIndex,
               BuildProducer<AdditionalBeanBuildItem> additionalBeans,
               BuildProducer<JmediatorHandlerBuildItem> handlerProducer,
               BuildProducer<JmediatorPipelineBuildItem> behaviorProducer) {
 
         additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(JmediatorProducer.class));
 
+        IndexView index = combinedIndex.getIndex();
+        registerRequestHandlers(index, additionalBeans, handlerProducer);
+        registerPipelineBehaviors(index, additionalBeans, behaviorProducer);
+    }
+
+    void registerRequestHandlers(IndexView index,
+                                 BuildProducer<AdditionalBeanBuildItem> additionalBeans,
+                                 BuildProducer<JmediatorHandlerBuildItem> handlerProducer) {
         Map<String, Class<RequestHandler>> handlerClassNames = new HashMap<>();
-        IndexView indexView = beanArchiveIndex.getIndex();
-        Collection<ClassInfo> handlers = indexView.getAllKnownImplementors(DotName.createSimple(RequestHandler.class.getName()));
+        Collection<ClassInfo> handlers = index.getAllKnownImplementors(REQUEST_HANDLER_DOT_NAME);
         for (ClassInfo handler : handlers) {
             try {
                 @SuppressWarnings("unchecked")
@@ -70,9 +79,13 @@ public class JmediatorProcessor {
         }
 
         handlerProducer.produce(new JmediatorHandlerBuildItem(handlerClassNames));
+    }
 
+    void registerPipelineBehaviors(IndexView index,
+                                   BuildProducer<AdditionalBeanBuildItem> additionalBeans,
+                                   BuildProducer<JmediatorPipelineBuildItem> behaviorProducer) {
         List<Class<PipelineBehavior>> behaviorClassNames = new ArrayList<>();
-        Collection<ClassInfo> pipelineBehaviors = indexView.getAllKnownImplementors(PIPELINE_BEHAVIOR_DOT_NAME);
+        Collection<ClassInfo> pipelineBehaviors = index.getAllKnownImplementors(PIPELINE_BEHAVIOR_DOT_NAME);
         for (ClassInfo behavior : pipelineBehaviors) {
             try {
                 Class<PipelineBehavior> behaviorClass = (Class<PipelineBehavior>) Class.forName(behavior.name().toString());
@@ -84,6 +97,26 @@ public class JmediatorProcessor {
                 LOGGER.errorf("failed to get requestClass for %s", behavior.name().toString());
             }
         }
+
+        // Pipeline behaviors might be defined within a factory class and exposed via a CDI producer method declaration
+        // I really dont care for this code because I assume there must be a better way to do this.
+        for (ClassInfo beanClass : index.getKnownClasses()) {
+            for (MethodInfo method : beanClass.methods()) {
+                if (method.hasAnnotation(DotNames.PRODUCES)) {
+                    Type returnType = method.returnType();
+                    try {
+                        Class<?> clazz = Class.forName(returnType.toString());
+                        if (PipelineBehavior.class.isAssignableFrom(clazz)) {
+                            behaviorClassNames.add((Class<PipelineBehavior>) clazz);
+                            additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(clazz));
+                        }
+                    } catch (ClassNotFoundException ex) {
+                        LOGGER.warnf("failed to add pipeline behavior %s because we could not find class", returnType, ex);
+                    }
+                }
+            }
+        }
+
         behaviorProducer.produce(new JmediatorPipelineBuildItem(behaviorClassNames));
     }
 
@@ -95,6 +128,7 @@ public class JmediatorProcessor {
         }
         return null;
     }
+
 
     @BuildStep
     @Record(RUNTIME_INIT)
