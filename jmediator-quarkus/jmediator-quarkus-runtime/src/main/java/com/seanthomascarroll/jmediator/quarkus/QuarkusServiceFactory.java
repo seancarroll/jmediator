@@ -46,6 +46,11 @@ public class QuarkusServiceFactory implements ServiceFactory {
 
         // TODO: Will this cause a memory leak if we dont close?
         InstanceHandle<? extends RequestHandler> instance = container.instance(handlerClassName);
+
+//        if (instance.isAvailable()) {
+//
+//        }
+
         RequestHandler handler = instance.get();
         if (handler == null) {
             throw new NoHandlerForRequestException(requestClass);
