@@ -5,8 +5,6 @@ import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
 import io.honeycomb.beeline.tracing.Beeline;
 import io.honeycomb.beeline.tracing.Span;
-import io.honeycomb.libhoney.HoneyClient;
-import io.honeycomb.libhoney.LibHoney;
 
 /**
  *

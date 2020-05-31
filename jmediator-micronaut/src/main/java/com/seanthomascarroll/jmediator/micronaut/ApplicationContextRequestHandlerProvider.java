@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("rawtypes")
 @Singleton
 public class ApplicationContextRequestHandlerProvider implements ServiceFactory, ApplicationEventListener<StartupEvent> {
 
@@ -32,6 +33,7 @@ public class ApplicationContextRequestHandlerProvider implements ServiceFactory,
         this.applicationContext = applicationContext;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T extends Request, R> RequestHandler<T, R> getRequestHandler(Class<? extends Request> requestClass) {
         Class<RequestHandler> handlerClass = handlerClassNameToTypeMap.get(requestClass.getName());
