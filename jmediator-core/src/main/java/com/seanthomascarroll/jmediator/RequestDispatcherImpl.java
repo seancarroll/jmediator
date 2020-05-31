@@ -4,8 +4,6 @@ import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChainImpl;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,29 +12,11 @@ import java.util.List;
  */
 public class RequestDispatcherImpl implements RequestDispatcher {
 
-//    private final RequestHandlerProvider requestHandlerProvider;
-//    private final List<PipelineBehavior> pipelineBehaviors;
     private final ServiceFactory serviceFactory;
 
     public RequestDispatcherImpl(ServiceFactory serviceFactory) {
         this.serviceFactory = serviceFactory;
     }
-
-//    /**
-//     * @param requestHandlerProvider
-//     */
-//    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider) {
-//        this(requestHandlerProvider, Collections.emptyList());
-//    }
-//
-//    /**
-//     * @param requestHandlerProvider
-//     * @param pipelineBehaviors
-//     */
-//    public RequestDispatcherImpl(RequestHandlerProvider requestHandlerProvider, List<PipelineBehavior> pipelineBehaviors) {
-//        this.requestHandlerProvider = Ensure.notNull(requestHandlerProvider);
-//        this.pipelineBehaviors = Ensure.notNull(pipelineBehaviors);
-//    }
 
     @Override
     public <R> R send(Request request) {
