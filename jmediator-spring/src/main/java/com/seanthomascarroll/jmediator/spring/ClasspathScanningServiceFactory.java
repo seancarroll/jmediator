@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class ClasspathScanningServiceFactory implements ServiceFactory, BeanFactoryPostProcessor {
+public class ClasspathScanningServiceFactory implements ServiceFactory, BeanFactoryPostProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathScanningServiceFactory.class);
 

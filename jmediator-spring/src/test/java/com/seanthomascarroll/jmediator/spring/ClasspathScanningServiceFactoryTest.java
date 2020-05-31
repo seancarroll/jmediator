@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
-public class ClasspathScanningServiceFactoryTest {
+class ClasspathScanningServiceFactoryTest {
 
     @Inject
     private ConfigurableListableBeanFactory beanFactory;
