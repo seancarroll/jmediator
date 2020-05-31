@@ -7,13 +7,13 @@ import java.util.List;
 
 public final class JmediatorPipelineBuildItem extends SimpleBuildItem {
 
-    private final List<Class<PipelineBehavior>> behaviorClassNames;
+    private final List<Class<? extends PipelineBehavior>> behaviorClassNames;
 
-    public JmediatorPipelineBuildItem(List<Class<PipelineBehavior>> behaviorClassNames) {
+    public JmediatorPipelineBuildItem(List<Class<? extends PipelineBehavior>> behaviorClassNames) {
         this.behaviorClassNames = behaviorClassNames;
     }
 
-    public List<Class<PipelineBehavior>> getBehaviorClassNames() {
+    public List<Class<? extends PipelineBehavior>> getBehaviorClassNames() {
         return behaviorClassNames;
     }
 }

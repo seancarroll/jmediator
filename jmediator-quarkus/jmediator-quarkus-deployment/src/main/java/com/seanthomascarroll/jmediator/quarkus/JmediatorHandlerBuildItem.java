@@ -7,13 +7,13 @@ import java.util.Map;
 
 public final class JmediatorHandlerBuildItem extends SimpleBuildItem {
 
-    private final Map<String, Class<RequestHandler>> handlerClassNames;
+    private final Map<String, Class<? extends RequestHandler>> handlerClassNames;
 
-    public JmediatorHandlerBuildItem(Map<String, Class<RequestHandler>> handlerClassNames) {
+    public JmediatorHandlerBuildItem(Map<String, Class<? extends RequestHandler>> handlerClassNames) {
         this.handlerClassNames = handlerClassNames;
     }
 
-    public Map<String, Class<RequestHandler>> getHandlerClassNames() {
+    public Map<String, Class<? extends RequestHandler>> getHandlerClassNames() {
         return handlerClassNames;
     }
 }

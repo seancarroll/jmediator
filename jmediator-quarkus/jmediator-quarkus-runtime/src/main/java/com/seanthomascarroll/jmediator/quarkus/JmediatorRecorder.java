@@ -12,8 +12,8 @@ import java.util.Map;
 public class JmediatorRecorder {
 
     public void initServiceFactory(BeanContainer container,
-                                   Map<String, Class<RequestHandler>> handlerClassNames,
-                                   List<Class<PipelineBehavior>> behaviorClassNames) {
+                                   Map<String, Class<? extends RequestHandler>> handlerClassNames,
+                                   List<Class<? extends PipelineBehavior>> behaviorClassNames) {
         JmediatorProducer producer = container.instance(JmediatorProducer.class);
         producer.init(handlerClassNames, behaviorClassNames);
     }

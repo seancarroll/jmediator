@@ -58,7 +58,7 @@ public class JmediatorProcessor {
     void registerRequestHandlers(IndexView index,
                                  BuildProducer<AdditionalBeanBuildItem> additionalBeans,
                                  BuildProducer<JmediatorHandlerBuildItem> handlerProducer) {
-        Map<String, Class<RequestHandler>> handlerClassNames = new HashMap<>();
+        Map<String, Class<? extends RequestHandler>> handlerClassNames = new HashMap<>();
         Collection<ClassInfo> handlers = index.getAllKnownImplementors(REQUEST_HANDLER_DOT_NAME);
         for (ClassInfo handler : handlers) {
             try {
@@ -84,7 +84,7 @@ public class JmediatorProcessor {
     void registerPipelineBehaviors(IndexView index,
                                    BuildProducer<AdditionalBeanBuildItem> additionalBeans,
                                    BuildProducer<JmediatorPipelineBuildItem> behaviorProducer) {
-        List<Class<PipelineBehavior>> behaviorClassNames = new ArrayList<>();
+        List<Class<? extends PipelineBehavior>> behaviorClassNames = new ArrayList<>();
         Collection<ClassInfo> pipelineBehaviors = index.getAllKnownImplementors(PIPELINE_BEHAVIOR_DOT_NAME);
         for (ClassInfo behavior : pipelineBehaviors) {
             try {

@@ -45,6 +45,6 @@ public class JmediatorProcessPipelineBehaviorTest {
         public LoggingPipelineBehavior nullBehavior() {
             return new LoggingPipelineBehavior();
         }
-        
+
     }
 }
