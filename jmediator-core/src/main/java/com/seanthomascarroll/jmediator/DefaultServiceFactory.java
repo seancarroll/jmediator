@@ -2,7 +2,6 @@ package com.seanthomascarroll.jmediator;
 
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 
-import java.nio.channels.Pipe;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
