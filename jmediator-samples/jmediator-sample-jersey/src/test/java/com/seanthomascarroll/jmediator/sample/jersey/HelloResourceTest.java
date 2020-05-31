@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 // https://stackoverflow.com/questions/30896911/jersey-junit-test-weblistener-servletcontextlistener-not-invoked
 // https://github.com/jersey/jersey/issues/3386
 // http://generationpalindrome.blogspot.com/2012/06/jerseytest-with-servletcontextlistener.html
-public class HelloResourceTest extends JerseyTest {
+class HelloResourceTest extends JerseyTest {
 
     @Override
     protected Application configure() {

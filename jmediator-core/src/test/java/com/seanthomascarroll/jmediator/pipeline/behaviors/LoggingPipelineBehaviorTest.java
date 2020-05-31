@@ -14,33 +14,41 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-public class LoggingPipelineBehaviorTest {
+class LoggingPipelineBehaviorTest {
 
     private LoggingPipelineBehavior behavior;
     private PipelineChain pipelineChain;
-    private ListAppender appender;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         behavior = new LoggingPipelineBehavior();
         pipelineChain = mock(PipelineChain.class);
     }
 
-    @AfterEach
     @BeforeAll
-    public void cleanUp() {
+    static void init() {
+        clearAppender();
+    }
+
+    @AfterEach
+    void cleanUp() {
+        clearAppender();
+    }
+
+    private static void clearAppender() {
+        ListAppender appender = getListAppender("com.seanthomascarroll.jmediator.pipeline.behaviors");
         if (appender != null) {
             appender.clear();
         }
     }
 
     @Test
-    public void canLogNullReturnValue() {
+    void canLogNullReturnValue() {
         when(pipelineChain.doBehavior()).thenReturn(null);
 
         behavior.handle(new Ping(), pipelineChain);
 
-        appender = (ListAppender) LoggerContext.getContext(false).getLogger("com.seanthomascarroll.jmediator.pipeline.behaviors").getAppenders().get("List");
+        ListAppender appender = getListAppender("com.seanthomascarroll.jmediator.pipeline.behaviors");
         assertEquals(2, appender.getMessages().size());
         assertTrue(appender.getMessages().get(1).contains("null"));
     }
@@ -53,7 +61,7 @@ public class LoggingPipelineBehaviorTest {
         Ping request = new Ping("Hello");
         behavior.handle(request, pipelineChain);
 
-        appender = (ListAppender) LoggerContext.getContext(false).getLogger("com.seanthomascarroll.jmediator.pipeline.behaviors").getAppenders().get("List");
+        ListAppender appender = getListAppender("com.seanthomascarroll.jmediator.pipeline.behaviors");
         assertEquals(2, appender.getMessages().size());
         // TODO: use hamcrest or assertj...probably assertj
         assertTrue(appender.getMessages().get(0).contains("Hello"));
@@ -74,7 +82,7 @@ public class LoggingPipelineBehaviorTest {
             // expected
         }
 
-        appender = (ListAppender) LoggerContext.getContext(false).getLogger("com.seanthomascarroll.jmediator.pipeline.behaviors").getAppenders().get("List");
+        ListAppender appender = getListAppender("com.seanthomascarroll.jmediator.pipeline.behaviors");
         assertEquals(1, appender.getMessages().size());
         assertTrue(appender.getMessages().get(0).contains("Ping"));
     }
@@ -89,7 +97,7 @@ public class LoggingPipelineBehaviorTest {
 
         behaviorWithCustomLogger.handle(request, pipelineChain);
 
-        appender = (ListAppender) LoggerContext.getContext(false).getLogger(loggerName).getAppenders().get("List");
+        ListAppender appender = getListAppender(loggerName);
         assertEquals(2, appender.getMessages().size());
         // TODO: use assertj
         assertTrue(appender.getMessages().get(0).contains("Hello"));
@@ -128,6 +136,13 @@ public class LoggingPipelineBehaviorTest {
                 "message='" + message + '\'' +
                 '}';
         }
+    }
+
+    private static ListAppender getListAppender(String name) {
+        return (ListAppender) LoggerContext.getContext(false)
+            .getLogger(name)
+            .getAppenders()
+            .get("List");
     }
 
 }

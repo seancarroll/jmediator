@@ -53,4 +53,12 @@ public class ClasspathScanningServiceFactoryTest {
 
         assertThrows(NoHandlerForRequestException.class, () -> serviceFactory.getRequestHandler(MissingHandler.class));
     }
+
+    @Test
+    void shouldThrowForRequestClassWhoseHandlerIsNotARegisteredBean() {
+        ClasspathScanningServiceFactory serviceFactory = new ClasspathScanningServiceFactory(beanFactory);
+        serviceFactory.postProcessBeanFactory(beanFactory);
+
+        assertThrows(NoHandlerForRequestException.class, () -> serviceFactory.getRequestHandler(NotBean.class));
+    }
 }

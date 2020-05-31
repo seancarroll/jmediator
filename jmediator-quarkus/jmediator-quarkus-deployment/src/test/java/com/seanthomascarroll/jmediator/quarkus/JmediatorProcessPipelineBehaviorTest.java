@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JmediatorProcessPipelineBehaviorTest {
+class JmediatorProcessPipelineBehaviorTest {
 
     @Inject
     ServiceFactory serviceFactory;
@@ -39,7 +39,7 @@ public class JmediatorProcessPipelineBehaviorTest {
         }
     }
 
-    public class JmediatorBehaviorFactory {
+    class JmediatorBehaviorFactory {
 
         @Produces
         public LoggingPipelineBehavior nullBehavior() {

@@ -71,10 +71,8 @@ public class JmediatorProcessor {
                 handlerClassNames.put(requestClass, handlerClass);
                 additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(handlerClass));
                 LOGGER.debugf("Configured bean: %s", handlerClass.getName());
-            } catch (ClassNotFoundException e) {
-                LOGGER.warn("Failed to load bean class", e);
-            } catch (Exception ex) {
-                LOGGER.errorf("failed to get requestClass for %s", handler.name().toString());
+            } catch (Exception e) {
+                LOGGER.warn("Failed to load request handler [%s]", handler.name().toString(), e);
             }
         }
 
@@ -91,10 +89,8 @@ public class JmediatorProcessor {
                 Class<PipelineBehavior> behaviorClass = (Class<PipelineBehavior>) Class.forName(behavior.name().toString());
                 behaviorClassNames.add(behaviorClass);
                 additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(behaviorClass));
-            } catch (ClassNotFoundException e) {
-                LOGGER.warn("Failed to load pipeline behavior bean class", e);
-            } catch (Exception ex) {
-                LOGGER.errorf("failed to get requestClass for %s", behavior.name().toString());
+            } catch (Exception e) {
+                LOGGER.warnf("Failed to load pipeline behavior [%s]", behavior.name().toString(), e);
             }
         }
 

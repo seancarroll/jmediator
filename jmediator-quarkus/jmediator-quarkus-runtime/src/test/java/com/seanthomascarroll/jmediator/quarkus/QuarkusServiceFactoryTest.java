@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 // TODO: would potentially be nice to use ArcTestContainer if Quarkus decides to deploy it
-public class QuarkusServiceFactoryTest {
+class QuarkusServiceFactoryTest {
 
     @Test
     void shouldThrowWhenRequestNotRegistered() {
