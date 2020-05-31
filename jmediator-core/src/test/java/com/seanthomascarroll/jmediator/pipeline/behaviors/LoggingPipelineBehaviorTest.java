@@ -5,6 +5,7 @@ import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.test.appender.ListAppender;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +27,7 @@ public class LoggingPipelineBehaviorTest {
     }
 
     @AfterEach
+    @BeforeAll
     public void cleanUp() {
         if (appender != null) {
             appender.clear();
@@ -89,7 +91,7 @@ public class LoggingPipelineBehaviorTest {
 
         appender = (ListAppender) LoggerContext.getContext(false).getLogger(loggerName).getAppenders().get("List");
         assertEquals(2, appender.getMessages().size());
-        // TODO: use hamcrest or assertj...probably assertj
+        // TODO: use assertj
         assertTrue(appender.getMessages().get(0).contains("Hello"));
         assertTrue(appender.getMessages().get(1).contains("World"));
     }
