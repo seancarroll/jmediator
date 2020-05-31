@@ -81,6 +81,10 @@
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <sonar-maven-plugin.version>3.6.1.1688</sonar-maven-plugin.version>
         <spotbugs-maven-plugin.version>3.1.12.2</spotbugs-maven-plugin.version>
+
+        <sonar.coverage.exclusions>
+            com.seanthomascarroll.jmediator.sample.jersey.SampleJerseyApplication.java
+        </sonar.coverage.exclusions>
     </properties>
 
     <developers>
