@@ -1,4 +1,4 @@
-package com.seanthomascarroll.jmediator.sample;
+package com.seanthomascarroll.jmediator.sample.micronaut;
 
 import com.seanthomascarroll.jmediator.RequestHandler;
 

@@ -1,13 +1,10 @@
-package com.seanthomascarroll.jmediator.sample;
+package com.seanthomascarroll.jmediator.sample.micronaut;
 
 import com.seanthomascarroll.jmediator.Request;
 
 public class HelloRequest implements Request {
 
-    private String name;
-
-    public HelloRequest() {
-    }
+    private final String name;
 
     public HelloRequest(String name) {
         this.name = name;
@@ -15,10 +12,6 @@ public class HelloRequest implements Request {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
