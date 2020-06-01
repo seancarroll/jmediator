@@ -90,7 +90,7 @@ public class JmediatorProcessor {
                 behaviorClassNames.add(behaviorClass);
                 additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(behaviorClass));
             } catch (Exception e) {
-                LOGGER.warnf("Failed to load pipeline behavior [%s]", behavior.name().toString(), e);
+                LOGGER.warnf(e, "Failed to load pipeline behavior [%s]", behavior.name().toString());
             }
         }
 
@@ -107,7 +107,7 @@ public class JmediatorProcessor {
                             additionalBeans.produce(AdditionalBeanBuildItem.unremovableOf(clazz));
                         }
                     } catch (ClassNotFoundException ex) {
-                        LOGGER.warnf("failed to add pipeline behavior %s because we could not find class", returnType, ex);
+                        LOGGER.warnf(ex, "failed to add pipeline behavior %s because we could not find class", returnType);
                     }
                 }
             }
