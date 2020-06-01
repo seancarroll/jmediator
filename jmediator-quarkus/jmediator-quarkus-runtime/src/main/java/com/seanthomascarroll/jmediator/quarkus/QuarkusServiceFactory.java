@@ -11,7 +11,9 @@ import io.quarkus.arc.ArcContainer;
 import io.quarkus.arc.InstanceHandle;
 import org.jboss.logging.Logger;
 
+import javax.enterprise.context.Dependent;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ public class QuarkusServiceFactory implements ServiceFactory {
     private final Map<String, Class<? extends RequestHandler>> handlerClassNames;
     private final List<Class<? extends PipelineBehavior>> behaviors;
     private final ArcContainer container;
+    private final Map<Object, InstanceHandle<?>> destroyableInstances = new IdentityHashMap<>();
 
     public QuarkusServiceFactory(Map<String, Class<? extends RequestHandler>> handlerClassNames, List<Class<? extends PipelineBehavior>> behaviors) {
         this(handlerClassNames, behaviors, Arc.container());
@@ -44,18 +47,15 @@ public class QuarkusServiceFactory implements ServiceFactory {
             throw new NoHandlerForRequestException(requestClass);
         }
 
-        // TODO: Will this cause a memory leak if we dont close?
-        InstanceHandle<? extends RequestHandler> instance = container.instance(handlerClassName);
-
-//        if (instance.isAvailable()) {
-//
-//        }
-
-        RequestHandler handler = instance.get();
+        InstanceHandle<? extends RequestHandler> handle = container.instance(handlerClassName);
+        RequestHandler handler = handle.get();
         if (handler == null) {
             throw new NoHandlerForRequestException(requestClass);
         }
 
+        if (handle.getBean().getScope().equals(Dependent.class)) {
+            destroyableInstances.put(handler, handle);
+        }
         return handler;
     }
 
@@ -64,16 +64,29 @@ public class QuarkusServiceFactory implements ServiceFactory {
         try {
             List<PipelineBehavior> pipelineBehaviors = new ArrayList<>();
             for (Class<? extends PipelineBehavior> clazz : behaviors) {
-                // TODO: Will this cause a memory leak if we dont close?
-                InstanceHandle<? extends PipelineBehavior> instance = container.instance(clazz);
-                PipelineBehavior behavior = instance.get();
+                InstanceHandle<? extends PipelineBehavior> handle = container.instance(clazz);
+                PipelineBehavior behavior = handle.get();
                 if (behavior != null) {
                     pipelineBehaviors.add(behavior);
+                    if (handle.getBean().getScope().equals(Dependent.class)) {
+                        destroyableInstances.put(behavior, handle);
+                    }
                 }
             }
             return pipelineBehaviors;
         } catch (Exception ex) {
             throw new ServiceFactoryException("Failed to create PipelineBehavior bean(s)", ex);
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void release(List<Object> instance) {
+        for (Object key : instance) {
+            InstanceHandle handle = destroyableInstances.remove(key);
+            if (handle != null) {
+                handle.destroy();
+            }
         }
     }
 }

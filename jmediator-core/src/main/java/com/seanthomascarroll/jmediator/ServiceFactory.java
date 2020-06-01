@@ -10,4 +10,7 @@ public interface ServiceFactory {
 
     List<PipelineBehavior> getPipelineBehaviors();
 
+    default void release(List<Object> handles) {
+        // no-op default implementation
+    }
 }
