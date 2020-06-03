@@ -23,16 +23,16 @@ import java.util.Map;
 public class QuarkusServiceFactory implements ServiceFactory {
     private static final Logger LOGGER = Logger.getLogger(QuarkusServiceFactory.class);
 
-    private final Map<String, Class<? extends RequestHandler>> handlerClassNames;
+    private final Map<String, Class<? extends RequestHandler<?, ?>>> handlerClassNames;
     private final List<Class<? extends PipelineBehavior>> behaviors;
     private final ArcContainer container;
     private final Map<Object, InstanceHandle<?>> destroyableInstances = new IdentityHashMap<>();
 
-    public QuarkusServiceFactory(Map<String, Class<? extends RequestHandler>> handlerClassNames, List<Class<? extends PipelineBehavior>> behaviors) {
+    public QuarkusServiceFactory(Map<String, Class<? extends RequestHandler<?, ?>>> handlerClassNames, List<Class<? extends PipelineBehavior>> behaviors) {
         this(handlerClassNames, behaviors, Arc.container());
     }
 
-    QuarkusServiceFactory(Map<String, Class<? extends RequestHandler>> handlerClassNames,
+    QuarkusServiceFactory(Map<String, Class<? extends RequestHandler<?, ?>>> handlerClassNames,
                           List<Class<? extends PipelineBehavior>> behaviors,
                           ArcContainer container) {
         this.handlerClassNames = handlerClassNames;

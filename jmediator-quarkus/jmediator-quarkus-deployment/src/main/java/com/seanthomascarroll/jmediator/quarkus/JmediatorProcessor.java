@@ -58,12 +58,12 @@ public class JmediatorProcessor {
     void registerRequestHandlers(IndexView index,
                                  BuildProducer<AdditionalBeanBuildItem> additionalBeans,
                                  BuildProducer<JmediatorHandlerBuildItem> handlerProducer) {
-        Map<String, Class<? extends RequestHandler>> handlerClassNames = new HashMap<>();
+        Map<String, Class<? extends RequestHandler<?,?>>> handlerClassNames = new HashMap<>();
         Collection<ClassInfo> handlers = index.getAllKnownImplementors(REQUEST_HANDLER_DOT_NAME);
         for (ClassInfo handler : handlers) {
             try {
                 @SuppressWarnings("unchecked")
-                Class<RequestHandler> handlerClass = (Class<RequestHandler>) Class.forName(handler.name().toString());
+                Class<RequestHandler<?, ?>> handlerClass = (Class<RequestHandler<?, ?>>) Class.forName(handler.name().toString());
                 String requestClass = getRequestClass(handler);
                 if (requestClass == null) {
                     continue;

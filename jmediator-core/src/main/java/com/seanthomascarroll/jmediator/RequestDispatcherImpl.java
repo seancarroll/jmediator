@@ -5,12 +5,7 @@ import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChainImpl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Implementation of the dispatcher, aka command bus, that dispatches requests to the handlers subscribed to the specific type of request.
@@ -43,7 +38,7 @@ public class RequestDispatcherImpl implements RequestDispatcher {
         return response;
     }
 
-    private void release(RequestHandler requestHandler, List<PipelineBehavior> behaviors) {
+    private void release(RequestHandler<?, ?> requestHandler, List<PipelineBehavior> behaviors) {
         List<Object> objects = new ArrayList<>(behaviors);
         objects.add(requestHandler);
 

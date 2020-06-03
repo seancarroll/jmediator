@@ -31,7 +31,7 @@ class QuarkusServiceFactoryTest {
 
     @Test
     void shouldThrowWhenRequestNotRegistered() {
-        Map<String, Class<? extends RequestHandler>> handlers = new HashMap<>();
+        Map<String, Class<? extends RequestHandler<?, ?>>> handlers = new HashMap<>();
 
         QuarkusServiceFactory serviceFactory = new QuarkusServiceFactory(handlers, null, null);
 
@@ -46,7 +46,7 @@ class QuarkusServiceFactoryTest {
         ArcContainer container = mock(ArcContainer.class);
         when(container.instance(HelloRequestHandler.class)).thenReturn(instanceHandle);
 
-        Map<String, Class<? extends RequestHandler>> handlers = new HashMap<>();
+        Map<String, Class<? extends RequestHandler<?, ?>>> handlers = new HashMap<>();
         handlers.put(HelloRequest.class.getName(), HelloRequestHandler.class);
 
         QuarkusServiceFactory serviceFactory = new QuarkusServiceFactory(handlers, null, container);
@@ -65,7 +65,7 @@ class QuarkusServiceFactoryTest {
         ArcContainer container = mock(ArcContainer.class);
         when(container.instance(HelloRequestHandler.class)).thenReturn(requestHandle);
 
-        Map<String, Class<? extends RequestHandler>> handlers = new HashMap<>();
+        Map<String, Class<? extends RequestHandler<?, ?>>> handlers = new HashMap<>();
         handlers.put(HelloRequest.class.getName(), HelloRequestHandler.class);
 
         QuarkusServiceFactory serviceFactory = new QuarkusServiceFactory(handlers, null, container);
@@ -97,16 +97,16 @@ class QuarkusServiceFactoryTest {
 
     @Test
     void shouldReleaseInstanceHandles() {
-        InstanceHandle<HelloRequestHandler> requestHandle = mock(InstanceHandle.class);
+        InstanceHandle requestHandle = mock(InstanceHandle.class);
         when(requestHandle.get()).thenReturn(new HelloRequestHandler());
-        InjectableBean<RequestHandler> mockRequestHandlerBean = mock(InjectableBean.class);
+        InjectableBean<RequestHandler<?, ?>> mockRequestHandlerBean = mock(InjectableBean.class);
         doReturn(mockRequestHandlerBean).when(requestHandle).getBean();
         doReturn(Dependent.class).when(mockRequestHandlerBean).getScope();
 
         ArcContainer container = mock(ArcContainer.class);
         when(container.instance(HelloRequestHandler.class)).thenReturn(requestHandle);
 
-        Map<String, Class<? extends RequestHandler>> handlers = new HashMap<>();
+        Map<String, Class<? extends RequestHandler<?, ?>>> handlers = new HashMap<>();
         handlers.put(HelloRequest.class.getName(), HelloRequestHandler.class);
 
         InstanceHandle<NoopBehavior> behaviorInstance = mock(InstanceHandle.class);
@@ -126,6 +126,8 @@ class QuarkusServiceFactoryTest {
         instances.add(handler);
 
         serviceFactory.release(instances);
+
+        // TODO: add assert
     }
 
     static class HelloRequest implements Request {

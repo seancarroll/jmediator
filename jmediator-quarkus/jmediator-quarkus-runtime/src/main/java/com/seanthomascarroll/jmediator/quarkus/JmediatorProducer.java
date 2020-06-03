@@ -32,7 +32,7 @@ public class JmediatorProducer {
         return new RequestDispatcherImpl(serviceFactory);
     }
 
-    public void init(Map<String, Class<? extends RequestHandler>> handlerClassNames, List<Class<? extends PipelineBehavior>> behaviorClassNames) {
+    public void init(Map<String, Class<? extends RequestHandler<?, ?>>> handlerClassNames, List<Class<? extends PipelineBehavior>> behaviorClassNames) {
         serviceFactory = new QuarkusServiceFactory(handlerClassNames, behaviorClassNames);
     }
 }
