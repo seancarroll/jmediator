@@ -13,7 +13,7 @@ import java.util.List;
 public class PipelineChainImpl<T extends Request> implements PipelineChain {
 
     private final T request;
-    private List<? extends PipelineBehavior> behaviors;
+    private final List<? extends PipelineBehavior> behaviors;
     private final RequestHandler<? super T, ?> handler;
     private int position = 0;
 
