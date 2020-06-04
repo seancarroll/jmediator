@@ -7,9 +7,8 @@ import com.seanthomascarroll.jmediator.ServiceFactory;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
+import javax.inject.Singleton;
 import java.util.List;
 import java.util.Map;
 
@@ -19,15 +18,13 @@ public class JmediatorProducer {
     private volatile QuarkusServiceFactory serviceFactory;
 
     @Produces
-    @Dependent
-    @Default
+    @Singleton
     public ServiceFactory producesServiceFactory() {
         return serviceFactory;
     }
 
     @Produces
-    @Dependent
-    @Default
+    @Singleton
     public RequestDispatcher producesRequestDispatcher(ServiceFactory serviceFactory) {
         return new RequestDispatcherImpl(serviceFactory);
     }
