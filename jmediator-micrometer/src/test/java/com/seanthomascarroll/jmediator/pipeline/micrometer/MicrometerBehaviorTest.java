@@ -54,27 +54,11 @@ class MicrometerBehaviorTest {
             .get("request.time")
             .tag("request.name", Ping.class.getName())
             .timer();
-        assertEquals(500, timer.totalTime(TimeUnit.MILLISECONDS), 10);
+        assertEquals(500, timer.totalTime(TimeUnit.MILLISECONDS), 100);
     }
 
 
     private static class Ping implements Request {
-        Ping() {
-
-        }
-
-        Ping(String message) {
-            this.message = message;
-        }
-
-        String message;
-
-        @Override
-        public String toString() {
-            return "Ping{" +
-                "message='" + message + '\'' +
-                '}';
-        }
     }
 
     private static class PingHandler implements RequestHandler<Ping, Pong> {
@@ -87,16 +71,16 @@ class MicrometerBehaviorTest {
                 // ignore
             }
 
-            return new Pong("hello " + request.message);
+            return new Pong("pong");
         }
     }
 
     private static class Pong {
+        String message;
+
         Pong(String message) {
             this.message = message;
         }
-
-        String message;
 
         @Override
         public String toString() {
