@@ -10,9 +10,11 @@ public interface RequestDispatcher {
     /**
      * Send a response to handler
      *
-     * @param request message to be handled
-     * @return Response from the handler
+     * @param request  message to be handled
+     * @param <T>
+     * @param <R>
+     * @return  Response from the handler
      */
-    <R> R send(Request request);
+    <T extends Request, R> R send(T request);
 
 }

@@ -20,7 +20,7 @@ public class RequestDispatcherImpl implements RequestDispatcher {
     }
 
     @Override
-    public <R> R send(Request request) {
+    public <T extends Request, R> R send(T request) {
         return doSend(request);
     }
 
