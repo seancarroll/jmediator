@@ -13,37 +13,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO: implement autobind or remove
-// https://github.com/tchen319/hairball-j/blob/4a2f87386e578394fee547970d4502618f218421/src/main/java/com/oath/gemini/merchant/cron/QuartzFeature.java
-
 /**
  *
  */
 public class JmediatorFeature implements ServiceFactory, Feature {
 
-    private final boolean autobind;
     private final String[] packagesToScan;
     private final Map<String, Class<RequestHandler>> handlers = new HashMap<>();
     private InjectionManager injectionManager;
 
-    // TODO: can we support a no-arg constructor?
-    // If specific packages are not defined, scanning will occur from the package of the class that declares this annotation
-    // how would I get caller class?
-
     /**
      * @param packagesToScan packages  to look for RequestHandler
-     * @see JmediatorFeature#JmediatorFeature(boolean, String...)
      */
     public JmediatorFeature(String... packagesToScan) {
-        this(false, packagesToScan);
-    }
-
-    /**
-     * @param autobind  whether or not RequestHandlers should be registered with DI system
-     * @param packagesToScan  packages to look for RequestHandler
-     */
-    public JmediatorFeature(boolean autobind, String... packagesToScan) {
-        this.autobind = autobind;
         this.packagesToScan = packagesToScan;
     }
 
@@ -77,7 +59,7 @@ public class JmediatorFeature implements ServiceFactory, Feature {
                 RequestDispatcherImpl dispatcher = new RequestDispatcherImpl(serviceFactory);
                 bind(dispatcher).to(RequestDispatcher.class);
 
-                for (Class clazz : handlers.values()) {
+                for (Class<?> clazz : handlers.values()) {
                     bind(clazz).to(clazz);
                 }
             }
@@ -86,6 +68,7 @@ public class JmediatorFeature implements ServiceFactory, Feature {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T extends Request, R> RequestHandler<T, R> getRequestHandler(Class<? extends Request> requestClass) {
         Class<RequestHandler> handlerClass = handlers.get(requestClass.getName());
