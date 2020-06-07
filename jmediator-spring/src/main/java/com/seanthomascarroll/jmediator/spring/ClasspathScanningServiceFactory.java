@@ -23,8 +23,8 @@ public class ClasspathScanningServiceFactory implements ServiceFactory, BeanFact
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathScanningServiceFactory.class);
 
-    private ConfigurableListableBeanFactory beanFactory;
-    private Map<String, String> handlerClassNames = new HashMap<>();
+    private final ConfigurableListableBeanFactory beanFactory;
+    private final Map<String, String> handlerClassNames = new HashMap<>();
 
     public ClasspathScanningServiceFactory(ConfigurableListableBeanFactory beanFactory) {
         this.beanFactory = beanFactory;
