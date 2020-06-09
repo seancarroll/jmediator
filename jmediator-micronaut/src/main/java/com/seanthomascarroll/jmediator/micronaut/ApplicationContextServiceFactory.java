@@ -22,14 +22,14 @@ import java.util.Map;
 
 @SuppressWarnings("rawtypes")
 @Singleton
-public class ApplicationContextRequestHandlerProvider implements ServiceFactory, ApplicationEventListener<StartupEvent> {
+public class ApplicationContextServiceFactory implements ServiceFactory, ApplicationEventListener<StartupEvent> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextRequestHandlerProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationContextServiceFactory.class);
 
     private final ApplicationContext applicationContext;
     private final Map<String, Class<RequestHandler>> handlerClassNameToTypeMap = new HashMap<>();
 
-    public ApplicationContextRequestHandlerProvider(ApplicationContext applicationContext) {
+    public ApplicationContextServiceFactory(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

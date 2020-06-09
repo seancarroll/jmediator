@@ -1,5 +1,6 @@
 package com.seanthomascarroll.jmediator.micronaut;
 
+import com.seanthomascarroll.jmediator.NoHandlerForRequestException;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestHandler;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
@@ -13,31 +14,43 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ApplicationContextRequestHandlerProviderTest {
+class ApplicationContextServiceFactoryTest {
 
     @Test
     void shouldSuccessfullyGetRegisteredRequestHandler() {
         ApplicationContext context = ApplicationContext.run();
         context.registerSingleton(RequestHandler.class, new HelloRequestHandler());
-        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextRequestHandlerProvider(context));
+        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextServiceFactory(context));
 
-        ApplicationContextRequestHandlerProvider requestHandlerProvider = new ApplicationContextRequestHandlerProvider(context);
-        requestHandlerProvider.onApplicationEvent(new StartupEvent(context));
+        ApplicationContextServiceFactory serviceFactory = new ApplicationContextServiceFactory(context);
+        serviceFactory.onApplicationEvent(new StartupEvent(context));
 
-        RequestHandler<HelloRequest, String> handler = requestHandlerProvider.getRequestHandler(HelloRequest.class);
+        RequestHandler<HelloRequest, String> handler = serviceFactory.getRequestHandler(HelloRequest.class);
         assertNotNull(handler);
         assertTrue(handler instanceof HelloRequestHandler);
+    }
+
+    @Test
+    void shouldThrowForRequestClassThatHasNoRegisteredHandler() {
+        ApplicationContext context = ApplicationContext.run();
+        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextServiceFactory(context));
+
+        ApplicationContextServiceFactory serviceFactory = new ApplicationContextServiceFactory(context);
+        serviceFactory.onApplicationEvent(new StartupEvent(context));
+
+        assertThrows(NoHandlerForRequestException.class, () -> serviceFactory.getRequestHandler(MissingRequest.class));
     }
 
     @Test
     void shouldSuccessfullyGetRegisteredPipelineBehavior() {
         ApplicationContext context = ApplicationContext.run();
         context.registerSingleton(PipelineBehavior.class, new LoggingPipelineBehavior());
-        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextRequestHandlerProvider(context));
+        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextServiceFactory(context));
 
-        ApplicationContextRequestHandlerProvider requestHandlerProvider = new ApplicationContextRequestHandlerProvider(context);
+        ApplicationContextServiceFactory requestHandlerProvider = new ApplicationContextServiceFactory(context);
 
         List<PipelineBehavior> behaviors = requestHandlerProvider.getPipelineBehaviors();
         assertNotNull(behaviors);
@@ -59,6 +72,10 @@ class ApplicationContextRequestHandlerProviderTest {
         public String handle(HelloRequest request) {
             return "Hello " + request.getName();
         }
+
+    }
+
+    static class MissingRequest implements Request {
 
     }
 
