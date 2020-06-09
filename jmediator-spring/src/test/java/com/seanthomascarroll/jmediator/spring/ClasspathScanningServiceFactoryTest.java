@@ -6,22 +6,20 @@ import com.seanthomascarroll.jmediator.ServiceFactoryException;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
-import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.inject.Inject;
-
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Answers.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -73,6 +71,22 @@ class ClasspathScanningServiceFactoryTest {
     }
 
     @Test
+    void shouldThrowWhenRequestHandlerBeanCannotBeInstantiated() {
+        ConfigurableListableBeanFactory mockBeanFactory = mock(ConfigurableListableBeanFactory.class, RETURNS_DEEP_STUBS);
+        when(mockBeanFactory.getBeanNamesForType(RequestHandler.class)).thenReturn(new String[]{PingHandler.class.getName()});
+
+        BeanDefinition beanDefinition = mock(BeanDefinition.class);
+        when(beanDefinition.getBeanClassName()).thenReturn(PingHandler.class.getName());
+        when(mockBeanFactory.getBeanDefinition(PingHandler.class.getName())).thenReturn(beanDefinition);
+        when(mockBeanFactory.getBean(PingHandler.class.getName(), RequestHandler.class)).thenThrow(FatalBeanException.class);
+
+        ClasspathScanningServiceFactory serviceFactory = new ClasspathScanningServiceFactory(mockBeanFactory);
+        serviceFactory.postProcessBeanFactory(mockBeanFactory);
+
+        assertThrows(NoHandlerForRequestException.class, () -> serviceFactory.getRequestHandler(Ping.class));
+    }
+
+    @Test
     void shouldRegisterPipelineBehavior() {
         ClasspathScanningServiceFactory serviceFactory = new ClasspathScanningServiceFactory(beanFactory);
 
@@ -89,7 +103,7 @@ class ClasspathScanningServiceFactoryTest {
 
         ClasspathScanningServiceFactory serviceFactory = new ClasspathScanningServiceFactory(mockBeanFactory);
 
-        assertThrows(ServiceFactoryException.class, () -> serviceFactory.getPipelineBehaviors());
+        assertThrows(ServiceFactoryException.class, serviceFactory::getPipelineBehaviors);
     }
 
 }
