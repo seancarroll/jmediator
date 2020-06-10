@@ -1,5 +1,9 @@
 package com.seanthomascarroll.jmediator.micronaut;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import com.seanthomascarroll.jmediator.NoHandlerForRequestException;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestHandler;
@@ -9,6 +13,7 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.event.StartupEvent;
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -45,6 +50,30 @@ class ApplicationContextServiceFactoryTest {
     }
 
     @Test
+    void shouldWarnWhenMultipleHandlersAreAssociatedToRequest() {
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        listAppender.start();
+
+        Logger applicationContextServiceFactoryLogger = (Logger) LoggerFactory.getLogger(ApplicationContextServiceFactory.class);
+        applicationContextServiceFactoryLogger.addAppender(listAppender);
+
+        ApplicationContext context = ApplicationContext.run();
+        context.registerSingleton(RequestHandler.class, new MultipleHandlersOne());
+        context.registerSingleton(RequestHandler.class, new MultipleHandlersTwo());
+        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextServiceFactory(context));
+
+        ApplicationContextServiceFactory serviceFactory = new ApplicationContextServiceFactory(context);
+        serviceFactory.onApplicationEvent(new StartupEvent(context));
+
+        RequestHandler<MultipleHandlersRequest, String> handler = serviceFactory.getRequestHandler(MultipleHandlersRequest.class);
+        assertNotNull(handler);
+
+        assertEquals(1, listAppender.list.size());
+        assertTrue(listAppender.list.get(0).getFormattedMessage().contains("MultipleHandlersRequest already associated with"));
+        assertEquals(Level.WARN, listAppender.list.get(0).getLevel());
+    }
+
+    @Test
     void shouldSuccessfullyGetRegisteredPipelineBehavior() {
         ApplicationContext context = ApplicationContext.run();
         context.registerSingleton(PipelineBehavior.class, new LoggingPipelineBehavior());
@@ -77,6 +106,26 @@ class ApplicationContextServiceFactoryTest {
 
     static class MissingRequest implements Request {
 
+    }
+
+    static class MultipleHandlersRequest implements Request {
+
+    }
+
+    static class MultipleHandlersOne implements RequestHandler<MultipleHandlersRequest, String> {
+
+        @Override
+        public String handle(MultipleHandlersRequest request) {
+            return "one";
+        }
+    }
+
+    static class MultipleHandlersTwo implements RequestHandler<MultipleHandlersRequest, String> {
+
+        @Override
+        public String handle(MultipleHandlersRequest request) {
+            return "two";
+        }
     }
 
 }
