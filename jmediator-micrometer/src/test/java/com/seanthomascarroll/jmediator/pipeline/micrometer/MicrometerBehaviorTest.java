@@ -66,7 +66,7 @@ class MicrometerBehaviorTest {
         @Override
         public Pong handle(Ping request) {
             try {
-                Thread.sleep(500);
+                TimeUnit.MILLISECONDS.sleep(500);
             } catch (InterruptedException e) {
                 // ignore
             }
