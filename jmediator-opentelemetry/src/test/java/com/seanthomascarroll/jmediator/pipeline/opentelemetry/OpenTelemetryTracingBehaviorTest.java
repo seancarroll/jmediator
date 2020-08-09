@@ -7,7 +7,7 @@ import com.seanthomascarroll.jmediator.RequestHandler;
 import io.opentelemetry.exporters.inmemory.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.TracerSdkProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
-import io.opentelemetry.sdk.trace.export.SimpleSpansProcessor;
+import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
 import io.opentelemetry.trace.Status;
 import io.opentelemetry.trace.Tracer;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ class OpenTelemetryTracingBehaviorTest {
 
     @BeforeEach
     public void setUp() {
-        tracerSdkProvider.addSpanProcessor(SimpleSpansProcessor.create(exporter));
+        tracerSdkProvider.addSpanProcessor(SimpleSpanProcessor.newBuilder(exporter).build());
         behavior = new OpenTelemetryTracingBehavior(tracer);
     }
 
@@ -63,10 +63,10 @@ class OpenTelemetryTracingBehaviorTest {
         assertEquals(Status.CanonicalCode.UNKNOWN, spanItems.get(0).getStatus().getCanonicalCode());
         assertEquals("an error occurred", spanItems.get(0).getStatus().getDescription());
 
-        List<SpanData.TimedEvent> events = spanItems.get(0).getTimedEvents();
+        List<SpanData.Event> events = spanItems.get(0).getEvents();
         assertNotNull(events);
         assertEquals(1, events.size());
-        SpanData.TimedEvent error = events.get(0);
+        SpanData.Event error = events.get(0);
         assertEquals("error", error.getName());
         assertEquals(2, error.getAttributes().size());
         assertEquals("RuntimeException", error.getAttributes().get("error.type").getStringValue());

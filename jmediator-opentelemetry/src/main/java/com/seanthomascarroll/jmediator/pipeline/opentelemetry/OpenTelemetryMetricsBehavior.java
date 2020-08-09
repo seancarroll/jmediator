@@ -3,15 +3,18 @@ package com.seanthomascarroll.jmediator.pipeline.opentelemetry;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
+import io.opentelemetry.common.Labels;
 import io.opentelemetry.metrics.LongCounter;
-import io.opentelemetry.metrics.LongMeasure;
+import io.opentelemetry.metrics.LongValueRecorder;
 import io.opentelemetry.metrics.Meter;
 import io.opentelemetry.metrics.MeterProvider;
 
 public class OpenTelemetryMetricsBehavior implements PipelineBehavior {
     private final Meter meter;
     private final LongCounter counter;
-    private final LongMeasure latency;
+
+    // TODO: de we want to keep a map of bound counters?
+    private final LongValueRecorder latency;
 
     public OpenTelemetryMetricsBehavior(MeterProvider meterProvider) {
 
@@ -20,10 +23,8 @@ public class OpenTelemetryMetricsBehavior implements PipelineBehavior {
         counter = meter.longCounterBuilder("request.count")
             .setDescription("RequestHandler count")
             .setUnit("long")
-            .setMonotonic(true)
             .build();
-
-        latency = meter.longMeasureBuilder("request.time")
+        latency = meter.longValueRecorderBuilder("request.time")
             .setDescription("RequestHandler Latency")
             .setUnit("ms")
             .build();
@@ -33,7 +34,7 @@ public class OpenTelemetryMetricsBehavior implements PipelineBehavior {
     public <T extends Request> Object handle(T request, PipelineChain chain) {
         // TODO: should we keep a map of bound metrics?
 
-        String[] labels = {"request.name", request.getClass().getName()};
+        Labels labels = Labels.of("request.name", request.getClass().getName());
 
         counter.add(1, labels);
 
