@@ -41,4 +41,8 @@ public class PipelineChainImpl<T extends Request> implements PipelineChain {
         }
     }
 
+    public RequestHandler<? super T, ?> getHandler() {
+        return handler;
+    }
+
 }
