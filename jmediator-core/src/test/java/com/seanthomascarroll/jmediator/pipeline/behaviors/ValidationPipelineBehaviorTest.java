@@ -31,7 +31,7 @@ class ValidationPipelineBehaviorTest {
         StubMessage message = new StubMessage("Sean");
 
         behavior.handle(message, pipelineChain);
-        verify(pipelineChain).doBehavior();
+        verify(pipelineChain).doBehavior(message);
     }
 
     @Test
@@ -46,7 +46,7 @@ class ValidationPipelineBehaviorTest {
         } catch (Exception ex) {
             fail("wrong exception thrown. ConstraintViolationException should be thrown");
         }
-        verify(pipelineChain, never()).doBehavior();
+        verify(pipelineChain, never()).doBehavior(message);
     }
 
     @Test

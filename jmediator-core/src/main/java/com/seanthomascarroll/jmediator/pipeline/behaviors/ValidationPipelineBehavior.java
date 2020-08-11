@@ -34,7 +34,7 @@ public class ValidationPipelineBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain chain) {
+    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
         Validator validator = validatorFactory.getValidator();
 
         // TODO: check if JSR303 implementation (aka hibernate validator) is on the classpath.
@@ -47,6 +47,6 @@ public class ValidationPipelineBehavior implements PipelineBehavior {
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
-        return chain.doBehavior();
+        return chain.doBehavior(request);
     }
 }

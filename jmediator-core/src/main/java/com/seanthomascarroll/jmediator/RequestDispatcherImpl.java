@@ -29,9 +29,9 @@ public class RequestDispatcherImpl implements RequestDispatcher {
         RequestHandler<? super T, ?> handler = serviceFactory.getRequestHandler(request.getClass());
         List<PipelineBehavior> pipelineBehaviors = serviceFactory.getPipelineBehaviors();
 
-        PipelineChain chain = new PipelineChainImpl<>(request, pipelineBehaviors, handler);
+        PipelineChain<T> chain = new PipelineChainImpl<>(pipelineBehaviors, handler);
 
-        R response = (R) chain.doBehavior();
+        R response = (R) chain.doBehavior(request);
 
         release(handler, pipelineBehaviors);
 

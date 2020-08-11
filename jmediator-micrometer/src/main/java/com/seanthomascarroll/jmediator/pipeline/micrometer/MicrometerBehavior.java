@@ -25,11 +25,11 @@ public class MicrometerBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain chain) {
+    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
         List<Tag> tags = Collections.singletonList(Tag.of("request.name", request.getClass().getName()));
 
         registry.counter("request.count", tags).increment();
 
-        return registry.timer("request.time", tags).record(chain::doBehavior);
+        return registry.timer("request.time", tags).record(() -> chain.doBehavior(request));
     }
 }

@@ -22,7 +22,7 @@ class JmediatorProcessPipelineBehaviorTest {
     ServiceFactory serviceFactory;
 
     @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
+    static final QuarkusUnitTest CONFIG = new QuarkusUnitTest()
         .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
         .addClass(JmediatorBehaviorFactory.class));
 
@@ -34,8 +34,8 @@ class JmediatorProcessPipelineBehaviorTest {
     static class NoopBehavior implements PipelineBehavior {
 
         @Override
-        public <T extends Request> Object handle(T request, PipelineChain chain) {
-            return chain.doBehavior();
+        public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
+            return chain.doBehavior(request);
         }
     }
 

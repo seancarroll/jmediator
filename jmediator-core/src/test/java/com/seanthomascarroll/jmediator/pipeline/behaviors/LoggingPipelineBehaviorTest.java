@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -44,9 +45,10 @@ class LoggingPipelineBehaviorTest {
 
     @Test
     void canLogNullReturnValue() {
-        when(pipelineChain.doBehavior()).thenReturn(null);
+        Ping request = new Ping();
+        when(pipelineChain.doBehavior(request)).thenReturn(null);
 
-        behavior.handle(new Ping(), pipelineChain);
+        behavior.handle(request, pipelineChain);
 
         ListAppender appender = getListAppender("com.seanthomascarroll.jmediator.pipeline.behaviors");
         assertEquals(2, appender.getMessages().size());
@@ -56,9 +58,10 @@ class LoggingPipelineBehaviorTest {
     @Test
     void canLogCustomReturnValue() {
 
-        when(pipelineChain.doBehavior()).thenReturn(new Pong("World"));
-
         Ping request = new Ping("Hello");
+
+        when(pipelineChain.doBehavior(request)).thenReturn(new Pong("World"));
+
         behavior.handle(request, pipelineChain);
 
         ListAppender appender = getListAppender("com.seanthomascarroll.jmediator.pipeline.behaviors");
@@ -70,12 +73,10 @@ class LoggingPipelineBehaviorTest {
 
     @Test
     void shouldNotLogReturnWhenExceptionOccurs() {
-
-        when(pipelineChain.doBehavior()).thenThrow(new RuntimeException());
+        Ping request = new Ping();
+        when(pipelineChain.doBehavior(request)).thenThrow(new RuntimeException());
 
         try {
-            Ping request = new Ping();
-
             behavior.handle(request, pipelineChain);
             fail("exception should propagate to caller");
         } catch (Exception ex) {
@@ -89,10 +90,10 @@ class LoggingPipelineBehaviorTest {
 
     @Test
     void canUseCustomLogger() {
-        when(pipelineChain.doBehavior()).thenReturn(new Pong("World"));
+        Ping request = new Ping("Hello");
+        when(pipelineChain.doBehavior(request)).thenReturn(new Pong("World"));
         String loggerName = "com.seanthomascarroll.jmediator.pipeline.logging";
 
-        Ping request = new Ping("Hello");
         LoggingPipelineBehavior behaviorWithCustomLogger = new LoggingPipelineBehavior(loggerName);
 
         behaviorWithCustomLogger.handle(request, pipelineChain);

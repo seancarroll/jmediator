@@ -19,13 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MicrometerBehaviorTest {
 
     private MeterRegistry registry;
-    private MicrometerBehavior behavior;
     private RequestDispatcher dispatcher;
 
     @BeforeEach
     void setUp() {
         registry = new SimpleMeterRegistry();
-        behavior = new MicrometerBehavior(registry);
+        MicrometerBehavior behavior = new MicrometerBehavior(registry);
 
         DefaultServiceFactory serviceFactory = new DefaultServiceFactory();
         serviceFactory.register(new PingHandler());

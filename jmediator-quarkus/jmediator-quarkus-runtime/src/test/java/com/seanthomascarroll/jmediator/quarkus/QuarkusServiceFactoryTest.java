@@ -150,8 +150,8 @@ class QuarkusServiceFactoryTest {
     static class NoopBehavior implements PipelineBehavior {
 
         @Override
-        public <T extends Request> Object handle(T request, PipelineChain chain) {
-            return chain.doBehavior();
+        public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
+            return chain.doBehavior(request);
         }
     }
 }

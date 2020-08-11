@@ -19,11 +19,11 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain chain) {
+    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
         Span span = tracer.spanBuilder(request.getClass().getSimpleName()).startSpan();
 
         try (Scope scope = tracer.withSpan(span)) {
-            return chain.doBehavior();
+            return chain.doBehavior(request);
         } catch (Exception ex) {
             span.setStatus(Status.UNKNOWN.withDescription(ex.getLocalizedMessage()));
             span.addEvent("error", getExceptionDetails(ex));

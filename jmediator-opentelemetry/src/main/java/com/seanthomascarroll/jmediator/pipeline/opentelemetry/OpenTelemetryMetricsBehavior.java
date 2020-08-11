@@ -31,7 +31,7 @@ public class OpenTelemetryMetricsBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain chain) {
+    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
         // TODO: should we keep a map of bound metrics?
 
         Labels labels = Labels.of("request.name", request.getClass().getName());
@@ -39,7 +39,7 @@ public class OpenTelemetryMetricsBehavior implements PipelineBehavior {
         counter.add(1, labels);
 
         long start = System.currentTimeMillis();
-        Object result = chain.doBehavior();
+        Object result = chain.doBehavior(request);
         latency.record(System.currentTimeMillis() - start, labels);
 
         return result;
