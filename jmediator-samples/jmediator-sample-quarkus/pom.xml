@@ -6,14 +6,14 @@
     <parent>
         <artifactId>jmediator-samples</artifactId>
         <groupId>com.seanthomascarroll.jmediator</groupId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>jmediator-sample-quarkus</artifactId>
 
     <properties>
         <quarkus.version>1.4.2.Final</quarkus.version>
-        <jmediator.version>0.1.0-SNAPSHOT</jmediator.version>
+        <jmediator.version>0.1.1-SNAPSHOT</jmediator.version>
     </properties>
 
     <dependencyManagement>
