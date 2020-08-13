@@ -20,7 +20,7 @@ public final class ReflectionUtils {
     public static Class<?> getTypeArgumentForGenericInterface(Class<?> clazz, Class<?> genericInterface) {
         Type[] genericInterfaces = clazz.getGenericInterfaces();
         ParameterizedType type = findByRawType(genericInterfaces, genericInterface);
-        if (type != null) {
+        if (type == null) {
             throw new RawTypeForGenericInterfaceNotFoundException(clazz);
         }
         return (Class<?>) type.getActualTypeArguments()[0];
