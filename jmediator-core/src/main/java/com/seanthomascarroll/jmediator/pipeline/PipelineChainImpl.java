@@ -38,6 +38,7 @@ public class PipelineChainImpl<T extends Request> implements PipelineChain<T> {
         }
     }
 
+    @Override
     public RequestHandler<? super T, ?> getHandler() {
         return handler;
     }
