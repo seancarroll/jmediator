@@ -22,6 +22,15 @@ class DefaultServiceFactoryTest {
     }
 
     @Test
+    void shouldSuccessfullyRegisterInterfacesThatExtendRequestHandler() {
+        DefaultServiceFactory serviceFactory = new DefaultServiceFactory();
+
+        serviceFactory.register(new SomeCommandHandler());
+
+        assertNotNull(serviceFactory.getRequestHandler(SomeCommand.class));
+    }
+
+    @Test
     void shouldSuccessfullyRegisterPipelineBehavior() {
         DefaultServiceFactory serviceFactory = new DefaultServiceFactory();
 
@@ -41,6 +50,20 @@ class DefaultServiceFactoryTest {
 
         @Override
         public Void handle(SomeRequest request) {
+            return null;
+        }
+    }
+
+    interface CommandHandler<T extends Request, R> extends RequestHandler<T, R> {
+    }
+
+    static class SomeCommand implements Request {
+    }
+
+    static class SomeCommandHandler implements CommandHandler<SomeCommand, Void> {
+
+        @Override
+        public Void handle(SomeCommand request) {
             return null;
         }
     }

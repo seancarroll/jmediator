@@ -1,7 +1,6 @@
 package com.seanthomascarroll.jmediator.micronaut;
 
 import com.seanthomascarroll.jmediator.NoHandlerForRequestException;
-import com.seanthomascarroll.jmediator.ReflectionUtils;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestHandler;
 import com.seanthomascarroll.jmediator.ServiceFactory;
@@ -55,7 +54,7 @@ public class ApplicationContextServiceFactory implements ServiceFactory, Applica
         for (BeanDefinition<RequestHandler> beanDefinition : beanDefinitions) {
             try {
                 Class<?> handlerClass = Class.forName(beanDefinition.getName());
-                Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
+                Class<?> requestClass = getRequestClassForHandler(handlerClass);
                 // we only want to store the bean type as the actual handler should be managed by Micronaut and could have
                 // custom lifecycle or scope depending on how its registered
                 Class<?> previous = handlerClassNameToTypeMap.putIfAbsent(requestClass.getName(), beanDefinition.getBeanType());

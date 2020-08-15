@@ -1,7 +1,6 @@
 package com.seanthomascarroll.jmediator.spring;
 
 import com.seanthomascarroll.jmediator.NoHandlerForRequestException;
-import com.seanthomascarroll.jmediator.ReflectionUtils;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.RequestHandler;
 import com.seanthomascarroll.jmediator.ServiceFactory;
@@ -53,7 +52,8 @@ public class ClasspathScanningServiceFactory implements ServiceFactory, BeanFact
             try {
                 BeanDefinition requestHandler = configurableListableBeanFactory.getBeanDefinition(beanName);
                 Class<?> handlerClass = Class.forName(requestHandler.getBeanClassName());
-                Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handlerClass, RequestHandler.class);
+                Class<?> requestClass = getRequestClassForHandler(handlerClass);
+
                 // we only want to store the class name as the actual handler should be managed by Spring and could have
                 // custom lifecycle or scope depending on how it added to the injection binder
                 String previous = handlerClassNames.putIfAbsent(requestClass.getName(), beanName);

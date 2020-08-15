@@ -40,7 +40,7 @@ public class JmediatorFeature implements ServiceFactory, Feature {
         for (String className : requestHandlersNames) {
             try {
                 Class clazz = Class.forName(className);
-                Class requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(clazz, RequestHandler.class);
+                Class requestClass = getRequestClassForHandler(clazz);
                 // we only want to store the class name as the actual handler should be managed by Jersey's injection
                 // framework and could have custom lifecycle or scope depending on how it added to the injection binder
                 handlers.putIfAbsent(requestClass.getName(), clazz);

@@ -19,7 +19,7 @@ public class DefaultServiceFactory implements ServiceFactory {
      */
     public <T extends Request> void register(RequestHandler<? super T, ?> handler) {
         Ensure.notNull(handler);
-        Class<?> requestClass = ReflectionUtils.getTypeArgumentForGenericInterface(handler.getClass(), RequestHandler.class);
+        Class<?> requestClass = getRequestClassForHandler(handler.getClass());
         handlers.putIfAbsent(requestClass, handler);
     }
 
