@@ -22,7 +22,7 @@ public class PrometheusMetricsBehavior implements PipelineBehavior {
 
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
+    public Object handle(Request request, PipelineChain chain) {
         Summary.Timer timer = requestSummary.labels(request.getClass().getName()).startTimer();
         try {
             return chain.doBehavior(request);

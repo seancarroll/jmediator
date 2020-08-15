@@ -18,7 +18,7 @@ public class BeelineTraceBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
+    public Object handle(Request request, PipelineChain chain) {
         try (Span childSpan = beeline.startChildSpan(request.getClass().getName())) {
             return chain.doBehavior(request);
         }

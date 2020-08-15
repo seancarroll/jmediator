@@ -10,10 +10,10 @@ import java.util.List;
  *
  * @param <T>  The message type this pipeline chain can process
  */
-public class PipelineChainImpl<T extends Request> implements PipelineChain<T> {
+public class PipelineChainImpl implements PipelineChain {
 
     private final List<? extends PipelineBehavior> behaviors;
-    private final RequestHandler<? super T, ?> handler;
+    private final RequestHandler<? super Request, ?> handler;
     private int position = 0;
 
     /**
@@ -23,14 +23,14 @@ public class PipelineChainImpl<T extends Request> implements PipelineChain<T> {
      * @param behaviors  The behaviors composing the chain
      * @param handler  The handler for the request
      */
-    public PipelineChainImpl(List<? extends PipelineBehavior> behaviors, RequestHandler<? super T, ?> handler) {
+    public PipelineChainImpl(List<? extends PipelineBehavior> behaviors, RequestHandler<? super Request, ?> handler) {
         this.behaviors = behaviors;
         this.handler = handler;
     }
 
 
     @Override
-    public Object doBehavior(T request) {
+    public Object doBehavior(Request request) {
         if (position < behaviors.size()) {
             return behaviors.get(position++).handle(request, this);
         } else {
@@ -39,7 +39,7 @@ public class PipelineChainImpl<T extends Request> implements PipelineChain<T> {
     }
 
     @Override
-    public RequestHandler<? super T, ?> getHandler() {
+    public RequestHandler<? super Request, ?> getHandler() {
         return handler;
     }
 

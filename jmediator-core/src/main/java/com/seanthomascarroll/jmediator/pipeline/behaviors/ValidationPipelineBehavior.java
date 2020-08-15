@@ -34,7 +34,7 @@ public class ValidationPipelineBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
+    public Object handle(Request request, PipelineChain chain) {
         Validator validator = validatorFactory.getValidator();
 
         // TODO: check if JSR303 implementation (aka hibernate validator) is on the classpath.

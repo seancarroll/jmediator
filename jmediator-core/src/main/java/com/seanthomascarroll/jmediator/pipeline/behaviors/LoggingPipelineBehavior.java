@@ -42,7 +42,7 @@ public class LoggingPipelineBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
+    public Object handle(Request request, PipelineChain chain) {
         logger.info("incoming request {}", request);
         Object response = chain.doBehavior(request);
         logger.info("response {}", response);

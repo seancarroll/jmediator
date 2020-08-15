@@ -31,7 +31,7 @@ public class OpenTelemetryMetricsBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
+    public Object handle(Request request, PipelineChain chain) {
         // TODO: should we keep a map of bound metrics?
 
         Labels labels = Labels.of("request.name", request.getClass().getName());

@@ -18,7 +18,7 @@ public class HoneycombMetricsBehavior implements PipelineBehavior {
     }
 
     @Override
-    public <T extends Request> Object handle(T request, PipelineChain<T> chain) {
+    public Object handle(Request request, PipelineChain chain) {
         return timeCall(() -> chain.doBehavior(request), "timers." + request.getClass().getName());
     }
 
