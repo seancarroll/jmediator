@@ -52,7 +52,7 @@
         <opentelemetry.version>0.8.0</opentelemetry.version>
         <quarkus.version>1.4.2.Final</quarkus.version>
         <rest-assured.version>3.3.0</rest-assured.version>
-        <simpleclient.version>0.8.1</simpleclient.version>
+        <simpleclient.version>0.9.0</simpleclient.version>
         <slf4j.version>1.7.28</slf4j.version>
         <springframework.version>5.2.6.RELEASE</springframework.version>
         <springboot.version>2.2.7.RELEASE</springboot.version>
