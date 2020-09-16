@@ -1,6 +1,6 @@
 # jmediator
 
-[![Build Status](https://travis-ci.org/seancarroll/jmediator.svg?branch=master)](https://travis-ci.org/seancarroll/jmediator)
+[![Build Status](https://travis-ci.com/seancarroll/jmediator.svg?branch=master)](https://travis-ci.com/seancarroll/jmediator)
 [![codecov](https://codecov.io/gh/seancarroll/jmediator/branch/master/graph/badge.svg)](https://codecov.io/gh/seancarroll/jmediator)
 [![Maintainability](https://api.codeclimate.com/v1/badges/71e99c60f84bf8229d25/maintainability)](https://codeclimate.com/github/seancarroll/jmediator/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/71e99c60f84bf8229d25/test_coverage)](https://codeclimate.com/github/seancarroll/jmediator/test_coverage)
