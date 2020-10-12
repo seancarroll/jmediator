@@ -44,7 +44,7 @@ class OpenTelemetryMetricsBehaviorTest {
 
         List<MetricData> countMetrics = exporter.getFinishedMetricItems()
             .stream()
-            .filter(d -> "request.count".equals(d.getDescriptor().getName()))
+            .filter(d -> "request.count".equals(d.getName()))
             .collect(Collectors.toList());
 
         assertEquals(1, countMetrics.size());
@@ -54,7 +54,7 @@ class OpenTelemetryMetricsBehaviorTest {
 
         List<MetricData> timeMetrics = exporter.getFinishedMetricItems()
             .stream()
-            .filter(d -> "request.time".equals(d.getDescriptor().getName()) && !d.getPoints().isEmpty())
+            .filter(d -> "request.time".equals(d.getName()) && !d.getPoints().isEmpty())
             .collect(Collectors.toList());
 
         assertEquals(1, timeMetrics.size());

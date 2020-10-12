@@ -3,11 +3,10 @@ package com.seanthomascarroll.jmediator.pipeline.opentelemetry;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
-import io.opentelemetry.common.AttributeValue;
 import io.opentelemetry.common.Attributes;
 import io.opentelemetry.context.Scope;
 import io.opentelemetry.trace.Span;
-import io.opentelemetry.trace.Status;
+import io.opentelemetry.trace.StatusCanonicalCode;
 import io.opentelemetry.trace.Tracer;
 
 public class OpenTelemetryTracingBehavior implements PipelineBehavior {
@@ -25,7 +24,8 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
         try (Scope scope = tracer.withSpan(span)) {
             return chain.doBehavior(request);
         } catch (Exception ex) {
-            span.setStatus(Status.UNKNOWN.withDescription(ex.getLocalizedMessage()));
+            //StatusCanonicalCode.ERROR
+            span.setStatus(StatusCanonicalCode.ERROR, ex.getLocalizedMessage());
             span.addEvent("error", getExceptionDetails(ex));
             throw ex;
         } finally {
@@ -38,8 +38,8 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
         // currently not supported by opentelemetry. see https://github.com/open-telemetry/opentelemetry-java/issues/243
         // .setAttribute("error.stack", ex.getStackTrace());
         return Attributes.newBuilder()
-            .setAttribute("error.type", AttributeValue.stringAttributeValue(ex.getClass().getSimpleName()))
-            .setAttribute("error.message", AttributeValue.stringAttributeValue(ex.getMessage()))
+            .setAttribute("error.type", ex.getClass().getSimpleName())
+            .setAttribute("error.message", ex.getMessage())
             .build();
     }
 }

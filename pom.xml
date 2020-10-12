@@ -49,7 +49,7 @@
         <micrometer-core.version>1.5.4</micrometer-core.version>
         <micronaut.version>1.3.2</micronaut.version>
         <mockito.version>3.5.10</mockito.version>
-        <opentelemetry.version>0.8.0</opentelemetry.version>
+        <opentelemetry.version>0.9.1</opentelemetry.version>
         <quarkus.version>1.4.2.Final</quarkus.version>
         <rest-assured.version>3.3.0</rest-assured.version>
         <simpleclient.version>0.9.0</simpleclient.version>
@@ -200,6 +200,9 @@
 
         <profile>
             <id>sign</id>
+            <!--            <properties>-->
+            <!--                <gpg.keyname>EDA86E9FB607B5FC9223FB767D4868B53E31E7AD</gpg.keyname>-->
+            <!--            </properties>-->
             <build>
                 <plugins>
                     <plugin>

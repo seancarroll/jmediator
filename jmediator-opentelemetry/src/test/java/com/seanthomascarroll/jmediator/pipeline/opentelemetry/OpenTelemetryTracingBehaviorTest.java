@@ -8,13 +8,14 @@ import io.opentelemetry.exporters.inmemory.InMemorySpanExporter;
 import io.opentelemetry.sdk.trace.TracerSdkProvider;
 import io.opentelemetry.sdk.trace.data.SpanData;
 import io.opentelemetry.sdk.trace.export.SimpleSpanProcessor;
-import io.opentelemetry.trace.Status;
+import io.opentelemetry.trace.StatusCanonicalCode;
 import io.opentelemetry.trace.Tracer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static io.opentelemetry.common.AttributeKey.stringKey;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -60,7 +61,7 @@ class OpenTelemetryTracingBehaviorTest {
         assertNotNull(spanItems);
         assertEquals(1, spanItems.size());
         assertEquals("Ping", spanItems.get(0).getName());
-        assertEquals(Status.CanonicalCode.UNKNOWN, spanItems.get(0).getStatus().getCanonicalCode());
+        assertEquals(StatusCanonicalCode.ERROR, spanItems.get(0).getStatus().getCanonicalCode());
         assertEquals("an error occurred", spanItems.get(0).getStatus().getDescription());
 
         List<SpanData.Event> events = spanItems.get(0).getEvents();
@@ -69,8 +70,8 @@ class OpenTelemetryTracingBehaviorTest {
         SpanData.Event error = events.get(0);
         assertEquals("error", error.getName());
         assertEquals(2, error.getAttributes().size());
-        assertEquals("RuntimeException", error.getAttributes().get("error.type").getStringValue());
-        assertEquals("an error occurred", error.getAttributes().get("error.message").getStringValue());
+        assertEquals("RuntimeException", error.getAttributes().get(stringKey("error.type")));
+        assertEquals("an error occurred", error.getAttributes().get(stringKey("error.message")));
     }
 
     private static class FaultyPingHandler implements RequestHandler<Ping, Pong> {
