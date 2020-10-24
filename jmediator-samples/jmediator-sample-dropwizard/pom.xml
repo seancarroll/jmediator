@@ -12,7 +12,7 @@
     <artifactId>jmediator-sample-dropwizard</artifactId>
 
     <properties>
-        <dropwizard.version>2.0.9</dropwizard.version>
+        <dropwizard.version>2.0.14</dropwizard.version>
     </properties>
 
     <dependencyManagement>
