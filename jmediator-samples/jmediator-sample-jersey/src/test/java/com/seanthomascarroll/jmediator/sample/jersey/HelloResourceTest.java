@@ -1,13 +1,11 @@
 package com.seanthomascarroll.jmediator.sample.jersey;
 
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // https://stackoverflow.com/questions/28436040/hk2-is-not-injecting-the-httpservletrequest-with-jersey/28437888#28437888

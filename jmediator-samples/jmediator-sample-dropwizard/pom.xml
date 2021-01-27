@@ -12,40 +12,37 @@
     <artifactId>jmediator-sample-dropwizard</artifactId>
 
     <properties>
-        <dropwizard.version>2.0.9</dropwizard.version>
+        <dropwizard.version>2.0.17</dropwizard.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>2.10.0</version>
-                <scope>import</scope>
+                <groupId>com.seanthomascarroll.jmediator</groupId>
+                <artifactId>jmediator-jersey</artifactId>
+                <version>0.2.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-bom</artifactId>
+                <version>${dropwizard.version}</version>
                 <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <dependency>
-            <groupId>com.seanthomascarroll.jmediator</groupId>
-            <artifactId>jmediator-jersey</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
-            <version>${dropwizard.version}</version>
         </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-testing</artifactId>
-            <version>${dropwizard.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

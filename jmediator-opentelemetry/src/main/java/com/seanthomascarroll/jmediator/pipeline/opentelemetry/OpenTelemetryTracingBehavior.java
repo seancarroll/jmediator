@@ -3,11 +3,11 @@ package com.seanthomascarroll.jmediator.pipeline.opentelemetry;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
-import io.opentelemetry.common.Attributes;
+import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.StatusCode;
+import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Scope;
-import io.opentelemetry.trace.Span;
-import io.opentelemetry.trace.StatusCanonicalCode;
-import io.opentelemetry.trace.Tracer;
 
 public class OpenTelemetryTracingBehavior implements PipelineBehavior {
 
@@ -20,13 +20,11 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
     @Override
     public Object handle(Request request, PipelineChain chain) {
         Span span = tracer.spanBuilder(request.getClass().getSimpleName()).startSpan();
-
-        try (Scope scope = tracer.withSpan(span)) {
+        try (Scope scope = span.makeCurrent()) {
             return chain.doBehavior(request);
         } catch (Exception ex) {
-            //StatusCanonicalCode.ERROR
-            span.setStatus(StatusCanonicalCode.ERROR, ex.getLocalizedMessage());
-            span.addEvent("error", getExceptionDetails(ex));
+            span.recordException(ex, getExceptionDetails(ex));
+            span.setStatus(StatusCode.ERROR, ex.getLocalizedMessage());
             throw ex;
         } finally {
             span.end();
@@ -34,12 +32,9 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
     }
 
     private Attributes getExceptionDetails(Exception ex) {
-        // TODO: add stacktrace as attribute
-        // currently not supported by opentelemetry. see https://github.com/open-telemetry/opentelemetry-java/issues/243
-        // .setAttribute("error.stack", ex.getStackTrace());
-        return Attributes.newBuilder()
-            .setAttribute("error.type", ex.getClass().getSimpleName())
-            .setAttribute("error.message", ex.getMessage())
+        return Attributes.builder()
+            .put("error.type", ex.getClass().getSimpleName())
+            .put("error.message", ex.getMessage())
             .build();
     }
 }

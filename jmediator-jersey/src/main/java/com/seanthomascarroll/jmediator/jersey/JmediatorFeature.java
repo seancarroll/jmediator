@@ -3,12 +3,12 @@ package com.seanthomascarroll.jmediator.jersey;
 import com.seanthomascarroll.jmediator.*;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import io.github.classgraph.ClassGraph;
+import jakarta.ws.rs.core.Feature;
+import jakarta.ws.rs.core.FeatureContext;
 import org.glassfish.jersey.InjectionManagerProvider;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.internal.inject.InjectionManager;
 
-import javax.ws.rs.core.Feature;
-import javax.ws.rs.core.FeatureContext;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
