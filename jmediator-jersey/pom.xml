@@ -28,11 +28,18 @@
 <!--        </dependency>-->
 
         <!-- jersey is bringing in jakarta.ws.rs-api 2.1.6 for some reason -->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.ws.rs</groupId>-->
+<!--            <artifactId>jakarta.ws.rs-api</artifactId>-->
+<!--            <version>3.0.0</version>-->
+<!--        </dependency>-->
+        <!-- without this build fails for java.lang.NoClassDefFoundError: jakarta.annotation.Priority -->
         <dependency>
-            <groupId>jakarta.ws.rs</groupId>
-            <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.0.0</version>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.0.0</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
@@ -50,6 +57,10 @@
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.github.classgraph</groupId>
@@ -61,16 +72,17 @@
             <artifactId>jersey-test-framework-core</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--
+        was initially using jersey-test-framework-provider-jetty but was failing because
+        it said only JDK 11+ was supported despite that i'm using JDK 11.
+         -->
         <dependency>
             <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-            <artifactId>jersey-test-framework-provider-jetty</artifactId>
+            <artifactId>jersey-test-framework-provider-inmemory</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <scope>Test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
