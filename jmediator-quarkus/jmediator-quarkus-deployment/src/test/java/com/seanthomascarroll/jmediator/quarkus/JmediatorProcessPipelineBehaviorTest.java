@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JmediatorProcessPipelineBehaviorTest {
 
-    @Inject
-    ServiceFactory serviceFactory;
-
     @RegisterExtension
     static final QuarkusUnitTest CONFIG = new QuarkusUnitTest()
         .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
-        .addClass(JmediatorBehaviorFactory.class));
+            .addClass(JmediatorBehaviorFactory.class));
+
+    @Inject
+    ServiceFactory serviceFactory;
 
     @Test
     void shouldRegisterPipelineBehaviors() {

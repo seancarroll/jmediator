@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class JmediatorProcessorRequestHandlerTest {
 
+    @RegisterExtension
+    static final QuarkusUnitTest CONFIG = new QuarkusUnitTest()
+        .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
+
     @Inject
     HelloRequestHandler handler;
-
-    @RegisterExtension
-    static final QuarkusUnitTest config = new QuarkusUnitTest()
-        .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
     @Test
     void shouldRegisterRequestHandler() {
