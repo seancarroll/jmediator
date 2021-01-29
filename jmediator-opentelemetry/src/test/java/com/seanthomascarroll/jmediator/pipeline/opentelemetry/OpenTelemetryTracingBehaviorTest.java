@@ -69,10 +69,11 @@ class OpenTelemetryTracingBehaviorTest {
         assertNotNull(events);
         assertEquals(1, events.size());
         EventData error = events.get(0);
-        assertEquals("error", error.getName());
-        assertEquals(2, error.getAttributes().size());
-        assertEquals("RuntimeException", error.getAttributes().get(stringKey("error.type")));
-        assertEquals("an error occurred", error.getAttributes().get(stringKey("error.message")));
+        assertEquals("exception", error.getName());
+        assertEquals(3, error.getAttributes().size());
+        assertEquals("java.lang.RuntimeException", error.getAttributes().get(stringKey("exception.type")));
+        assertEquals("an error occurred", error.getAttributes().get(stringKey("exception.message")));
+        assertNotNull(error.getAttributes().get(stringKey("exception.stacktrace")));
     }
 
     private static class FaultyPingHandler implements RequestHandler<Ping, Pong> {

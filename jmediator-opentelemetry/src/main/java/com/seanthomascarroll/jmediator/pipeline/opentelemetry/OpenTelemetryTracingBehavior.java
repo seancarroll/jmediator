@@ -23,18 +23,11 @@ public class OpenTelemetryTracingBehavior implements PipelineBehavior {
         try (Scope scope = span.makeCurrent()) {
             return chain.doBehavior(request);
         } catch (Exception ex) {
-            span.recordException(ex, getExceptionDetails(ex));
+            span.recordException(ex);
             span.setStatus(StatusCode.ERROR, ex.getLocalizedMessage());
             throw ex;
         } finally {
             span.end();
         }
-    }
-
-    private Attributes getExceptionDetails(Exception ex) {
-        return Attributes.builder()
-            .put("error.type", ex.getClass().getSimpleName())
-            .put("error.message", ex.getMessage())
-            .build();
     }
 }
