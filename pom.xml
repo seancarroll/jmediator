@@ -15,7 +15,7 @@
     <modules>
         <module>jmediator-core</module>
         <module>jmediator-spring</module>
-        <module>jmediator-jersey</module>
+<!--        <module>jmediator-jersey</module>-->
         <module>jmediator-bom</module>
 <!--        <module>jmediator-samples</module>-->
         <module>jmediator-prometheus</module>
@@ -51,7 +51,7 @@
         <mockito.version>3.6.28</mockito.version>
         <opentelemetry.version>0.14.1</opentelemetry.version>
         <opentelemetry-exporters-inmemory.version>0.9.1</opentelemetry-exporters-inmemory.version>
-        <quarkus.version>1.9.2.Final</quarkus.version>
+        <quarkus.version>1.11.1.Final</quarkus.version>
         <rest-assured.version>4.3.3</rest-assured.version>
         <simpleclient.version>0.9.0</simpleclient.version>
         <slf4j.version>1.7.30</slf4j.version>
@@ -344,39 +344,46 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-core</artifactId>
-                <version>${quarkus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-core-deployment</artifactId>
-                <version>${quarkus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-arc-deployment</artifactId>
-                <version>${quarkus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-arc-processor</artifactId>
-                <version>${quarkus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-junit5</artifactId>
-                <version>${quarkus.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-junit5-internal</artifactId>
-                <version>${quarkus.version}</version>
-                <scope>test</scope>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.quarkus</groupId>-->
+<!--                <artifactId>quarkus-core</artifactId>-->
+<!--                <version>${quarkus.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>io.quarkus</groupId>-->
+<!--                <artifactId>quarkus-core-deployment</artifactId>-->
+<!--                <version>${quarkus.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>io.quarkus</groupId>-->
+<!--                <artifactId>quarkus-arc-deployment</artifactId>-->
+<!--                <version>${quarkus.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>io.quarkus</groupId>-->
+<!--                <artifactId>quarkus-arc-processor</artifactId>-->
+<!--                <version>${quarkus.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>io.quarkus</groupId>-->
+<!--                <artifactId>quarkus-junit5</artifactId>-->
+<!--                <version>${quarkus.version}</version>-->
+<!--                <scope>test</scope>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>io.quarkus</groupId>-->
+<!--                <artifactId>quarkus-junit5-internal</artifactId>-->
+<!--                <version>${quarkus.version}</version>-->
+<!--                <scope>test</scope>-->
+<!--            </dependency>-->
             <!-- used by quarkus test -->
             <dependency>
                 <groupId>io.rest-assured</groupId>
