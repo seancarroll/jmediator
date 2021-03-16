@@ -82,7 +82,7 @@
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.test-framework.providers</groupId>
-            <artifactId>jersey-test-framework-provider-jetty</artifactId>
+            <artifactId>jersey-test-framework-provider-inmemory</artifactId>
             <version>${jersey-server.version}</version>
             <scope>test</scope>
         </dependency>
