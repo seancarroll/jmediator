@@ -17,7 +17,7 @@
         <module>jmediator-spring</module>
         <module>jmediator-jersey</module>
         <module>jmediator-bom</module>
-<!--        <module>jmediator-samples</module>-->
+        <module>jmediator-samples</module>
         <module>jmediator-prometheus</module>
         <module>jmediator-micrometer</module>
         <module>jmediator-micronaut</module>
