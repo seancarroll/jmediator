@@ -3,7 +3,6 @@ package com.seanthomascarroll.jmediator.pipeline.opentelemetry;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
-import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
 import io.opentelemetry.api.trace.Tracer;

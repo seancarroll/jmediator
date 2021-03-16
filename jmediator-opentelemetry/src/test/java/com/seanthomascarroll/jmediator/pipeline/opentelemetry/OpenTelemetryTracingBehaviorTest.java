@@ -23,14 +23,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OpenTelemetryTracingBehaviorTest {
 
-    private final SdkTracerProvider tracerSdkProvider = SdkTracerProvider.builder().build();
-    private final Tracer tracer = tracerSdkProvider.get("test");
+    private SdkTracerProvider tracerSdkProvider;
+    private Tracer tracer;
     private final InMemorySpanExporter exporter = InMemorySpanExporter.create();
     private OpenTelemetryTracingBehavior behavior;
 
     @BeforeEach
     public void setUp() {
-        tracerSdkProvider.addSpanProcessor(SimpleSpanProcessor.builder(exporter).build());
+        tracerSdkProvider = SdkTracerProvider.builder().addSpanProcessor(SimpleSpanProcessor.create(exporter)).build();
+        tracer = tracerSdkProvider.get("test");
         behavior = new OpenTelemetryTracingBehavior(tracer);
     }
 

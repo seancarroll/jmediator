@@ -5,9 +5,9 @@ import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import io.opentelemetry.exporters.inmemory.InMemoryMetricExporter;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
-import io.opentelemetry.sdk.metrics.data.LongPoint;
+import io.opentelemetry.sdk.metrics.data.DoubleSummaryPointData;
+import io.opentelemetry.sdk.metrics.data.LongPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
-import io.opentelemetry.sdk.metrics.data.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,7 +49,7 @@ class OpenTelemetryMetricsBehaviorTest {
 
         assertEquals(1, countMetrics.size());
         assertEquals(1, countMetrics.get(0).getLongSumData().getPoints().size());
-        LongPoint countMetricDataPoint = countMetrics.get(0).getLongSumData().getPoints().iterator().next();
+        LongPointData countMetricDataPoint = countMetrics.get(0).getLongSumData().getPoints().iterator().next();
         assertEquals(2, countMetricDataPoint.getValue());
 
         List<MetricData> timeMetrics = exporter.getFinishedMetricItems()
@@ -59,7 +59,7 @@ class OpenTelemetryMetricsBehaviorTest {
 
         assertEquals(1, timeMetrics.size());
         assertEquals(1, timeMetrics.get(0).getDoubleSummaryData().getPoints().size());
-        Point timeMetricDataPoint = timeMetrics.get(0).getDoubleSummaryData().getPoints().iterator().next();
+        DoubleSummaryPointData timeMetricDataPoint = timeMetrics.get(0).getDoubleSummaryData().getPoints().iterator().next();
         assertEquals(1_000, (timeMetricDataPoint.getEpochNanos() - timeMetricDataPoint.getStartEpochNanos()) / 1e6, 300);
     }
 

@@ -3,11 +3,11 @@ package com.seanthomascarroll.jmediator.pipeline.opentelemetry;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
-import io.opentelemetry.api.common.Labels;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.LongValueRecorder;
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.api.metrics.MeterProvider;
+import io.opentelemetry.api.metrics.common.Labels;
 
 public class OpenTelemetryMetricsBehavior implements PipelineBehavior {
     private final Meter meter;
