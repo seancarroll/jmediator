@@ -195,9 +195,6 @@
 
         <profile>
             <id>sign</id>
-            <!--            <properties>-->
-            <!--                <gpg.keyname>EDA86E9FB607B5FC9223FB767D4868B53E31E7AD</gpg.keyname>-->
-            <!--            </properties>-->
             <build>
                 <plugins>
                     <plugin>
