@@ -3,8 +3,11 @@ package com.seanthomascarroll.jmediator.pipeline.behaviors;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
-
-import javax.validation.*;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import java.util.Set;
 
 /**
@@ -18,7 +21,7 @@ public class ValidationPipelineBehavior implements PipelineBehavior {
     /**
      * Initializes a validation behavior using a default ValidatorFactory
      *
-     * @see javax.validation.Validation#buildDefaultValidatorFactory()
+     * @see jakarta.validation.Validation#buildDefaultValidatorFactory()
      */
     public ValidationPipelineBehavior() {
         this(Validation.buildDefaultValidatorFactory());
