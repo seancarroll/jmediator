@@ -45,7 +45,7 @@
         <jakarta.validation-api.version>3.0.0</jakarta.validation-api.version>
         <jakarta.el.version>4.0.0</jakarta.el.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-        <jersey-server.version>3.0.1</jersey-server.version>
+        <jersey-server.version>3.0.2</jersey-server.version>
         <junit.version>5.7.0</junit.version>
         <log4j.version>2.14.0</log4j.version>
         <micrometer-core.version>1.6.4</micrometer-core.version>
