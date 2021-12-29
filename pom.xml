@@ -47,7 +47,7 @@
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <jersey-server.version>3.0.1</jersey-server.version>
         <junit.version>5.7.0</junit.version>
-        <log4j.version>2.15.0</log4j.version>
+        <log4j.version>2.17.1</log4j.version>
         <micrometer-core.version>1.6.4</micrometer-core.version>
         <micronaut.version>2.5.4</micronaut.version>
         <mockito.version>3.8.0</mockito.version>
