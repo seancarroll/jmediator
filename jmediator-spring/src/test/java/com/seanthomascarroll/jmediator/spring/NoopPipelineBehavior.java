@@ -3,8 +3,7 @@ package com.seanthomascarroll.jmediator.spring;
 import com.seanthomascarroll.jmediator.Request;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import com.seanthomascarroll.jmediator.pipeline.PipelineChain;
-
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 @Named
 public class NoopPipelineBehavior implements PipelineBehavior {

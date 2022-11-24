@@ -4,6 +4,7 @@ import com.seanthomascarroll.jmediator.NoHandlerForRequestException;
 import com.seanthomascarroll.jmediator.RequestHandler;
 import com.seanthomascarroll.jmediator.ServiceFactoryException;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.FatalBeanException;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.Map;
 

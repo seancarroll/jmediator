@@ -1,8 +1,7 @@
 package com.seanthomascarroll.jmediator.spring;
 
 import com.seanthomascarroll.jmediator.RequestHandler;
-
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 @Named
 public class PingHandler implements RequestHandler<Ping, String> {
