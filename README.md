@@ -14,7 +14,7 @@ Simple in-process mediator implementation.
 
 ## Prerequisites
 
-Requires Java 8
+Requires Java 11
 
 ## Examples
 

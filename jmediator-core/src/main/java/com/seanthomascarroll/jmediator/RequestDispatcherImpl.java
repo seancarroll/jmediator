@@ -26,10 +26,10 @@ public class RequestDispatcherImpl implements RequestDispatcher {
 
     @SuppressWarnings({"unchecked"})
     private <T extends Request, R> R doSend(T request) {
-        RequestHandler<? super Request, ?> handler = serviceFactory.getRequestHandler(request.getClass());
+        RequestHandler<T, ?> handler = serviceFactory.getRequestHandler(request.getClass());
         List<PipelineBehavior> pipelineBehaviors = serviceFactory.getPipelineBehaviors();
 
-        PipelineChain chain = new PipelineChainImpl(pipelineBehaviors, handler);
+        PipelineChain<T> chain = new PipelineChainImpl<>(pipelineBehaviors, handler);
 
         R response = (R) chain.doBehavior(request);
 

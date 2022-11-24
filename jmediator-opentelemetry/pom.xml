@@ -37,6 +37,10 @@
             <groupId>io.opentelemetry</groupId>
             <artifactId>opentelemetry-exporters-inmemory</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-sdk-testing</artifactId>
+        </dependency>
 
     </dependencies>
 

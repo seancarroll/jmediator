@@ -14,7 +14,6 @@ import java.util.Map;
  *
  */
 public class HoneycombContext {
-
     private final Map<String, Object> contextualData;
     private final Event event;
 

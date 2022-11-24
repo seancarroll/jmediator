@@ -10,9 +10,7 @@ import io.honeycomb.beeline.tracing.Span;
  *
  */
 public class BeelineTraceBehavior implements PipelineBehavior {
-
     private final Beeline beeline;
-
     public BeelineTraceBehavior(Beeline beeline) {
         this.beeline = beeline;
     }

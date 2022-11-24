@@ -2,7 +2,7 @@ package com.seanthomascarroll.jmediator.sample.dropwizard;
 
 import com.seanthomascarroll.jmediator.RequestHandler;
 
-import javax.inject.Named;
+import jakarta.inject.Named;
 
 @Named
 public class HelloRequestHandler implements RequestHandler<HelloRequest, String> {

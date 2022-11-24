@@ -15,5 +15,5 @@ public interface PipelineBehavior {
      * @param <T>  The message type this behavior chain can process
      * @return Response from the handler
      */
-    <T extends Request> Object handle(Request request, PipelineChain chain);
+    <T extends Request> Object handle(T request, PipelineChain<T> chain);
 }

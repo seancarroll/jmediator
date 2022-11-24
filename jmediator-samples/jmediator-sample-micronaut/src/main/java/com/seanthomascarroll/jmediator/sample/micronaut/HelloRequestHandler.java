@@ -2,7 +2,7 @@ package com.seanthomascarroll.jmediator.sample.micronaut;
 
 import com.seanthomascarroll.jmediator.RequestHandler;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class HelloRequestHandler implements RequestHandler<HelloRequest, String> {

@@ -1,5 +1,6 @@
 package com.seanthomascarroll.jmediator.sample.spring;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ public class SampleSpringController {
 
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String hello(HelloRequest request) {
+    public String hello(HelloRequest request) throws JsonProcessingException {
         return dispatcher.send(request);
     }
 }

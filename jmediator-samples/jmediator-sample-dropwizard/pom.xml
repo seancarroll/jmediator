@@ -12,17 +12,11 @@
     <artifactId>jmediator-sample-dropwizard</artifactId>
 
     <properties>
-        <dropwizard.version>2.0.17</dropwizard.version>
+        <dropwizard.version>4.0.0-beta.3</dropwizard.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.seanthomascarroll.jmediator</groupId>
-                <artifactId>jmediator-jersey</artifactId>
-                <version>0.2.0-SNAPSHOT</version>
-            </dependency>
-
             <dependency>
                 <groupId>io.dropwizard</groupId>
                 <artifactId>dropwizard-bom</artifactId>
@@ -35,8 +29,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.seanthomascarroll.jmediator</groupId>
+            <artifactId>jmediator-jersey</artifactId>
+            <version>0.2.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
         </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>

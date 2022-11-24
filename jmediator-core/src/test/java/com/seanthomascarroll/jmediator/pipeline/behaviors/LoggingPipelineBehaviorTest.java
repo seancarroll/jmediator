@@ -15,7 +15,6 @@ import static org.mockito.Mockito.when;
 
 
 class LoggingPipelineBehaviorTest {
-
     private LoggingPipelineBehavior behavior;
     private PipelineChain pipelineChain;
 
@@ -64,6 +63,7 @@ class LoggingPipelineBehaviorTest {
         behavior.handle(request, pipelineChain);
 
         ListAppender appender = getListAppender("com.seanthomascarroll.jmediator.pipeline.behaviors");
+
         assertEquals(2, appender.getMessages().size());
         // TODO: use hamcrest or assertj...probably assertj
         assertTrue(appender.getMessages().get(0).contains("Hello"));

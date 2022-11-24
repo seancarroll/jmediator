@@ -4,8 +4,7 @@ import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import com.seanthomascarroll.jmediator.ServiceFactory;
 import io.micronaut.context.annotation.Factory;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Factory
 public class JmediatorFactory {

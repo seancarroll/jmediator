@@ -12,6 +12,7 @@ import com.seanthomascarroll.jmediator.pipeline.behaviors.LoggingPipelineBehavio
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.event.StartupEvent;
+import io.micronaut.inject.annotation.AnnotationMetadataSupport;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ApplicationContextServiceFactoryTest {
-
     @Test
     void shouldSuccessfullyGetRegisteredRequestHandler() {
         ApplicationContext context = ApplicationContext.run();

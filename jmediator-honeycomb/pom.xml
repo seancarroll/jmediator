@@ -20,11 +20,6 @@
             <groupId>io.honeycomb.beeline</groupId>
             <artifactId>beeline-core</artifactId>
         </dependency>
-
     </dependencies>
-
-    <build>
-
-    </build>
 
 </project>

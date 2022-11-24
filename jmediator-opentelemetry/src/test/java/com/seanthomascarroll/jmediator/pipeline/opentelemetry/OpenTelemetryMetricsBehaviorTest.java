@@ -4,8 +4,9 @@ import com.seanthomascarroll.jmediator.DefaultServiceFactory;
 import com.seanthomascarroll.jmediator.RequestDispatcher;
 import com.seanthomascarroll.jmediator.RequestDispatcherImpl;
 import io.opentelemetry.exporters.inmemory.InMemoryMetricExporter;
+import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
-import io.opentelemetry.sdk.metrics.data.DoubleSummaryPointData;
+import io.opentelemetry.sdk.metrics.data.SummaryPointData;
 import io.opentelemetry.sdk.metrics.data.LongPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,12 +21,24 @@ class OpenTelemetryMetricsBehaviorTest {
 
     private InMemoryMetricExporter exporter;
     private OpenTelemetryMetricsBehavior behavior;
-    private final SdkMeterProvider sdkMeterProvider = SdkMeterProvider.builder().build();
+    private SdkMeterProvider sdkMeterProvider;
+    private InMemoryMetricReader sdkMeterReader;
+
+//    private final SdkMeterProviderBuilder sdkMeterProviderBuilder =
+//        SdkMeterProvider.builder().setClock(testClock).setResource(RESOURCE);
 
     @BeforeEach
     void setUp() {
         exporter = InMemoryMetricExporter.create();
-        behavior = new OpenTelemetryMetricsBehavior(sdkMeterProvider);
+        sdkMeterReader = InMemoryMetricReader.create();
+        sdkMeterProvider =
+            SdkMeterProvider.builder().registerMetricReader(sdkMeterReader).build();
+
+
+//        behavior = new OpenTelemetryMetricsBehavior(sdkMeterProvider);
+//        InMemoryMetricReader sdkMeterReader = InMemoryMetricReader.create();
+//        SdkMeterProvider sdkMeterProvider =
+//            sdkMeterProviderBuilder.registerMetricReader(sdkMeterReader).build();
     }
 
     // TODO: this probably should be two tests but at the moment I don't see an easy
@@ -40,7 +53,9 @@ class OpenTelemetryMetricsBehaviorTest {
         dispatcher.send(new Ping());
         dispatcher.send(new Ping());
 
-        exporter.export(sdkMeterProvider.collectAllMetrics());
+
+//        exporter.export(sdkMeterProvider.collectAllMetrics());
+        sdkMeterReader.collectAllMetrics();
 
         List<MetricData> countMetrics = exporter.getFinishedMetricItems()
             .stream()
@@ -58,8 +73,8 @@ class OpenTelemetryMetricsBehaviorTest {
             .collect(Collectors.toList());
 
         assertEquals(1, timeMetrics.size());
-        assertEquals(1, timeMetrics.get(0).getDoubleSummaryData().getPoints().size());
-        DoubleSummaryPointData timeMetricDataPoint = timeMetrics.get(0).getDoubleSummaryData().getPoints().iterator().next();
+        assertEquals(1, timeMetrics.get(0).getSummaryData().getPoints().size());
+        SummaryPointData timeMetricDataPoint = timeMetrics.get(0).getSummaryData().getPoints().iterator().next();
         assertEquals(1_000, (timeMetricDataPoint.getEpochNanos() - timeMetricDataPoint.getStartEpochNanos()) / 1e6, 300);
     }
 
