@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ClasspathScanningServiceFactory implements ServiceFactory, BeanFactoryPostProcessor {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathScanningServiceFactory.class);
 
     private final ConfigurableListableBeanFactory beanFactory;
@@ -48,7 +47,7 @@ public class ClasspathScanningServiceFactory implements ServiceFactory, BeanFact
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
         String[] requestHandlersNames = configurableListableBeanFactory.getBeanNamesForType(RequestHandler.class);
         for (String beanName : requestHandlersNames) {
-            LOGGER.debug("registering request handler {} with jmediator", beanName);
+            LOGGER.info("registering request handler {} with jmediator", beanName);
             try {
                 BeanDefinition requestHandler = configurableListableBeanFactory.getBeanDefinition(beanName);
                 Class<?> handlerClass = Class.forName(requestHandler.getBeanClassName());
