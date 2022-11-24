@@ -46,7 +46,7 @@
         <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
         <jakarta.el.version>4.0.2</jakarta.el.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-        <jakarta.servlet-api>6.0.0</jakarta.servlet-api>
+        <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
         <jersey-server.version>3.1.0</jersey-server.version>
         <junit.version>5.9.1</junit.version>
         <log4j.version>2.19.0</log4j.version>
@@ -289,7 +289,7 @@
             <dependency>
                 <groupId>jakarta.servlet</groupId>
                 <artifactId>jakarta.servlet-api</artifactId>
-                <version>6.0.0</version>
+                <version>${jakarta.servlet-api.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
