@@ -3,6 +3,7 @@ package com.seanthomascarroll.jmediator.jersey;
 import com.seanthomascarroll.jmediator.*;
 import com.seanthomascarroll.jmediator.pipeline.PipelineBehavior;
 import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
 import jakarta.ws.rs.core.Feature;
 import jakarta.ws.rs.core.FeatureContext;
 import org.glassfish.jersey.InjectionManagerProvider;
@@ -89,9 +90,10 @@ public class JmediatorFeature implements ServiceFactory, Feature {
     }
 
     private static List<String> getRequestHandlerClassNames(String... packages) {
-        return new ClassGraph().whitelistPackages(packages)
-            .scan()
-            .getClassesImplementing(RequestHandler.class.getName())
-            .getNames();
+        try (ScanResult scanResult = new ClassGraph().acceptPackages(packages).scan()) {
+            return scanResult
+                .getClassesImplementing(RequestHandler.class.getName())
+                .getNames();
+        }
     }
 }
