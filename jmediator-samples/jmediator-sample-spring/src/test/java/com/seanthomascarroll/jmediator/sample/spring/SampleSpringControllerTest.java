@@ -1,6 +1,6 @@
 package com.seanthomascarroll.jmediator.sample.spring;
 
-import jakarta.inject.Inject;
+import javax.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class SampleSpringControllerTest {
 
-    @Autowired
+    @Inject
     private MockMvc mvc;
 
     @Test
