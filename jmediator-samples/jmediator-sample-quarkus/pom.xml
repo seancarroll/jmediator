@@ -12,7 +12,7 @@
     <artifactId>jmediator-sample-quarkus</artifactId>
 
     <properties>
-        <quarkus.version>1.10.5.Final</quarkus.version>
+        <quarkus.version>2.14.1.Final</quarkus.version>
         <jmediator.version>0.2.0-SNAPSHOT</jmediator.version>
     </properties>
 

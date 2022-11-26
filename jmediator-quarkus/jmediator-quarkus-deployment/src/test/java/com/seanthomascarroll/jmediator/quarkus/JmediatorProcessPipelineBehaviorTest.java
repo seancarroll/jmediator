@@ -39,12 +39,4 @@ class JmediatorProcessPipelineBehaviorTest {
         }
     }
 
-    class JmediatorBehaviorFactory {
-
-        @Produces
-        public LoggingPipelineBehavior nullBehavior() {
-            return new LoggingPipelineBehavior();
-        }
-
-    }
 }

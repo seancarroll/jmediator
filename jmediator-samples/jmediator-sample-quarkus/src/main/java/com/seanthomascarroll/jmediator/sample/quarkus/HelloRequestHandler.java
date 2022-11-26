@@ -2,7 +2,7 @@ package com.seanthomascarroll.jmediator.sample.quarkus;
 
 import com.seanthomascarroll.jmediator.RequestHandler;
 
-import jakarta.inject.Singleton;
+import javax.inject.Singleton;
 
 @Singleton
 public class HelloRequestHandler implements RequestHandler<HelloRequest, String> {
