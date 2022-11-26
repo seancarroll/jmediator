@@ -38,7 +38,7 @@
         <checker-qual.version>3.26.0</checker-qual.version>
         <classgraph.version>4.8.151</classgraph.version>
         <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
-        <hk2.version>3.0.3</hk2.version>
+        <hk2.version>2.6.1</hk2.version>
         <honeycomb.version>1.5.3</honeycomb.version>
         <honeycomb.beeline.version>2.1.1</honeycomb.beeline.version>
         <jackson.version>2.14.0</jackson.version>
@@ -47,8 +47,11 @@
         <jakarta.el.version>4.0.2</jakarta.el.version>
         <jakarta.inject-api.version>2.0.1</jakarta.inject-api.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+        <jaxrs.api.impl.version>2.1.6</jaxrs.api.impl.version>
+        <servlet4.version>4.0.4</servlet4.version>
+        <servlet5.version>5.0.2</servlet5.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
-        <jersey-server.version>3.1.0</jersey-server.version>
+        <jersey-server.version>2.37</jersey-server.version>
         <junit.version>5.9.1</junit.version>
         <log4j.version>2.19.0</log4j.version>
         <micrometer-core.version>1.10.1</micrometer-core.version>
@@ -57,12 +60,12 @@
         <opentelemetry.version>1.19.0</opentelemetry.version>
         <opentelemetry-metris-api.version>1.10.0-alpha-rc.1	</opentelemetry-metris-api.version>
         <opentelemetry-exporters-inmemory.version>0.9.1</opentelemetry-exporters-inmemory.version>
-        <quarkus.version>2.13.1.Final</quarkus.version>
+        <quarkus.version>2.14.1.Final</quarkus.version>
         <rest-assured.version>5.2.0</rest-assured.version>
         <simpleclient.version>0.16.0</simpleclient.version>
         <slf4j.version>2.0.4</slf4j.version>
         <springframework.version>6.0.0</springframework.version>
-        <springboot.version>2.7.5</springboot.version>
+        <springboot.version>3.0.0</springboot.version>
 
         <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
         <dependency-check-maven.version>7.2.1</dependency-check-maven.version>

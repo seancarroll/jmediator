@@ -1,7 +1,7 @@
 package com.seanthomascarroll.jmediator.jersey;
 
 import com.seanthomascarroll.jmediator.RequestHandler;
-import jakarta.inject.Named;
+import javax.inject.Named;
 
 @Named
 public class HelloRequestHandler implements RequestHandler<HelloRequest, String> {

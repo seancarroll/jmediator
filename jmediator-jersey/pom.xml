@@ -51,14 +51,52 @@
             <groupId>com.seanthomascarroll.jmediator</groupId>
             <artifactId>jmediator-core</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet</groupId>-->
+<!--            <artifactId>javax.servlet-api</artifactId>-->
+<!--        </dependency>-->
+        <!-- need to specify versions because we cant move completely over to jakarta because of dropwizard -->
         <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>${servlet4.version}</version>
         </dependency>
         <dependency>
-            <groupId>jakarta.inject</groupId>
-            <artifactId>jakarta.inject-api</artifactId>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>${jaxrs.api.impl.version}</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>javax.inject</groupId>-->
+<!--            <artifactId>javax.inject</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>javax.xml.bind</groupId>-->
+<!--            <artifactId>jaxb-api</artifactId>-->
+<!--            <version>2.3.1</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax.validation</groupId>-->
+<!--            <artifactId>validation-api</artifactId>-->
+<!--            <version>2.0.1.Final</version>-->
+<!--        </dependency>-->
+
+
+        <!--        <dependency>-->
+<!--            <groupId>jakarta.annotation</groupId>-->
+<!--            <artifactId>jakarta.annotation-api</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.inject</groupId>-->
+<!--            <artifactId>jakarta.inject-api</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
@@ -66,7 +104,6 @@
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
-            <version>${jersey-server.version}</version>
         </dependency>
 
         <dependency>
@@ -87,6 +124,11 @@
             <artifactId>jersey-media-jaxb</artifactId>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.ext</groupId>-->
+<!--            <artifactId>jersey-bean-validation</artifactId>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
@@ -97,11 +139,11 @@
             <artifactId>classgraph</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.junit.vintage</groupId>-->
+<!--            <artifactId>junit-vintage-engine</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.glassfish.jersey.test-framework</groupId>
             <artifactId>jersey-test-framework-core</artifactId>
