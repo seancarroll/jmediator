@@ -13,6 +13,7 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.context.event.StartupEvent;
 import io.micronaut.inject.annotation.AnnotationMetadataSupport;
+import jakarta.inject.Singleton;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +25,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ApplicationContextServiceFactoryTest {
+
+// https://docs.micronaut.io/latest/guide/
+//    @Test
+//    public void testEventListenerIsNotified() {
+//        try (ApplicationContext context = ApplicationContext.run()) {
+//            SampleEventEmitterBean emitter = context.getBean(SampleEventEmitterBean.class);
+//            SampleEventListener listener = context.getBean(SampleEventListener.class);
+//            assertEquals(0, listener.getInvocationCounter());
+//            emitter.publishSampleEvent();
+//            assertEquals(1, listener.getInvocationCounter());
+//        }
+//    }
+
     @Test
     void shouldSuccessfullyGetRegisteredRequestHandler() {
         ApplicationContext context = ApplicationContext.run();
-        context.registerSingleton(RequestHandler.class, new HelloRequestHandler());
-        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextServiceFactory(context));
 
         ApplicationContextServiceFactory serviceFactory = new ApplicationContextServiceFactory(context);
+
+        context.registerSingleton(RequestHandler.class, new HelloRequestHandler());
+//        context.registerSingleton(ApplicationEventListener.class, serviceFactory);
+
         serviceFactory.onApplicationEvent(new StartupEvent(context));
+
 
         RequestHandler<HelloRequest, String> handler = serviceFactory.getRequestHandler(HelloRequest.class);
         assertNotNull(handler);
@@ -41,10 +58,10 @@ class ApplicationContextServiceFactoryTest {
     @Test
     void shouldThrowForRequestClassThatHasNoRegisteredHandler() {
         ApplicationContext context = ApplicationContext.run();
-        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextServiceFactory(context));
-
         ApplicationContextServiceFactory serviceFactory = new ApplicationContextServiceFactory(context);
         serviceFactory.onApplicationEvent(new StartupEvent(context));
+
+//        context.registerSingleton(ApplicationEventListener.class, serviceFactory);
 
         assertThrows(NoHandlerForRequestException.class, () -> serviceFactory.getRequestHandler(MissingRequest.class));
     }
@@ -58,12 +75,15 @@ class ApplicationContextServiceFactoryTest {
         applicationContextServiceFactoryLogger.addAppender(listAppender);
 
         ApplicationContext context = ApplicationContext.run();
-        context.registerSingleton(RequestHandler.class, new MultipleHandlersOne());
-        context.registerSingleton(RequestHandler.class, new MultipleHandlersTwo());
-        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextServiceFactory(context));
 
         ApplicationContextServiceFactory serviceFactory = new ApplicationContextServiceFactory(context);
+
+        context.registerSingleton(RequestHandler.class, new MultipleHandlersOne());
+        context.registerSingleton(RequestHandler.class, new MultipleHandlersTwo());
+//        context.registerSingleton(ApplicationEventListener.class, serviceFactory);
+
         serviceFactory.onApplicationEvent(new StartupEvent(context));
+
 
         RequestHandler<MultipleHandlersRequest, String> handler = serviceFactory.getRequestHandler(MultipleHandlersRequest.class);
         assertNotNull(handler);
@@ -76,12 +96,15 @@ class ApplicationContextServiceFactoryTest {
     @Test
     void shouldSuccessfullyGetRegisteredPipelineBehavior() {
         ApplicationContext context = ApplicationContext.run();
+        ApplicationContextServiceFactory serviceFactory = new ApplicationContextServiceFactory(context);
+
         context.registerSingleton(PipelineBehavior.class, new LoggingPipelineBehavior());
-        context.registerSingleton(ApplicationEventListener.class, new ApplicationContextServiceFactory(context));
+//        context.registerSingleton(ApplicationEventListener.class, serviceFactory);
 
-        ApplicationContextServiceFactory requestHandlerProvider = new ApplicationContextServiceFactory(context);
+        serviceFactory.onApplicationEvent(new StartupEvent(context));
 
-        List<PipelineBehavior> behaviors = requestHandlerProvider.getPipelineBehaviors();
+
+        List<PipelineBehavior> behaviors = serviceFactory.getPipelineBehaviors();
         assertNotNull(behaviors);
         assertEquals(1, behaviors.size());
         assertTrue(behaviors.get(0) instanceof LoggingPipelineBehavior);
@@ -95,6 +118,7 @@ class ApplicationContextServiceFactoryTest {
 
     }
 
+    @Singleton
     static class HelloRequestHandler implements RequestHandler<HelloRequest, String> {
 
         @Override

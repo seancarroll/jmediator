@@ -14,9 +14,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <log4j.version>2.14.0</log4j.version>
-        <micronaut.version>2.2.2</micronaut.version>
+        <micronaut.version>3.7.4</micronaut.version>
         <exec.mainClass>com.seanthomascarroll.jmediator.sample.micronaut.Application</exec.mainClass>
     </properties>
 
