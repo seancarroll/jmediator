@@ -1,10 +1,9 @@
 package com.seanthomascarroll.jmediator.sample.jersey;
 
 import com.seanthomascarroll.jmediator.jersey.JmediatorFeature;
+import jakarta.ws.rs.ApplicationPath;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
-
-import javax.ws.rs.ApplicationPath;
 
 @ApplicationPath("/*")
 public class AppConfig extends ResourceConfig {
